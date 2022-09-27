@@ -1072,17 +1072,17 @@ YY_RULE_SETUP
 case 45:
 YY_RULE_SETUP
 #line 61 "Project.l"
-{printf("ID\n");}
+{printf("ID(%s)\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 63 "Project.l"
-{printf("INTLIT\n");}                  
+{printf("INTLIT(%s)\n", yytext);}                  
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 65 "Project.l"
-{printf("REALLIT\n");}
+{printf("REALLIT(%s)\n", yytext);}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP

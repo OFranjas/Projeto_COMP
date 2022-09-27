@@ -58,11 +58,11 @@ expoentes   (("E"|"e")[+-]?{digitos})
 "0"+{digitos}"."?{letras}*{digitos}*                ;
 
 
-{letras}                        {printf("ID\n");}
+{letras}                        {printf("ID(%s)\n", yytext);}
 
-({nonzeros}"_"*{digitos}*)|0       {printf("INTLIT\n");}                  
+({nonzeros}"_"*{digitos}*)|0       {printf("INTLIT(%s)\n", yytext);}                  
 
-{digitos}*"_"*"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT\n");}
+{digitos}*"_"*"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT(%s)\n", yytext);}
 
 
 
