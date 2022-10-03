@@ -2108,12 +2108,17 @@ void yyfree (void * ptr )
 #line 73 "Project.l"
 
 
-int main()
-{
-yylex(); return 0;
+int main(int argc, char *argv[]){
+    /* ./compile.sh Project.l juccompiler;./juccompiler < Factorial.java > Output.txt */
+    if (argc > 1)
+        yyin = fopen(argv[1], "r");
+    else
+        yyin = stdin;
+    yylex();
+    return 0;
 }
 
-int yywrap()
-{
-return 1;
+int yywrap() {
+    return 1;
 }
+
