@@ -1,4 +1,4 @@
-```#!/bin/bash
+#!/bin/bash
 # Compara o output do programa com o output esperado para cada
 #   ficheiro na input/output directory a configurar em baixo
 # Os ficheiros de input tem que ter extensao .java ou .juc
@@ -124,4 +124,4 @@ done
 echo ""
 echo "Total $tests_passed/$tests_made ("`echo "$tests_passed*100/$tests_made" | bc`"%)"
 
-rm $outputfile```
+rm $outputfile

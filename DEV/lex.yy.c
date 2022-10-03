@@ -670,8 +670,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Project.l"
-#line 2 "Project.l"
+#line 1 "jucompiler.l"
+#line 2 "jucompiler.l"
 
 
 #line 678 "lex.yy.c"
@@ -892,7 +892,7 @@ YY_DECL
 		}
 
 	{
-#line 12 "Project.l"
+#line 12 "jucompiler.l"
 
 
 #line 899 "lex.yy.c"
@@ -954,263 +954,263 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "Project.l"
+#line 14 "jucompiler.l"
 {printf("BOOLLIT\n");}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "Project.l"
+#line 15 "jucompiler.l"
 {printf("AND\n");}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "Project.l"
+#line 16 "jucompiler.l"
 {printf("ASSIGN\n");}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "Project.l"
+#line 17 "jucompiler.l"
 {printf("STAR\n");}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "Project.l"
+#line 18 "jucompiler.l"
 {printf("COMMA\n");}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "Project.l"
+#line 19 "jucompiler.l"
 {printf("DIV\n");}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "Project.l"
+#line 20 "jucompiler.l"
 {printf("EQ\n");}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "Project.l"
+#line 21 "jucompiler.l"
 {printf("GE\n");}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "Project.l"
+#line 22 "jucompiler.l"
 {printf("GT\n");}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "Project.l"
+#line 23 "jucompiler.l"
 {printf("LBRACE\n");}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "Project.l"
+#line 24 "jucompiler.l"
 {printf("LE\n");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "Project.l"
+#line 25 "jucompiler.l"
 {printf("LPAR\n");}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 26 "Project.l"
+#line 26 "jucompiler.l"
 {printf("LSQ\n");}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 27 "Project.l"
+#line 27 "jucompiler.l"
 {printf("LT\n");}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "Project.l"
+#line 28 "jucompiler.l"
 {printf("MINUS\n");}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 29 "Project.l"
+#line 29 "jucompiler.l"
 {printf("MOD\n");}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 30 "Project.l"
+#line 30 "jucompiler.l"
 {printf("NE\n");}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 31 "Project.l"
+#line 31 "jucompiler.l"
 {printf("NOT\n");}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 32 "Project.l"
+#line 32 "jucompiler.l"
 {printf("OR\n");}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 33 "Project.l"
+#line 33 "jucompiler.l"
 {printf("PLUS\n");}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 34 "Project.l"
+#line 34 "jucompiler.l"
 {printf("RBRACE\n");}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "Project.l"
+#line 35 "jucompiler.l"
 {printf("RPAR\n");}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 36 "Project.l"
+#line 36 "jucompiler.l"
 {printf("RSQ\n");}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 37 "Project.l"
+#line 37 "jucompiler.l"
 {printf("SEMICOLON\n");}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 38 "Project.l"
+#line 38 "jucompiler.l"
 {printf("ARROW\n");}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 39 "Project.l"
+#line 39 "jucompiler.l"
 {printf("LSHIFT\n");}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 40 "Project.l"
+#line 40 "jucompiler.l"
 {printf("RSHIFT\n");}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 41 "Project.l"
+#line 41 "jucompiler.l"
 {printf("XOR\n");}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 42 "Project.l"
+#line 42 "jucompiler.l"
 {printf("BOOL\n");}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 43 "Project.l"
+#line 43 "jucompiler.l"
 {printf("CLASS\n");}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 44 "Project.l"
+#line 44 "jucompiler.l"
 {printf("DOTLENGTH\n");}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 45 "Project.l"
+#line 45 "jucompiler.l"
 {printf("DOUBLE\n");}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 46 "Project.l"
+#line 46 "jucompiler.l"
 {printf("ELSE\n");}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 47 "Project.l"
+#line 47 "jucompiler.l"
 {printf("IF\n");}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 48 "Project.l"
+#line 48 "jucompiler.l"
 {printf("INT\n");}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 49 "Project.l"
+#line 49 "jucompiler.l"
 {printf("PRINT\n");}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 50 "Project.l"
+#line 50 "jucompiler.l"
 {printf("PARSEINT\n");}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 51 "Project.l"
+#line 51 "jucompiler.l"
 {printf("PUBLIC\n");}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 52 "Project.l"
+#line 52 "jucompiler.l"
 {printf("RETURN\n");}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 53 "Project.l"
+#line 53 "jucompiler.l"
 {printf("STATIC\n");}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 54 "Project.l"
+#line 54 "jucompiler.l"
 {printf("STRING\n");}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 55 "Project.l"
+#line 55 "jucompiler.l"
 {printf("VOID\n");}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 56 "Project.l"
+#line 56 "jucompiler.l"
 {printf("WHILE\n");}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 59 "Project.l"
+#line 59 "jucompiler.l"
 ;
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 61 "Project.l"
+#line 61 "jucompiler.l"
 {printf("RESERVED(%s)\n", yytext);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 63 "Project.l"
+#line 63 "jucompiler.l"
 {printf("ID(%s)\n", yytext);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 65 "Project.l"
+#line 65 "jucompiler.l"
 {printf("INTLIT(%s)\n", yytext);}                  
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 67 "Project.l"
+#line 67 "jucompiler.l"
 {printf("REALLIT(%s)\n", yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 68 "Project.l"
+#line 68 "jucompiler.l"
 {printf("REALLIT(%s)\n", yytext);}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 71 "Project.l"
+#line 71 "jucompiler.l"
 ;
 	YY_BREAK
 case 51:
 /* rule 51 can match eol */
 YY_RULE_SETUP
-#line 72 "Project.l"
+#line 72 "jucompiler.l"
 ;
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 75 "Project.l"
+#line 75 "jucompiler.l"
 ECHO;
 	YY_BREAK
 #line 1217 "lex.yy.c"
@@ -2218,7 +2218,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 75 "Project.l"
+#line 75 "jucompiler.l"
 
 
 int main(int argc, char *argv[]){
