@@ -7,6 +7,7 @@ letras  ([A-Za-z]|[_$])([0-9]|[_$]|[A-Za-z])*
 digitos  [0-9]+
 nonzeros [1-9]+
 expoentes   (("E"|"e")[+-]?{digitos})
+reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
 
 %%  
 
@@ -57,13 +58,14 @@ expoentes   (("E"|"e")[+-]?{digitos})
 
 "0"+{digitos}"."?{letras}*{digitos}*                ;
 
+{reservadas}                {printf("RESERVED(%s)\n", yytext);}
 
 {letras}                        {printf("ID(%s)\n", yytext);}
 
-({nonzeros}"_"*{digitos}*)|0       {printf("INTLIT(%s)\n", yytext);}                  
+({nonzeros}"_"*{digitos})|0       {printf("INTLIT(%s)\n", yytext);}                  
 
-{digitos}*"_"*"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT(%s)\n", yytext);}
-
+({digitos}"_"*{digitos})?"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT(%s)\n", yytext);}
+{digitos}({expoentes}|{digitos})?"."?({digitos})*  {printf("REALLIT(%s)\n", yytext);}
 
 
 .                               ;
