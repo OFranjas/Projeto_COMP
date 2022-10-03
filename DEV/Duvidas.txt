@@ -1,3 +1,9 @@
 {digitos}"."?{digitos}*(("E"|"e")[+-]?{digitos})?  {printf("REALLIT");}
 
 Comments3 - Porque é que o espaço não tá no .???
+
+INTLIT2 - Porque a barrinha inclinada????? 
+
+literals - Tá complicado os expoentes com 0 antes, conflito com o intlit do 0
+
+HyperMegaSuperTest - Ver depois
