@@ -1,0 +1,3 @@
+{digitos}"."?{digitos}*(("E"|"e")[+-]?{digitos})?  {printf("REALLIT");}
+
+Comments3 - Porque é que o espaço não tá no .???

@@ -1,5 +1,5 @@
 %{
-
+    int counter = 0;
 
 %}
 
@@ -8,6 +8,8 @@ digitos  [0-9]+
 nonzeros [1-9]+
 expoentes   (("E"|"e")[+-]?{digitos})
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
+comment "//".*"\n"
+erros   (".")
 
 %%  
 
@@ -55,6 +57,9 @@ reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|
 "void"                      {printf("VOID\n");}
 "while"                     {printf("WHILE\n");}
 
+"/*"(.*|"\n"*|{comment}*)*"*/"      ;
+
+{comment}          ;   
 
 "0"+{digitos}"."?{letras}*{digitos}*                ;
 
@@ -67,7 +72,9 @@ reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|
 ({digitos}"_"*{digitos})?"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT(%s)\n", yytext);}
 {digitos}({expoentes}|{digitos})?"."?({digitos})*  {printf("REALLIT(%s)\n", yytext);}
 
+{erros}  {printf(": illegal character (%s)\n", yytext);}
 
+" "                             ;
 .                               ;
 "\n"                            ;
 
