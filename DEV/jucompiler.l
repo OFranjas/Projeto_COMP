@@ -10,6 +10,9 @@ expoentes   (("E"|"e")[+-]?{digitos})
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
 comment "//".*"\n"
 erros   (".")
+invalidos ("\r"|"\f"|"\n"|"\t"|"\0"|"\\"|"\"")
+
+%X COMMENT STRLIT
 
 %%  
 
@@ -59,24 +62,28 @@ erros   (".")
 
 {erros}  {printf("illegal character (%s)\n", yytext);}
 
-"/*"(.*|"\n"*|{comment}*)*"*/"      ;
+{comment}          ;  
 
-{comment}          ;   
+"/*" {BEGIN(COMMENT);}
+<COMMENT>"*/" {BEGIN(0);}
+<COMMENT>.          ;
+<COMMENT>"\n"   ;
+
+"\""                        {BEGIN(STRLIT);printf("STRLIT(\"");}
+
+<STRLIT>"\""                 {BEGIN(0);printf("\")\n");}
+<STRLIT>.                    {printf("%c",yytext[0]);}
 
 {reservadas}                {printf("RESERVED(%s)\n", yytext);}
 
-
-"\"".*"\""                  {printf("STRLIT(%s)\n", yytext);}
+"\""[^"]*"\""                  {printf("STRLIT(%s)\n", yytext);}
 
 {letras}                        {printf("ID(%s)\n", yytext);}
-
 
 {nonzeros}(("_"|{digitos})*{digitos})?|"0"       {printf("INTLIT(%s)\n", yytext);}                  
 
 {digitos}*("_"*{digitos})?"."({digitos}|[_])*({expoentes}|{digitos})?   {printf("REALLIT(%s)\n", yytext);}
 {nonzeros}({expoentes}|{digitos})*"."?({digitos})*  {printf("REALLIT(%s)\n", yytext);}
-
-
 
 " "                             ;
 .                               ;
