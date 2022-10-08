@@ -13,7 +13,7 @@ nonzeros [1-9]
 expoentes   (("E"|"e")[+-]?{digitos}([0-9]|"_")*)
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
 comment "//".*"\r\n"
-erros   (".")
+erros   ("."|"&"|"?"|"#")
 invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 
 %X COMMENT STRLIT ERRO_STRLIT
@@ -64,14 +64,15 @@ invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 "void"                      {printf("VOID\r\n");coluna += yyleng;}
 "while"                     {printf("WHILE\r\n");coluna += yyleng;}
 
-{erros}  {printf("illegal character (%s)\r\n", yytext);coluna += yyleng;}
+{erros}  {printf("Line %d, col %d: illegal character (%s)\r\n",linha,coluna, yytext);coluna += yyleng;}
 
 {comment}          {linha++;};  
 "/*" {BEGIN(COMMENT);linha_aux = linha;coluna_aux=coluna;coluna += yyleng;}
 <COMMENT>"*/"       {BEGIN(0);coluna += yyleng;}
 <COMMENT><<EOF>>    {printf("Line %d, col %d: unterminated comment\r\n", linha_aux, coluna_aux); BEGIN(0);coluna += yyleng;}
 <COMMENT>.          {coluna += yyleng;}
-<COMMENT>"\r\n"     {linha++;coluna = 1;};
+<COMMENT>"\r\n"|"\n"     {linha++;coluna = 1;};
+
 
 "\""                                  {BEGIN(STRLIT);sprintf(buffer,"STRLIT(\"");linha_aux=linha;coluna_aux=coluna;coluna++;}
 
@@ -94,7 +95,7 @@ invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 {digitos}*("_"*{digitos})*"."({digitos}|["_"])*({expoentes})?           {printf("REALLIT(%s)\r\n", yytext);coluna += yyleng;}
 
 " "                             {coluna += yyleng;}
-"\r\n"|"\n"                     {linha++;coluna = 1;}
+"\r\n"|"\n"|"\r"                     {linha++;coluna = 1;}
 .                               {coluna += yyleng;}
 
 
