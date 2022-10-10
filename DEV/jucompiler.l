@@ -10,7 +10,7 @@
 letras  ([A-Za-z]|[_$])([0-9]|[_$]|[A-Za-z])*
 digitos  [0-9]+
 nonzeros [1-9]
-expoentes   (("E"|"e")[+-]?{digitos}([0-9]|"_")*)
+expoentes   ((E|e)[+-]?{digitos}([0-9]|_)*)
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
 comment "//".*"\r\n"
 erros   ("."|"&"|"?"|"#")
@@ -66,7 +66,7 @@ invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 
 {erros}  {printf("Line %d, col %d: illegal character (%s)\r\n",linha,coluna, yytext);coluna += yyleng;}
 
-{comment}          {linha++;};  
+{comment}          {linha++; coluna = 1;};  
 "/*" {BEGIN(COMMENT);linha_aux = linha;coluna_aux=coluna;coluna += yyleng;}
 <COMMENT>"*/"       {BEGIN(0);coluna += yyleng;}
 <COMMENT><<EOF>>    {printf("Line %d, col %d: unterminated comment\r\n", linha_aux, coluna_aux); BEGIN(0);coluna += yyleng;}
@@ -76,17 +76,17 @@ invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 
 "\""                                  {BEGIN(STRLIT);sprintf(buffer,"STRLIT(\"");linha_aux=linha;coluna_aux=coluna;coluna++;}
 
-<STRLIT>"\\"[^(f|n|r|t|"\\"|\")]      {if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\r\n", linha, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\r\n", linha, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
+<STRLIT>"\\"[^f|n|r|t|"\\"|\"]      {if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\r\n", linha, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\r\n", linha, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
 <STRLIT>"\\""\\"                      {strcat(buffer,&yytext[0]);coluna+=yyleng;}
 <STRLIT>"\\""\""                      {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-<STRLIT>"\""                          {BEGIN(0);printf("%s\")\r\n",buffer);bzero(buffer,sizeof(buffer));}
+<STRLIT>"\""                          {BEGIN(0);printf("%s\")\r\n",buffer);bzero(buffer,sizeof(buffer));coluna+=yyleng;}
 <STRLIT>"\r\n"|"\n"                   {printf("Line %d, col %d: unterminated string literal\r\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); linha++; coluna = 1;}
 <STRLIT>.                             {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-
-<ERRO_STRLIT>"\""                     {BEGIN 0;}
+<STRLIT><<EOF>>                     {printf("Line %d, col %d: unterminated string literal\r\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); linha++; coluna = 1;}
+<ERRO_STRLIT>"\""                     {BEGIN 0;coluna+=yyleng;coluna+=yyleng;}
 <ERRO_STRLIT>"\\""\\"                 {strcat(buffer,&yytext[0]);coluna+=yyleng;}
 <ERRO_STRLIT>"\\""\""                 {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-<ERRO_STRLIT>"\\"[^(f|n|r|t|"\\"|\")]      {if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\r\n", linha, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\r\n", linha, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
+<ERRO_STRLIT>"\\"[^f|n|r|t|"\\"|\"] {if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\r\n", linha, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\r\n", linha, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
 <ERRO_STRLIT>"\r\n"|"\n"              {printf("Line %d, col %d: unterminated string literal\r\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); linha++; coluna = 1;}
 <ERRO_STRLIT>.                        {coluna+=yyleng;}
 
@@ -97,7 +97,7 @@ invalidos ("\r"|"\f"|"\r\n"|"\t"|"\0"|"\\"|"\"")
 {nonzeros}(("_"|{digitos})*{digitos})?|"0"       {printf("INTLIT(%s)\r\n", yytext);coluna += yyleng;}                  
 
 (({digitos}"."{digitos}?{expoentes}?)|("."{digitos}{expoentes}?)|({digitos}{expoentes}))   {printf("REALLIT(%s)\r\n", yytext);coluna += yyleng;}
-{digitos}*("_"*{digitos})*"."({digitos}|["_"])*({expoentes})?           {printf("REALLIT(%s)\r\n", yytext);coluna += yyleng;}
+(({digitos}*("_"*{digitos})*"."({digitos}|[_])+({expoentes})?)|({digitos}*("_"*{digitos})*"."))           {printf("REALLIT(%s)\r\n", yytext);coluna += yyleng;}
 
 " "                             {coluna += yyleng;}
 "\r\n"|"\n"|"\r"                {linha++;coluna = 1;}
