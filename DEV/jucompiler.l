@@ -13,14 +13,12 @@ digitos  [0-9]+
 nonzeros [1-9]
 expoentes   ((E|e)[+-]?{digitos}([0-9]|_)*)
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
-comment ("//".*)({NEWLINE})?
-erros   [.|?|#|&|:|\\|.|`|']
 REALLIT (({digitos}"."{digitos}?{expoentes}?)|("."{digitos}{expoentes}?)|({digitos}{expoentes}))|(({digitos}*("_"*{digitos})*"."("_"*{digitos})+({expoentes})?)|({digitos}*("_"*{digitos})+"."))                  
 INTLIT {nonzeros}(("_"|{digitos})*{digitos})?|"0"
 SPACE " "
 NEWLINE "\n"|"\r"|"\r\n"
 
-%X COMMENT STRLIT ERRO_STRLIT
+%X COMMENT STRLIT ERRO_STRLIT SINGLE_LINE_COMMENT
 
 %%  
 
@@ -77,7 +75,12 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 {INTLIT}                    {if(flag == 1){printf("INTLIT(%s)\n", yytext);}coluna += yyleng;}             
 
-{comment}                   {yylineno++;coluna = 1;} 
+
+"//"                           {BEGIN SINGLE_LINE_COMMENT;coluna += yyleng;}
+<SINGLE_LINE_COMMENT>"\r"|"\n" {BEGIN 0;coluna = 1; yylineno++;}
+<SINGLE_LINE_COMMENT>.         {;coluna += yyleng;}
+
+
 
 "/""*"                      {linha_aux = yylineno;coluna_aux=coluna;coluna += 2;BEGIN(COMMENT);}
 <COMMENT>"*""/"             {BEGIN(0);coluna += yyleng;}
