@@ -5,6 +5,7 @@
     char buffer[1024];
 
     int flag = 1;
+    int error = 0;
 
 %}
 
@@ -18,7 +19,7 @@ INTLIT {nonzeros}(("_"|{digitos})*{digitos})?|"0"
 SPACE " "
 NEWLINE "\n"|"\r"|"\r\n"
 
-%X COMMENT STRLIT ERRO_STRLIT SINGLE_LINE_COMMENT
+%X COMMENT STRLIT SINGLE_LINE_COMMENT
 
 %%  
 
@@ -78,7 +79,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 "//"                           {BEGIN SINGLE_LINE_COMMENT;coluna += yyleng;}
 <SINGLE_LINE_COMMENT>"\r"|"\n" {BEGIN 0;coluna = 1; yylineno++;}
-<SINGLE_LINE_COMMENT>.         {;coluna += yyleng;}
+<SINGLE_LINE_COMMENT>.         {coluna += yyleng;}
 
 
 
@@ -89,28 +90,18 @@ NEWLINE "\n"|"\r"|"\r\n"
 <COMMENT><<EOF>>            {printf("Line %d, col %d: unterminated comment\n", linha_aux, coluna_aux); BEGIN(0);coluna += yyleng;}
 <COMMENT>.                  {coluna += yyleng;}
 
-
-"\""                                  {BEGIN(STRLIT);bzero(buffer,sizeof(buffer));linha_aux=yylineno;coluna_aux=coluna;coluna++;}
-
-<STRLIT>"\""                          {if(flag == 1){printf("STRLIT(\"%s\")\n",buffer);}BEGIN(0);bzero(buffer,sizeof(buffer));coluna+=yyleng;}
-<STRLIT>"\\"[^f|n|r|"\n"|"r\n"|t|"\\"|\"]  {if ((yytext[1] != '\r') && (yytext[1] != '\n')) {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
-<STRLIT>"\\"["\\"|"\""]               {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-<STRLIT>"\\""\n"                      {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna); printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux);coluna = 1; yylineno++; bzero(buffer,sizeof(buffer)); BEGIN(0);}
-<STRLIT>{NEWLINE}                     {printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); yylineno++; coluna = 1;}
-<STRLIT><<EOF>>                       {printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); yylineno++; coluna = 1;}
-<STRLIT>.                             {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-
-
-<ERRO_STRLIT>"\""                     {BEGIN (0);coluna+=yyleng;coluna+=yyleng;}
-<ERRO_STRLIT>"\\"[^f|n|r|"\n"|("r\n")|t|("\\")|(\")]  {if ((yytext[1] != '\r') && (yytext[1] != '\n')) {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext);} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna);}BEGIN ERRO_STRLIT;coluna+=yyleng;}
-<ERRO_STRLIT>"\\""\""                 {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-<ERRO_STRLIT>"\\"["\\"|"\""]          {strcat(buffer,&yytext[0]);coluna+=yyleng;}
-<ERRO_STRLIT>"\n"|"\r\n"|"\r"|"\n\r"  {printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); yylineno++; coluna = 1;}
-<ERRO_STRLIT>.                        {coluna+=yyleng;}
-<ERRO_STRLIT><<EOF>>                  {printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); BEGIN(0);bzero(buffer,sizeof(buffer)); yylineno++; coluna = 1;}
-
-
-
+\"                          {coluna_aux = coluna; coluna += 1; linha_aux=yylineno; BEGIN STRLIT; buffer[0] = '\0'; error = 0;}
+<STRLIT>[^\\"\n]*           {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\\f                 {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\\n                 {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\\t                 {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\\r                 {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\\[\\"]             {coluna+=yyleng; strcat(buffer, yytext);}
+<STRLIT>\"                  {coluna+=yyleng; BEGIN 0;
+                             if (error!=1){if(flag==1){printf("STRLIT(\"%s\")\n", buffer);}}}
+<STRLIT>\\.|\\              {error=1; if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext); coluna+=yyleng;} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna); coluna+=yyleng;}}
+<STRLIT>\n                  {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
+<STRLIT><<EOF>>             {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
 
 "\f"|"\t"                             {coluna += yyleng;}
 {SPACE}                               {coluna += yyleng;}
