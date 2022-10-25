@@ -6,6 +6,8 @@ Gonçalo Ferreira 2020226867
 
 
 %{
+    //#include "y.tab.h"
+
     int coluna = 1;
     int linha_aux = 0;
     int coluna_aux = 0;
@@ -19,12 +21,13 @@ Gonçalo Ferreira 2020226867
 ID  ([A-Za-z]|[_$])([0-9]|[_$]|[A-Za-z])*
 digitos  [0-9]+
 nonzeros [1-9]
-expoentes   ((E|e)[+-]?{digitos}([0-9]|_)*)
+expoentes   ((E|e)[+-]?{digitos}+("_"*{digitos}+)*)
 reservadas "switch"|"assert"|"default"|"package"|"finally"|"float"|"implements"|"import"|"instanceof"|"interface"|"long"|"native"|"new"|"synchronized"|"do"|"goto"|"private"|"break"|"++"|"--"|"null"|"Integer"|"System"|"for"|"abstract"|"continue"|"byte"|"case"|"catch"|"char"|"const"|"enum"|"extends"|"final"|"protected"|"short"|"strictfp"|"transient"|"try"|"volatile"|"super"|"this"|"throw"|"throws"
-REALLIT (({digitos}"."{digitos}?{expoentes}?)|("."{digitos}{expoentes}?)|({digitos}{expoentes}))|(({digitos}*("_"*{digitos})*"."("_"*{digitos})+({expoentes})?)|({digitos}*("_"*{digitos})+"."))                  
+REALLIT (({digitos}*("_"*{digitos})+"."{expoentes})|({digitos}"."{digitos}?{expoentes}?)|("."{digitos}{expoentes}?)|({digitos}{expoentes})|({digitos}*("_"*{digitos}){expoentes}))|(({digitos}*("_"*{digitos})*"."("_"*{digitos})+({expoentes})?)|({digitos}*("_"*{digitos})+"."))|(({digitos}|"_")+([Ee][+-]?[0-9](({digitos}|"_")*[0-9])?)\.?({digitos}|"_")*?)|((({digitos}|"_")*[0-9])?*\.(({digitos}|"_")*[0-9])?([Ee][+-]?[0-9](({digitos}|"_")*)?)?)  
 INTLIT {nonzeros}(("_"|{digitos})*{digitos})?|"0"
 SPACE " "
 NEWLINE "\n"|"\r"|"\r\n"
+
 
 %X COMMENT STRLIT SINGLE_LINE_COMMENT
 
@@ -79,23 +82,31 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 {ID}                        {if(flag == 1){printf("ID(%s)\n", yytext);}coluna += yyleng;}
 
+
+"."                         {printf("Line %d, col %d: illegal character (%s)\n",yylineno,coluna, yytext);coluna += yyleng;}
+"."[Ee]{INTLIT}             {printf("Line %d, col %d: illegal character (.)\n",yylineno, coluna);coluna += yyleng; printf("ID(%s)\n", yytext+yyleng-2);}
+{INTLIT}*"."[Ee]           {coluna+=yyleng; if(flag==1){printf("REALLIT(%.*s)\n", yyleng-1, yytext); printf("ID(%s)\n", yytext+yyleng-1);}}
+
+
+
 {REALLIT}                   {if(flag == 1){printf("REALLIT(%s)\n", yytext);}coluna += yyleng;}
 
 {INTLIT}                    {if(flag == 1){printf("INTLIT(%s)\n", yytext);}coluna += yyleng;}             
 
 
 "//"                           {BEGIN SINGLE_LINE_COMMENT;coluna += yyleng;}
-<SINGLE_LINE_COMMENT>"\r"|"\n" {BEGIN 0;coluna = 1; yylineno++;}
+<SINGLE_LINE_COMMENT>"\r"|"\n" {BEGIN 0;coluna = 1;yylineno++;}
 <SINGLE_LINE_COMMENT>.         {coluna += yyleng;}
 
 
 
 "/""*"                      {linha_aux = yylineno;coluna_aux=coluna;coluna += 2;BEGIN(COMMENT);}
+<COMMENT>[\r\n]             {coluna = 1; yylineno++;}
+<COMMENT>[\t\f]             {coluna += yyleng;}
 <COMMENT>"*""/"             {BEGIN(0);coluna += yyleng;}
-<COMMENT>"*"+[^*/\n]        {coluna += yyleng;}
-<COMMENT>{NEWLINE}          {yylineno++;coluna = 1;}
+<COMMENT>"*"+[^*/\n\r]      {coluna += yyleng;}
 <COMMENT><<EOF>>            {printf("Line %d, col %d: unterminated comment\n", linha_aux, coluna_aux); BEGIN(0);coluna += yyleng;}
-<COMMENT>.                  {coluna += yyleng;}
+<COMMENT>[^\r\n]            {coluna += yyleng;}
 
 \"                          {coluna_aux = coluna; coluna += 1; linha_aux=yylineno; BEGIN STRLIT; buffer[0] = '\0'; error = 0;}
 <STRLIT>[^\\"\n]*           {coluna+=yyleng; strcat(buffer, yytext);}
@@ -130,4 +141,9 @@ int main(int argc, char *argv[]){
 
 int yywrap() {
     return 1;
+}
+
+void yyerror (char *s)
+{
+printf ("%s\n", s);
 }
