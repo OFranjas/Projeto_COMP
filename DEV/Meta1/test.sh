@@ -23,8 +23,8 @@
 # Oleksandr Yakovlyev 2020 Universidade de Coimbra
 
 # CONFIGURAR PARA A DIRETORIA ONDE TEM OS TESTES
-in_dir="./meta1"
-out_dir="./meta1"
+in_dir="./files"
+out_dir="./files"
 
 # Reset
 Color_Off='\033[0m'       # Text Reset
