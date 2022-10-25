@@ -1,3 +1,9 @@
+/* Autores */
+/* Gonçalo Gameiro Neves number: 2020239361 */
+/* Gonçalo Franja Ferreira number 2020226867 */
+
+
+
 %{
     int coluna = 1;
     int linha_aux = 0;
