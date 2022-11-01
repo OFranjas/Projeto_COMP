@@ -11,6 +11,7 @@
 #include <string.h>
 #include "symtab.h"
 #include "Tree.h"
+#include "Tree.c"
 
 
 #define NSYMS 100
@@ -150,42 +151,102 @@ Assignment: ID ASSIGN Expr                                                      
 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                                       {;}
          ;
 
-Expr: Expr PLUS Expr                                                                {;}
-    | Expr MINUS Expr                                                               {;}
-    | Expr STAR Expr                                                                {;}
-    | Expr DIV Expr                                                                 {;}
-    | Expr MOD Expr                                                                 {;}
-    | Expr OR Expr                                                                  {;}
-    | Expr XOR Expr                                                                 {;}
-    | Expr AND Expr                                                                 {;}
+Expr:
+     Expr PLUS Expr                                                                {
+                                                                                    $$ = AST_new("Add","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+                                                                                    
+    | Expr MINUS Expr                                                               {
+                                                                                    $$ = AST_new("Sub","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | Expr STAR Expr                                                                {
+                                                                                    $$ = AST_new("Mult","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr DIV Expr                                                                 {$$ = AST_new("Div","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | Expr MOD Expr                                                                 {$$ = AST_new("Mod","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr OR Expr                                                                  {$$ = AST_new("Or","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr XOR Expr                                                                 {$$ = AST_new("Xor","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr AND Expr                                                                 {$$ = AST_new("And","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
     | Expr LSHIFT Expr                                                              {;}
     | Expr RSHIFT Expr                                                              {;}
-    | Expr EQ Expr                                                                  {;}
-    | Expr NE Expr                                                                  {;}
-    | Expr LT Expr                                                                  {;}
-    | Expr GT Expr                                                                  {;}
-    | Expr LE Expr                                                                  {;}
-    | Expr GE Expr                                                                  {;}
-    | MINUS Expr                                                                    {;} 
-    | NOT Expr                                                                      {;}
-    | PLUS Expr                                                                     {;}
-    | LPAR Expr RPAR                                                                {;}
+
+    | Expr EQ Expr                                                                  {
+                                                                                    $$ = AST_new("Eq","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr NE Expr                                                                  {
+                                                                                    $$ = AST_new("Ne","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | Expr LT Expr                                                                  {
+                                                                                    $$ = AST_new("Lt","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | Expr GT Expr                                                                  {
+                                                                                    $$ = AST_new("Gt","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | Expr LE Expr                                                                  {
+                                                                                    $$ = AST_new("Le","");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);  
+                                                                                    }
+
+    | Expr GE Expr                                                                  {
+                                                                                    $$ = AST_new("Ge", "");
+                                                                                    AST_add_son($$, $1);
+                                                                                    AST_add_son($$, $3);
+                                                                                    }
+
+    | MINUS Expr                                                                    {$$ = - $2;} 
+    | NOT Expr                                                                      {$$ = ! $2;}
+    | PLUS Expr                                                                     {$$ = +$2;}
+    | LPAR Expr RPAR                                                                {$$ = $2;}
     | MethodInvocation                                                              {;}
     | Assignment                                                                    {;}
     | ParseArgs                                                                     {;}
-    | ID                                                                            {;}
-    | ID DOTLENGTH                                                                  {;}
-    | INTLIT                                                                        {;}
-    | REALLIT                                                                       {;}
-    | BOOLLIT                                                                       {;}
+    | ID                                                                            {$$ = AST_new("ID", $1);}
+    | ID DOTLENGTH                                                                  {$$ = AST_new("ID Dotlength", $1);}
+    | INTLIT                                                                        {$$ = AST_new("Intlit", $1);}
+    | REALLIT                                                                       {$$ = AST_new("Reallit", $1);} 
+    | BOOLLIT                                                                       {$$ = AST_new("Boollit", $1);}
     ;
-
-
-
-
-
-
-
 
 %%
 
