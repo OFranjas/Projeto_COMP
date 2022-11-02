@@ -74,12 +74,11 @@
 #include "symtab.h"
 #include "Tree.h"
 
-char* type_spec;
 
-AST_struct root = NULL;
+struct AST root = NULL;
 int flag = 1;int error = 0;
 
-#line 83 "y.tab.c"
+#line 82 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -231,12 +230,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 21 "jucompiler.y"
+#line 20 "jucompiler.y"
 
 char* string;
 struct AST* ast;
 
-#line 240 "y.tab.c"
+#line 239 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -616,15 +615,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    59,    59,    66,    67,    68,    69,    70,    71,    74,
-      77,    80,    81,    84,    85,    86,    89,    90,    91,    92,
-      96,    97,   100,   101,   104,   107,   108,   109,   110,   113,
-     116,   117,   121,   122,   123,   124,   125,   126,   127,   128,
-     129,   130,   131,   132,   133,   135,   136,   139,   140,   143,
-     144,   147,   150,   153,   154,   155,   156,   157,   158,   159,
-     160,   161,   162,   163,   164,   165,   166,   167,   168,   169,
-     170,   171,   172,   173,   174,   175,   176,   177,   178,   179,
-     180
+       0,    58,    58,    65,    66,    67,    68,    69,    70,    73,
+      76,    79,    80,    83,    84,    85,    88,    89,    90,    91,
+      95,    96,    99,   100,   103,   106,   107,   108,   109,   112,
+     115,   116,   120,   121,   122,   123,   124,   125,   126,   127,
+     128,   129,   130,   131,   132,   134,   135,   138,   139,   142,
+     143,   146,   149,   152,   153,   154,   155,   156,   157,   158,
+     159,   160,   161,   162,   163,   164,   165,   166,   167,   168,
+     169,   170,   171,   172,   173,   174,   175,   176,   177,   178,
+     179
 };
 #endif
 
@@ -1584,485 +1583,485 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 59 "jucompiler.y"
+#line 58 "jucompiler.y"
                                                                                     {																
 																                        root = AST_new("Program","");
                                                                                         AST_add_son(root,(yyvsp[-3].string));
 																                        (yyval.ast) = root;
                                                                                      }
-#line 1594 "y.tab.c"
+#line 1593 "y.tab.c"
     break;
 
   case 3:
-#line 66 "jucompiler.y"
+#line 65 "jucompiler.y"
                                                                                     {;}
-#line 1600 "y.tab.c"
+#line 1599 "y.tab.c"
     break;
 
   case 4:
-#line 67 "jucompiler.y"
+#line 66 "jucompiler.y"
                                                                                     {;}
-#line 1606 "y.tab.c"
+#line 1605 "y.tab.c"
     break;
 
   case 5:
-#line 68 "jucompiler.y"
+#line 67 "jucompiler.y"
                                                                                     {;}
-#line 1612 "y.tab.c"
+#line 1611 "y.tab.c"
     break;
 
   case 6:
-#line 69 "jucompiler.y"
+#line 68 "jucompiler.y"
                                                                                     {;}
-#line 1618 "y.tab.c"
+#line 1617 "y.tab.c"
     break;
 
   case 7:
-#line 70 "jucompiler.y"
+#line 69 "jucompiler.y"
                                                                                     {;}
-#line 1624 "y.tab.c"
+#line 1623 "y.tab.c"
     break;
 
   case 8:
-#line 71 "jucompiler.y"
+#line 70 "jucompiler.y"
                                                                                     {;}
-#line 1630 "y.tab.c"
+#line 1629 "y.tab.c"
     break;
 
   case 9:
-#line 74 "jucompiler.y"
+#line 73 "jucompiler.y"
                                                                                     {;}
-#line 1636 "y.tab.c"
+#line 1635 "y.tab.c"
     break;
 
   case 10:
-#line 77 "jucompiler.y"
+#line 76 "jucompiler.y"
                                                                                     {;}
-#line 1642 "y.tab.c"
+#line 1641 "y.tab.c"
     break;
 
   case 11:
-#line 80 "jucompiler.y"
+#line 79 "jucompiler.y"
                                                                                     {;}
-#line 1648 "y.tab.c"
+#line 1647 "y.tab.c"
     break;
 
   case 12:
-#line 81 "jucompiler.y"
+#line 80 "jucompiler.y"
                                                                                     {;}
-#line 1654 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 13:
-#line 84 "jucompiler.y"
+#line 83 "jucompiler.y"
                                                                                     {;}
-#line 1660 "y.tab.c"
+#line 1659 "y.tab.c"
     break;
 
   case 14:
-#line 85 "jucompiler.y"
+#line 84 "jucompiler.y"
                                                                                     {;}
-#line 1666 "y.tab.c"
+#line 1665 "y.tab.c"
     break;
 
   case 15:
-#line 86 "jucompiler.y"
+#line 85 "jucompiler.y"
                                                                                     {;}
-#line 1672 "y.tab.c"
+#line 1671 "y.tab.c"
     break;
 
   case 16:
-#line 89 "jucompiler.y"
+#line 88 "jucompiler.y"
                                                                                     {;}
-#line 1678 "y.tab.c"
+#line 1677 "y.tab.c"
     break;
 
   case 17:
-#line 90 "jucompiler.y"
+#line 89 "jucompiler.y"
                                                                                     {;}
-#line 1684 "y.tab.c"
+#line 1683 "y.tab.c"
     break;
 
   case 18:
-#line 91 "jucompiler.y"
+#line 90 "jucompiler.y"
                                                                                     {;}
-#line 1690 "y.tab.c"
+#line 1689 "y.tab.c"
     break;
 
   case 19:
-#line 92 "jucompiler.y"
+#line 91 "jucompiler.y"
                                                                                     {;}
-#line 1696 "y.tab.c"
+#line 1695 "y.tab.c"
     break;
 
   case 20:
-#line 96 "jucompiler.y"
+#line 95 "jucompiler.y"
                                                                                     {;}
-#line 1702 "y.tab.c"
+#line 1701 "y.tab.c"
     break;
 
   case 21:
-#line 97 "jucompiler.y"
+#line 96 "jucompiler.y"
                                                                                     {;}
-#line 1708 "y.tab.c"
+#line 1707 "y.tab.c"
     break;
 
   case 22:
-#line 100 "jucompiler.y"
+#line 99 "jucompiler.y"
                                                                                     {;}
-#line 1714 "y.tab.c"
+#line 1713 "y.tab.c"
     break;
 
   case 23:
-#line 101 "jucompiler.y"
+#line 100 "jucompiler.y"
                                                                                     {;}
-#line 1720 "y.tab.c"
+#line 1719 "y.tab.c"
     break;
 
   case 24:
-#line 104 "jucompiler.y"
+#line 103 "jucompiler.y"
                                                                                     {;}
-#line 1726 "y.tab.c"
+#line 1725 "y.tab.c"
     break;
 
   case 25:
-#line 107 "jucompiler.y"
+#line 106 "jucompiler.y"
                                                                                     {;}
-#line 1732 "y.tab.c"
+#line 1731 "y.tab.c"
     break;
 
   case 26:
-#line 108 "jucompiler.y"
+#line 107 "jucompiler.y"
                                                                                     {;}
-#line 1738 "y.tab.c"
+#line 1737 "y.tab.c"
     break;
 
   case 27:
-#line 109 "jucompiler.y"
+#line 108 "jucompiler.y"
                                                                                     {;}
-#line 1744 "y.tab.c"
+#line 1743 "y.tab.c"
     break;
 
   case 28:
-#line 110 "jucompiler.y"
+#line 109 "jucompiler.y"
                                                                                     {;}
-#line 1750 "y.tab.c"
+#line 1749 "y.tab.c"
     break;
 
   case 29:
-#line 113 "jucompiler.y"
+#line 112 "jucompiler.y"
                                                                                     {;}
-#line 1756 "y.tab.c"
+#line 1755 "y.tab.c"
     break;
 
   case 30:
-#line 116 "jucompiler.y"
+#line 115 "jucompiler.y"
                                                                                     {;}
-#line 1762 "y.tab.c"
+#line 1761 "y.tab.c"
     break;
 
   case 31:
-#line 117 "jucompiler.y"
+#line 116 "jucompiler.y"
                                                                                     {;}
-#line 1768 "y.tab.c"
+#line 1767 "y.tab.c"
     break;
 
   case 32:
-#line 121 "jucompiler.y"
+#line 120 "jucompiler.y"
                                                                                     {;}
-#line 1774 "y.tab.c"
+#line 1773 "y.tab.c"
     break;
 
   case 33:
-#line 122 "jucompiler.y"
+#line 121 "jucompiler.y"
                                                                                     {;}
-#line 1780 "y.tab.c"
+#line 1779 "y.tab.c"
     break;
 
   case 34:
-#line 123 "jucompiler.y"
+#line 122 "jucompiler.y"
                                                                                     {;}
-#line 1786 "y.tab.c"
+#line 1785 "y.tab.c"
     break;
 
   case 35:
-#line 124 "jucompiler.y"
+#line 123 "jucompiler.y"
                                                                                     {;}
-#line 1792 "y.tab.c"
+#line 1791 "y.tab.c"
     break;
 
   case 36:
-#line 125 "jucompiler.y"
+#line 124 "jucompiler.y"
                                                                                     {;}
-#line 1798 "y.tab.c"
+#line 1797 "y.tab.c"
     break;
 
   case 37:
-#line 126 "jucompiler.y"
+#line 125 "jucompiler.y"
                                                                                     {;}
-#line 1804 "y.tab.c"
+#line 1803 "y.tab.c"
     break;
 
   case 38:
-#line 127 "jucompiler.y"
+#line 126 "jucompiler.y"
                                                                                     {;}
-#line 1810 "y.tab.c"
+#line 1809 "y.tab.c"
     break;
 
   case 39:
-#line 128 "jucompiler.y"
+#line 127 "jucompiler.y"
                                                                                     {;}
-#line 1816 "y.tab.c"
+#line 1815 "y.tab.c"
     break;
 
   case 40:
-#line 129 "jucompiler.y"
+#line 128 "jucompiler.y"
                                                                                     {;}
-#line 1822 "y.tab.c"
+#line 1821 "y.tab.c"
     break;
 
   case 41:
-#line 130 "jucompiler.y"
+#line 129 "jucompiler.y"
                                                                                     {;}
-#line 1828 "y.tab.c"
+#line 1827 "y.tab.c"
     break;
 
   case 42:
-#line 131 "jucompiler.y"
+#line 130 "jucompiler.y"
                                                                                     {;}
-#line 1834 "y.tab.c"
+#line 1833 "y.tab.c"
     break;
 
   case 43:
-#line 132 "jucompiler.y"
+#line 131 "jucompiler.y"
                                                                                     {;}
-#line 1840 "y.tab.c"
+#line 1839 "y.tab.c"
     break;
 
   case 44:
-#line 133 "jucompiler.y"
+#line 132 "jucompiler.y"
                                                                                     {;}
-#line 1846 "y.tab.c"
+#line 1845 "y.tab.c"
     break;
 
   case 45:
-#line 135 "jucompiler.y"
+#line 134 "jucompiler.y"
                                                                                     {;}
-#line 1852 "y.tab.c"
+#line 1851 "y.tab.c"
     break;
 
   case 46:
-#line 136 "jucompiler.y"
+#line 135 "jucompiler.y"
                                                                                     {;}
-#line 1858 "y.tab.c"
+#line 1857 "y.tab.c"
     break;
 
   case 47:
-#line 139 "jucompiler.y"
+#line 138 "jucompiler.y"
                                                                                     {;}
-#line 1864 "y.tab.c"
+#line 1863 "y.tab.c"
     break;
 
   case 48:
-#line 140 "jucompiler.y"
+#line 139 "jucompiler.y"
                                                                                     {;}
-#line 1870 "y.tab.c"
+#line 1869 "y.tab.c"
     break;
 
   case 49:
-#line 143 "jucompiler.y"
+#line 142 "jucompiler.y"
                                                                                     {;}
-#line 1876 "y.tab.c"
+#line 1875 "y.tab.c"
     break;
 
   case 50:
-#line 144 "jucompiler.y"
+#line 143 "jucompiler.y"
                                                                                     {;}
-#line 1882 "y.tab.c"
+#line 1881 "y.tab.c"
     break;
 
   case 51:
-#line 147 "jucompiler.y"
+#line 146 "jucompiler.y"
                                                                                     {;}
-#line 1888 "y.tab.c"
+#line 1887 "y.tab.c"
     break;
 
   case 52:
-#line 150 "jucompiler.y"
+#line 149 "jucompiler.y"
                                                                                     {;}
-#line 1894 "y.tab.c"
+#line 1893 "y.tab.c"
     break;
 
   case 53:
-#line 153 "jucompiler.y"
+#line 152 "jucompiler.y"
                                                                                     {;}
-#line 1900 "y.tab.c"
+#line 1899 "y.tab.c"
     break;
 
   case 54:
-#line 154 "jucompiler.y"
+#line 153 "jucompiler.y"
                                                                                     {;}
-#line 1906 "y.tab.c"
+#line 1905 "y.tab.c"
     break;
 
   case 55:
-#line 155 "jucompiler.y"
+#line 154 "jucompiler.y"
                                                                                     {;}
-#line 1912 "y.tab.c"
+#line 1911 "y.tab.c"
     break;
 
   case 56:
-#line 156 "jucompiler.y"
+#line 155 "jucompiler.y"
                                                                                     {;}
-#line 1918 "y.tab.c"
+#line 1917 "y.tab.c"
     break;
 
   case 57:
-#line 157 "jucompiler.y"
+#line 156 "jucompiler.y"
                                                                                     {;}
-#line 1924 "y.tab.c"
+#line 1923 "y.tab.c"
     break;
 
   case 58:
-#line 158 "jucompiler.y"
+#line 157 "jucompiler.y"
                                                                                     {;}
-#line 1930 "y.tab.c"
+#line 1929 "y.tab.c"
     break;
 
   case 59:
-#line 159 "jucompiler.y"
+#line 158 "jucompiler.y"
                                                                                     {;}
-#line 1936 "y.tab.c"
+#line 1935 "y.tab.c"
     break;
 
   case 60:
-#line 160 "jucompiler.y"
+#line 159 "jucompiler.y"
                                                                                     {;}
-#line 1942 "y.tab.c"
+#line 1941 "y.tab.c"
     break;
 
   case 61:
-#line 161 "jucompiler.y"
+#line 160 "jucompiler.y"
                                                                                     {;}
-#line 1948 "y.tab.c"
+#line 1947 "y.tab.c"
     break;
 
   case 62:
-#line 162 "jucompiler.y"
+#line 161 "jucompiler.y"
                                                                                     {;}
-#line 1954 "y.tab.c"
+#line 1953 "y.tab.c"
     break;
 
   case 63:
-#line 163 "jucompiler.y"
+#line 162 "jucompiler.y"
                                                                                     {;}
-#line 1960 "y.tab.c"
+#line 1959 "y.tab.c"
     break;
 
   case 64:
-#line 164 "jucompiler.y"
+#line 163 "jucompiler.y"
                                                                                     {;}
-#line 1966 "y.tab.c"
+#line 1965 "y.tab.c"
     break;
 
   case 65:
-#line 165 "jucompiler.y"
+#line 164 "jucompiler.y"
                                                                                     {;}
-#line 1972 "y.tab.c"
+#line 1971 "y.tab.c"
     break;
 
   case 66:
-#line 166 "jucompiler.y"
+#line 165 "jucompiler.y"
                                                                                     {;}
-#line 1978 "y.tab.c"
+#line 1977 "y.tab.c"
     break;
 
   case 67:
-#line 167 "jucompiler.y"
+#line 166 "jucompiler.y"
                                                                                     {;}
-#line 1984 "y.tab.c"
+#line 1983 "y.tab.c"
     break;
 
   case 68:
-#line 168 "jucompiler.y"
+#line 167 "jucompiler.y"
                                                                                     {;}
-#line 1990 "y.tab.c"
+#line 1989 "y.tab.c"
     break;
 
   case 69:
-#line 169 "jucompiler.y"
+#line 168 "jucompiler.y"
                                                                                     {;}
-#line 1996 "y.tab.c"
+#line 1995 "y.tab.c"
     break;
 
   case 70:
-#line 170 "jucompiler.y"
+#line 169 "jucompiler.y"
                                                                                     {;}
-#line 2002 "y.tab.c"
+#line 2001 "y.tab.c"
     break;
 
   case 71:
-#line 171 "jucompiler.y"
+#line 170 "jucompiler.y"
                                                                                     {;}
-#line 2008 "y.tab.c"
+#line 2007 "y.tab.c"
     break;
 
   case 72:
-#line 172 "jucompiler.y"
+#line 171 "jucompiler.y"
                                                                                     {;}
-#line 2014 "y.tab.c"
+#line 2013 "y.tab.c"
     break;
 
   case 73:
-#line 173 "jucompiler.y"
+#line 172 "jucompiler.y"
                                                                                     {;}
-#line 2020 "y.tab.c"
+#line 2019 "y.tab.c"
     break;
 
   case 74:
-#line 174 "jucompiler.y"
+#line 173 "jucompiler.y"
                                                                                     {;}
-#line 2026 "y.tab.c"
+#line 2025 "y.tab.c"
     break;
 
   case 75:
-#line 175 "jucompiler.y"
+#line 174 "jucompiler.y"
                                                                                     {;}
-#line 2032 "y.tab.c"
+#line 2031 "y.tab.c"
     break;
 
   case 76:
-#line 176 "jucompiler.y"
+#line 175 "jucompiler.y"
                                                                                     {;}
-#line 2038 "y.tab.c"
+#line 2037 "y.tab.c"
     break;
 
   case 77:
-#line 177 "jucompiler.y"
+#line 176 "jucompiler.y"
                                                                                     {;}
-#line 2044 "y.tab.c"
+#line 2043 "y.tab.c"
     break;
 
   case 78:
-#line 178 "jucompiler.y"
+#line 177 "jucompiler.y"
                                                                                     {;}
-#line 2050 "y.tab.c"
+#line 2049 "y.tab.c"
     break;
 
   case 79:
-#line 179 "jucompiler.y"
+#line 178 "jucompiler.y"
                                                                                     {;}
-#line 2056 "y.tab.c"
+#line 2055 "y.tab.c"
     break;
 
   case 80:
-#line 180 "jucompiler.y"
+#line 179 "jucompiler.y"
                                                                                     {;}
-#line 2062 "y.tab.c"
+#line 2061 "y.tab.c"
     break;
 
 
-#line 2066 "y.tab.c"
+#line 2065 "y.tab.c"
 
       default: break;
     }
@@ -2294,7 +2293,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 190 "jucompiler.y"
+#line 189 "jucompiler.y"
 
 
 int main(int argc, char *argv[]){
@@ -2326,21 +2325,4 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-symtab *symlook(char *varname)
-{
-    int i;
-  
-    for(i=0; i<NSYMS; i++)
-    {
-        if(tab[i].name && strcmp(varname, tab[i].name)==0)   
-            return &tab[i];
-        if(!tab[i].name)
-        {
-            tab[i].name=varname;
-            return &tab[i];
-        }
-    }
-    yyerror("variaveis a mais...");
-    exit(1);
-}
 

@@ -12,9 +12,8 @@
 #include "symtab.h"
 #include "Tree.h"
 
-char* type_spec;
 
-AST_struct root = NULL;
+struct AST root = NULL;
 int flag = 1;int error = 0;
 %}
 
@@ -218,21 +217,4 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-symtab *symlook(char *varname)
-{
-    int i;
-  
-    for(i=0; i<NSYMS; i++)
-    {
-        if(tab[i].name && strcmp(varname, tab[i].name)==0)   
-            return &tab[i];
-        if(!tab[i].name)
-        {
-            tab[i].name=varname;
-            return &tab[i];
-        }
-    }
-    yyerror("variaveis a mais...");
-    exit(1);
-}
 
