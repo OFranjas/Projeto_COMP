@@ -4,23 +4,6 @@
 #include <string.h>
 #include "Tree.h"
 
-// Function: Create a new AST node
-// Input: type, value
-// Output: a pointer to the new AST node
-AST_struct AST_new(char *type, char *value)
-{
-
-    AST_struct new = (AST_struct)malloc(sizeof(AST));
-
-    new->type = type;
-    new->value = value;
-
-    new->father = NULL;
-    new->son = NULL;
-    new->brother = NULL;
-
-    return new;
-}
 
 
 /* Create a new node */

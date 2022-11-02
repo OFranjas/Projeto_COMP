@@ -56,8 +56,8 @@ struct AST* ast;
 
 
 Program: CLASS ID LBRACE ClassBody RBRACE                                           {																
-																                        root = AST_new("Program","");
-                                                                                        AST_add_son(root,$2);
+																                        root = AST_newNode("Program","");
+                                                                                        AST_addSon(root,$2);
 																                        $$ = root;
                                                                                      }
        ;
