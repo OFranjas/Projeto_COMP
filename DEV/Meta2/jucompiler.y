@@ -191,8 +191,8 @@ Expr: Expr PLUS Expr                                                            
 
 %%
 /* META2 CORRER:
-    lex uccompiler.l
-    yacc -d -v uccompiler.y		
+    lex juccompiler.l
+    yacc -d -v juccompiler.y		
     cc -o uccompiler y.tab.c lex.yy.c functions.c
     ./juccompiler
     ./juccompiler -t < INPUT
