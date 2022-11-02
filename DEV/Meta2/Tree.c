@@ -7,7 +7,7 @@
 
 
 /* Create a new node */
-AST AST_newNode(char *type, char *value)
+AST *AST_newNode(char *type, char *value)
 {
     AST* new = (AST*)malloc(sizeof(AST));
     new->type = type;

@@ -13,8 +13,12 @@
 #include "Tree.h"
 
 
-struct AST root = NULL;
-int flag = 1;int error = 0;
+struct AST *root;
+int flag = 1;
+int error = 0;
+
+extern int yylex();
+void yyerror (char *s);
 %}
 
 %union{
@@ -57,7 +61,6 @@ struct AST* ast;
 
 Program: CLASS ID LBRACE ClassBody RBRACE                                           {																
 																                        root = AST_newNode("Program","");
-                                                                                        AST_addSon(root,$2);
 																                        $$ = root;
                                                                                      }
        ;
@@ -206,7 +209,7 @@ int main(int argc, char *argv[]){
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print();
+            AST_print(root);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */
