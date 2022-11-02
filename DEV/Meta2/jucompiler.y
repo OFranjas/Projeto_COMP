@@ -190,7 +190,13 @@ Expr: Expr PLUS Expr                                                            
 
 
 %%
-
+/* META2 CORRER:
+    lex uccompiler.l
+    yacc -d -v uccompiler.y		
+    cc -o uccompiler y.tab.c lex.yy.c functions.c
+    ./juccompiler
+    ./juccompiler -t < INPUT
+*/
 int main(int argc, char *argv[]){
     if(argc > 1){
 		if(strcmp(argv[1],"-e1") == 0){
