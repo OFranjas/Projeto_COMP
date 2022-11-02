@@ -49,119 +49,116 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    STRLIT = 258,
-    INTLIT = 259,
-    REALLIT = 260,
-    ID = 261,
-    CLASS = 262,
-    PUBLIC = 263,
-    STATIC = 264,
-    STRING = 265,
-    VOID = 266,
-    INT = 267,
-    DOUBLE = 268,
-    BOOL = 269,
-    SEMICOLON = 270,
-    COMMA = 271,
-    LBRACE = 272,
-    RBRACE = 273,
-    LPAR = 274,
-    RPAR = 275,
-    LSQ = 276,
-    RSQ = 277,
-    ASSIGN = 278,
-    PLUS = 279,
-    MINUS = 280,
-    STAR = 281,
-    DIV = 282,
-    MOD = 283,
-    XOR = 284,
-    OR = 285,
-    AND = 286,
-    BOOLLIT = 287,
-    EQ = 288,
-    NE = 289,
-    LE = 290,
-    GE = 291,
-    LT = 292,
-    GT = 293,
-    NOT = 294,
-    WHILE = 295,
-    IF = 296,
-    ELSE = 297,
-    RETURN = 298,
-    RESERVED = 299,
-    ARROW = 300,
-    LSHIFT = 301,
-    RSHIFT = 302,
-    DOTLENGTH = 303,
-    PRINT = 304,
-    PARSEINT = 305
+    CLASS = 258,
+    PUBLIC = 259,
+    STATIC = 260,
+    STRING = 261,
+    VOID = 262,
+    INT = 263,
+    DOUBLE = 264,
+    BOOL = 265,
+    SEMICOLON = 266,
+    COMMA = 267,
+    LBRACE = 268,
+    RBRACE = 269,
+    LPAR = 270,
+    RPAR = 271,
+    LSQ = 272,
+    RSQ = 273,
+    ASSIGN = 274,
+    PLUS = 275,
+    MINUS = 276,
+    STAR = 277,
+    DIV = 278,
+    MOD = 279,
+    XOR = 280,
+    OR = 281,
+    AND = 282,
+    BOOLLIT = 283,
+    EQ = 284,
+    NE = 285,
+    LE = 286,
+    GE = 287,
+    LT = 288,
+    GT = 289,
+    NOT = 290,
+    WHILE = 291,
+    IF = 292,
+    ELSE = 293,
+    RETURN = 294,
+    ARROW = 295,
+    LSHIFT = 296,
+    RSHIFT = 297,
+    DOTLENGTH = 298,
+    PRINT = 299,
+    PARSEINT = 300,
+    REALLIT = 301,
+    STRLIT = 302,
+    INTLIT = 303,
+    ID = 304,
+    RESERVED = 305
   };
 #endif
 /* Tokens.  */
-#define STRLIT 258
-#define INTLIT 259
-#define REALLIT 260
-#define ID 261
-#define CLASS 262
-#define PUBLIC 263
-#define STATIC 264
-#define STRING 265
-#define VOID 266
-#define INT 267
-#define DOUBLE 268
-#define BOOL 269
-#define SEMICOLON 270
-#define COMMA 271
-#define LBRACE 272
-#define RBRACE 273
-#define LPAR 274
-#define RPAR 275
-#define LSQ 276
-#define RSQ 277
-#define ASSIGN 278
-#define PLUS 279
-#define MINUS 280
-#define STAR 281
-#define DIV 282
-#define MOD 283
-#define XOR 284
-#define OR 285
-#define AND 286
-#define BOOLLIT 287
-#define EQ 288
-#define NE 289
-#define LE 290
-#define GE 291
-#define LT 292
-#define GT 293
-#define NOT 294
-#define WHILE 295
-#define IF 296
-#define ELSE 297
-#define RETURN 298
-#define RESERVED 299
-#define ARROW 300
-#define LSHIFT 301
-#define RSHIFT 302
-#define DOTLENGTH 303
-#define PRINT 304
-#define PARSEINT 305
+#define CLASS 258
+#define PUBLIC 259
+#define STATIC 260
+#define STRING 261
+#define VOID 262
+#define INT 263
+#define DOUBLE 264
+#define BOOL 265
+#define SEMICOLON 266
+#define COMMA 267
+#define LBRACE 268
+#define RBRACE 269
+#define LPAR 270
+#define RPAR 271
+#define LSQ 272
+#define RSQ 273
+#define ASSIGN 274
+#define PLUS 275
+#define MINUS 276
+#define STAR 277
+#define DIV 278
+#define MOD 279
+#define XOR 280
+#define OR 281
+#define AND 282
+#define BOOLLIT 283
+#define EQ 284
+#define NE 285
+#define LE 286
+#define GE 287
+#define LT 288
+#define GT 289
+#define NOT 290
+#define WHILE 291
+#define IF 292
+#define ELSE 293
+#define RETURN 294
+#define ARROW 295
+#define LSHIFT 296
+#define RSHIFT 297
+#define DOTLENGTH 298
+#define PRINT 299
+#define PARSEINT 300
+#define REALLIT 301
+#define STRLIT 302
+#define INTLIT 303
+#define ID 304
+#define RESERVED 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 25 "jucompiler.y"
+#line 21 "jucompiler.y"
 
-int intlit;
-float reallit;
-char* id;
-struct AST* node;
-char* stringValue;
+char* string;
+struct AST* ast;
 
-#line 165 "y.tab.h"
+#line 162 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

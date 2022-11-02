@@ -45,7 +45,7 @@
 Program:
 	FunctionsAndDeclarations 								{
 																root = cria_no("Program","");
-																adicionar_filho(root,$1);
+																AST_add_son(root,$1);
 																$$ = root;
 															}
 		;

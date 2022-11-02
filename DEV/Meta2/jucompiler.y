@@ -12,36 +12,29 @@
 #include "symtab.h"
 #include "Tree.h"
 
+char* type_spec;
 
-#define NSYMS 100
-
-symtab tab[NSYMS];
-
-symtab *symlook(char *varname);
-int yylex (void);
-void yyerror(char* s);
+AST_struct root = NULL;
+int flag = 1;int error = 0;
 %}
 
 %union{
-int intlit;
-float reallit;
-char* id;
-struct AST* node;
-char* stringValue;
+char* string;
+struct AST* ast;
 }
 
 /* TOKENS */
-%token STRLIT
-%token INTLIT
-%token REALLIT
-%token ID
 %token CLASS PUBLIC STATIC
 %token STRING VOID INT DOUBLE BOOL
 %token SEMICOLON COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ ASSIGN
 %token PLUS MINUS STAR DIV MOD
 %token XOR OR AND BOOLLIT EQ NE LE GE LT GT NOT
-%token WHILE IF ELSE RETURN RESERVED
+%token WHILE IF ELSE RETURN 
 %token ARROW LSHIFT RSHIFT DOTLENGTH PRINT PARSEINT
+
+%token <string> REALLIT STRLIT INTLIT ID RESERVED
+
+%type <ast> Program ClassBody MethodDecl FieldDecl FieldDeclCommaAux Type MethodHeader FormalParams FormalParamsAux MethodBody MethodBodyAux VarDecl VarDeclAux Statement MethodInvocation MethodInvocationAux MethodBodyAux2 Assignment ParseArgs Expr
 
 /* Precedências */
 %left COMMA
@@ -63,10 +56,14 @@ char* stringValue;
 %%
 
 
-PROGRAM: CLASS ID LBRACE ClassBody RBRACE                                           {;}
+Program: CLASS ID LBRACE ClassBody RBRACE                                           {																
+																                        root = AST_new("Program","");
+                                                                                        AST_add_son(root,$2);
+																                        $$ = root;
+                                                                                     }
        ;
 
-ClassBody:  MethodDecl ClassBody                                                   {;}
+ClassBody:  MethodDecl ClassBody                                                    {;}
            | MethodDecl                                                             {;}
            | FieldDecl  ClassBody                                                   {;}
            | FieldDecl                                                              {;}
@@ -78,7 +75,7 @@ MethodDecl: PUBLIC STATIC MethodHeader MethodBody                               
            ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclCommaAux SEMICOLON                        {;}
-           ;
+         ;
 
 FieldDeclCommaAux:  COMMA ID FieldDeclCommaAux                                      {;}
                   | COMMA ID                                                        {;}            
@@ -89,13 +86,12 @@ Type: BOOL                                                                      
     | DOUBLE                                                                        {;}
     ;
 
-MethodHeader: MethodHeaderAux ID LPAR FormalParams RPAR                             {;}
-            | MethodHeaderAux ID LPAR RPAR                                          {;}
+MethodHeader: Type ID LPAR FormalParams RPAR                                        {;}
+            | Type ID LPAR RPAR                                                     {;}
+            | VOID ID LPAR FormalParams RPAR                                        {;}
+            | VOID ID LPAR RPAR                                                     {;}
             ;
 
-MethodHeaderAux: Type                                                               {;}
-               | VOID                                                               {;}
-               ;
 
 FormalParams: Type ID FormalParamsAux                                               {;}
             | STRING LSQ RSQ ID                                                     {;}
@@ -141,7 +137,6 @@ MethodInvocation: ID LPAR MethodInvocationAux RPAR                              
                 ;
 
 MethodInvocationAux: Expr                                                           {;}
-                   | Expr MethodBodyAux2 MethodInvocationAux                        {;}
                    | Expr MethodBodyAux2                                            {;}
                    ;
 
@@ -174,7 +169,7 @@ Expr: Expr PLUS Expr                                                            
     | MINUS Expr                                                                    {;} 
     | NOT Expr                                                                      {;}
     | PLUS Expr                                                                     {;}
-    | LPAR Expr RPAR                                                                {;} // FIXME: Gera 1 Conflito
+    | LPAR Expr RPAR                                                                {;} 
     | MethodInvocation                                                              {;} 
     | Assignment                                                                    {;}
     | ParseArgs                                                                     {;}
@@ -193,6 +188,35 @@ Expr: Expr PLUS Expr                                                            
 
 
 %%
+
+int main(int argc, char *argv[]){
+    if(argc > 1){
+		if(strcmp(argv[1],"-e1") == 0){
+            /* Analise Lexical : Mostra so os erros */
+			flag=0;
+            yylex();
+		}else if(strcmp(argv[1],"-l") == 0){
+            /* Analise Lexical : Mostra tudo */
+            flag=1;
+            yylex();
+        }else if(strcmp(argv[1],"-e2") == 0){
+            /* Analise Lexical & Sintatica : Mostra so os erros */
+            flag = 2;
+            yyparse();  
+	}else{
+            /* Analise Lexical & Sintatica : Mostra tudo */
+            flag = 2;
+            yyparse();
+            AST_print();
+        }
+    }else{
+            /* Analise Lexical & Sintatica : Mostra tudo */
+            flag = 2;
+            yyparse();
+            AST_print(root);
+        }       
+    return 0;
+}
 
 symtab *symlook(char *varname)
 {

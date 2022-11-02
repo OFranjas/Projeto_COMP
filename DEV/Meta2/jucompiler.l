@@ -11,9 +11,7 @@
     int coluna_aux = 0;
     int linha_aux_2 = 0;
     char buffer[1024];
-
-    int flag = 1;
-    int error = 0;
+    
 
 %}
 
@@ -119,32 +117,6 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 %%
 
-int main(int argc, char *argv[]){
-    if(argc > 1){
-		if(strcmp(argv[1],"-e1") == 0){
-            /* Analise Lexical : Mostra so os erros */
-			flag=0;
-            yylex();
-		}else if(strcmp(argv[1],"-l") == 0){
-            /* Analise Lexical : Mostra tudo */
-            flag=1;
-            yylex();
-        }else if(strcmp(argv[1],"-e2") == 0){
-            /* Analise Lexical & Sintatica : Mostra so os erros */
-            flag = 2;
-            yyparse();  
-	}else{
-            /* Analise Lexical & Sintatica : Mostra tudo */
-            flag = 2;
-            yyparse();
-        }
-    }else{
-            /* Analise Lexical & Sintatica : Mostra tudo */
-            flag = 2;
-            yyparse();
-        }   
-    return 0;
-}
 
 int yywrap() {
     return 1;
