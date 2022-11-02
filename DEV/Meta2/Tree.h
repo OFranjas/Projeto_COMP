@@ -8,13 +8,10 @@ struct AST
     struct AST *father;
     struct AST *son;
     struct AST *brother;
-}
+};
 
 AST AST_newNode(char *type, char *value);
-void AST_addSon(AST* father, AST* son);
-void AST_addBrother(AST* brother, AST* new);
-void AST_print(AST* AST);
-void AST_free(AST* AST);
-
-
-
+void AST_addSon(AST *father, AST *son);
+void AST_addBrother(AST *brother, AST *new);
+void AST_print(AST *AST);
+void AST_free(AST *AST);
