@@ -17,6 +17,8 @@ struct AST *root;
 struct AST *aux;
 int flag = 1;
 int error = 0;
+char *type;
+
 
 extern int yylex();
 void yyerror (char *s);
@@ -89,7 +91,7 @@ ClassBody:  MethodDecl ClassBody                                                
            | SEMICOLON  ClassBody                                                   {
                                                                 $$ = $2;
                                                                                     }
-           | SEMICOLON                                                              {;}
+           | SEMICOLON                                                              {$$ = NULL;}
            ;
 
 MethodDecl: PUBLIC STATIC MethodHeader MethodBody                                   {
@@ -110,9 +112,26 @@ FieldDeclCommaAux:  COMMA ID FieldDeclCommaAux                                  
                   | COMMA ID                                                        {;}            
                   ;
 
-Type: BOOL                                                                          {;}
-    | INT                                                                           {;}
-    | DOUBLE                                                                        {;}
+Type: BOOL                                                                          {
+                                                                                        $$ = AST_newNode("Bool","");
+                                                                                        type = $$->type;
+                                                                                    }
+    | INT                                                                           {
+                                                                                        $$ = AST_newNode("Int","");
+                                                                                        type = $$->type;
+                                                                                    }
+    | DOUBLE                                                                        {
+                                                                                        $$ = AST_newNode("Double","");
+                                                                                        type = $$->type;
+                                                                                    }
+    | STRING                                                                        {
+                                                                                        $$ = AST_newNode("String","");
+                                                                                        type = $$->type;
+                                                                                    }
+    | VOID                                                                          {
+                                                                                        $$ = AST_newNode("Void","");
+                                                                                        type = $$->type;
+                                                                                    }
     ;
 
 MethodHeader: Type ID LPAR FormalParams RPAR                                        {
@@ -182,9 +201,15 @@ VarDeclAux: COMMA ID VarDeclAux                                                 
 
 Statement: LBRACE RBRACE                                                            {$$ = NULL;}
          | LBRACE Statement RBRACE                                                  {
-                                                                                    if($2 != NULL && $2->)
-
+                                                                                    if($2 != NULL && $2->brother != NULL){
+                                                                                        $$ = AST_newNode("Statement","");
+                                                                                        AST_addSon($$,$2);
+                                                                                    }else if($2 != NULL && $2->brother == NULL){
+                                                                                        $$ = $2;
+                                                                                    }else{
+                                                                                        $$ = NULL;
                                                                                     }
+                                                                                    }                                                          
 
          | IF LPAR Expr RPAR Statement                                              {
                                                                                     $$ = AST_newNode("If","");
@@ -192,8 +217,8 @@ Statement: LBRACE RBRACE                                                        
                                                                                     if($5 != NULL){
                                                                                         AST_addBrother($3, $5);
                                                                                     }else{
-                                                                                        temp = AST_newNode("Null","");
-                                                                                        AST_addBrother($3, temp);
+                                                                                        aux = AST_newNode("Null","");
+                                                                                        AST_addBrother($3, aux);
                                                                                     }
                                                                                     }
 
@@ -204,14 +229,14 @@ Statement: LBRACE RBRACE                                                        
                                                                                         AST_addBrother($3, $5);
                                                                                     }else{
                                                                                         temp = AST_newNode("Null","");
-                                                                                        AST_addBrother($3, temp);
+                                                                                        AST_addBrother($3, aux);
                                                                                     }
                                                                                     if($7 != NULL){
                                                                                         AST_addBrother($3, $7);
 
                                                                                     }else{
-                                                                                        temp = AST_newNode("Null","");
-                                                                                        AST_addBrother($53, temp);
+                                                                                        aux = AST_newNode("Null","");
+                                                                                        AST_addBrother($53, aux);
                                                                                     }                                                                               
                                                                                     }
 
@@ -221,8 +246,8 @@ Statement: LBRACE RBRACE                                                        
                                                                                     if($5 != NULL){
                                                                                         AST_addBrother($3,$5);
                                                                                     }else{
-                                                                                        temp = AST_newNode("Null","");
-                                                                                        AST_addBrother($3,temp);
+                                                                                        aux = AST_newNode("Null","");
+                                                                                        AST_addBrother($3,aux);
                                                                                     }
                                                                                     }
                                                                                     
@@ -230,8 +255,8 @@ Statement: LBRACE RBRACE                                                        
                                                                                     AST_addSon($$,$2);
                                                                                     }
          | RETURN SEMICOLON                                                         {$$ = AST_newNode("Return","");
-                                                                                    temp = AST_newNode("NULL","");
-                                                                                    AST_addSon($$,temp);
+                                                                                    aux = AST_newNode("NULL","");
+                                                                                    AST_addSon($$,aux);
                                                                                     }
          | MethodInvocation SEMICOLON                                               {;}
          | Assignment SEMICOLON                                                     {;}
@@ -365,19 +390,19 @@ Expr: Expr PLUS Expr                                                            
 																AST_addSon($$,$2);
                                                                                     } 
     | NOT Expr                                                                      {
-                												$$ = AST_newNode("NOT","");
-                                                                printf("NOT\n");
-																AST_addSon($$,$2);
+                                                                                    $$ = AST_newNode("NOT","");
+                                                                                    printf("NOT\n");
+                                                                                    AST_addSon($$,$2);
                                                                                     }
     | PLUS Expr                                                                     {
-                												$$ = AST_newNode("PLUS","");
-                                                                printf("PLUS\n");
-																AST_addSon($$,$2);
+                                                                                    $$ = AST_newNode("PLUS","");
+                                                                                    printf("PLUS\n");
+                                                                                    AST_addSon($$,$2);
                                                                                     }
     | LPAR Expr RPAR                                                                {
-                        										$$ = AST_newNode("ENTRE PARS","");
-                                                                printf("ENTRE PARS\n");
-																AST_addSon($$,$2);
+                                                                                    $$ = AST_newNode("ENTRE PARS","");
+                                                                                    printf("ENTRE PARS\n");
+                                                                                    AST_addSon($$,$2);
                                                                                     } 
     | MethodInvocation                                                              {;} 
     | Assignment                                                                    {;}
@@ -388,13 +413,6 @@ Expr: Expr PLUS Expr                                                            
     | REALLIT                                                                       {$$ = AST_newNode("REALLIT",$1);} 
     | BOOLLIT                                                                       {;} 
     ;
-
-
-
-
-
-
-
 
 %%
 /* META2 CORRER:
@@ -431,6 +449,4 @@ int main(int argc, char *argv[]){
             AST_print(root);
         }       
     return 0;
-}
-
-
+}x
