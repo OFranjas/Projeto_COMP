@@ -71,7 +71,7 @@ void AST_print(AST* AST)
 {
     if (AST == NULL)
     {
-        return;
+        printf("A RAIZ ESTA A NULL\n");
     }
     printf("%s ", AST->type);
     if (strcmp(AST->value, "") != 0)

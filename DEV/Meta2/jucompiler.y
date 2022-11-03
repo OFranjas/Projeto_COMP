@@ -14,6 +14,7 @@
 
 
 struct AST *root;
+struct AST *aux;
 int flag = 1;
 int error = 0;
 
@@ -34,8 +35,9 @@ struct AST* ast;
 %token XOR OR AND BOOLLIT EQ NE LE GE LT GT NOT
 %token WHILE IF ELSE RETURN 
 %token ARROW LSHIFT RSHIFT DOTLENGTH PRINT PARSEINT
+%token RESERVED
 
-%token <string> REALLIT STRLIT INTLIT ID RESERVED
+%token <string> REALLIT STRLIT INTLIT ID 
 
 %type <ast> Program ClassBody MethodDecl FieldDecl FieldDeclCommaAux Type MethodHeader FormalParams FormalParamsAux MethodBody MethodBodyAux VarDecl VarDeclAux Statement MethodInvocation MethodInvocationAux MethodBodyAux2 Assignment ParseArgs Expr
 
@@ -59,16 +61,31 @@ struct AST* ast;
 %%
 
 
-Program: CLASS ID LBRACE ClassBody RBRACE                                           {																
-																                        root = AST_newNode("Program","");
-																                        $$ = root;
-                                                                                     }
+Program: CLASS ID LBRACE ClassBody RBRACE                                           {
+                                                                root = AST_newNode("Program","");
+																$$ = AST_newNode("MethodDecl","");
+                                                                AST_add_son(root,$$);
+                                                                //TODO: COLOCAR O ID
+                                                                
+                                                                                    }
        ;
 
-ClassBody:  MethodDecl ClassBody                                                    {;}
-           | MethodDecl                                                             {;}
-           | FieldDecl  ClassBody                                                   {;}
-           | FieldDecl                                                              {;}
+ClassBody:  MethodDecl ClassBody                                                    {
+                                                                AST_addBrother($$, $1);
+                                                                $$ = $1; 
+                                                                                    }
+           | MethodDecl                                                             {
+                                                                AST_addBrother($$, $1);
+                                                                $$ = $1; 
+                                                                                    }
+           | FieldDecl  ClassBody                                                   {
+                                                                AST_addBrother($$, $1);
+                                                                $$ = $1; 
+                                                                                    }
+           | FieldDecl                                                              {
+                                                                AST_addBrother($$, $1);
+                                                                $$ = $1; 
+                                                                                    }
            | SEMICOLON  ClassBody                                                   {;}
            | SEMICOLON                                                              {;}
            ;
@@ -152,26 +169,102 @@ Assignment: ID ASSIGN Expr                                                      
 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                                       {;}
          ;
 
-Expr: Expr PLUS Expr                                                                {;}
-    | Expr MINUS Expr                                                               {;}
-    | Expr STAR Expr                                                                {;}
-    | Expr DIV Expr                                                                 {;}
-    | Expr MOD Expr                                                                 {;}
-    | Expr OR Expr                                                                  {;}
-    | Expr XOR Expr                                                                 {;}
-    | Expr AND Expr                                                                 {;}
-    | Expr LSHIFT Expr                                                              {;} 
-    | Expr RSHIFT Expr                                                              {;} 
-    | Expr EQ Expr                                                                  {;}
-    | Expr NE Expr                                                                  {;}
-    | Expr LT Expr                                                                  {;}
-    | Expr GT Expr                                                                  {;}
-    | Expr LE Expr                                                                  {;}
-    | Expr GE Expr                                                                  {;}
-    | MINUS Expr                                                                    {;} 
-    | NOT Expr                                                                      {;}
-    | PLUS Expr                                                                     {;}
-    | LPAR Expr RPAR                                                                {;} 
+Expr: Expr PLUS Expr                                                                {																
+                                                                $$ = AST_newNode("PLUS","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr MINUS Expr                                                               {
+                                                                $$ = AST_newNode("MINUS","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr STAR Expr                                                                {
+                                                                $$ = AST_newNode("STAR","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr DIV Expr                                                                 {
+                                                                $$ = AST_newNode("DIV","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr MOD Expr                                                                 {
+                                                                $$ = AST_newNode("MOD","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr OR Expr                                                                  {
+                                                                $$ = AST_newNode("OR","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr XOR Expr                                                                 {
+                                                                $$ = AST_newNode("XOR","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr AND Expr                                                                 {
+                                                                $$ = AST_newNode("AND","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr LSHIFT Expr                                                              {
+                                                                $$ = AST_newNode("LSHIFT","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    } 
+    | Expr RSHIFT Expr                                                              {
+                                                                $$ = AST_newNode("RSHIFT","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    } 
+    | Expr EQ Expr                                                                  {
+                                                                $$ = AST_newNode("EQ","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }   
+    | Expr NE Expr                                                                  {
+                                                                $$ = AST_newNode("NE","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr LT Expr                                                                  {
+                                                                $$ = AST_newNode("LT","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr GT Expr                                                                  {
+                                                                $$ = AST_newNode("GT","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr LE Expr                                                                  {
+                                                                $$ = AST_newNode("LE","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | Expr GE Expr                                                                  {
+                                                                $$ = AST_newNode("GE","");
+																AST_addSon($$,$1);
+																AST_addBrother($1,$3);
+                                                                                    }
+    | MINUS Expr                                                                    {
+        														$$ = AST_newNode("MINUS","");
+																AST_addSon($$,$2);
+                                                                                    } 
+    | NOT Expr                                                                      {
+                												$$ = AST_newNode("NOT","");
+																AST_addSon($$,$2);
+                                                                                    }
+    | PLUS Expr                                                                     {
+                												$$ = AST_newNode("PLUS","");
+																AST_addSon($$,$2);
+                                                                                    }
+    | LPAR Expr RPAR                                                                {
+                        										$$ = AST_newNode("ENTRE PARS","");
+																AST_addSon($$,$2);
+                                                                                    } 
     | MethodInvocation                                                              {;} 
     | Assignment                                                                    {;}
     | ParseArgs                                                                     {;}
@@ -215,7 +308,7 @@ int main(int argc, char *argv[]){
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            //AST_print(root);
+            AST_print(root);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */

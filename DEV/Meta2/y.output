@@ -155,11 +155,11 @@ Terminals, with rules where they appear
     DOTLENGTH (298) 76
     PRINT (299) 42 43
     PARSEINT (300) 51
-    REALLIT <string> (301) 78
-    STRLIT <string> (302) 43
-    INTLIT <string> (303) 77
-    ID <string> (304) 1 9 10 11 15 16 17 18 19 20 21 22 28 29 30 44 45 50 51 75 76
-    RESERVED <string> (305)
+    RESERVED (301)
+    REALLIT <string> (302) 78
+    STRLIT <string> (303) 43
+    INTLIT <string> (304) 77
+    ID <string> (305) 1 9 10 11 15 16 17 18 19 20 21 22 28 29 30 44 45 50 51 75 76
 
 
 Nonterminals, with rules where they appear

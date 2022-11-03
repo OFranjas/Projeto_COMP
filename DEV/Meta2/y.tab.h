@@ -92,11 +92,11 @@ extern int yydebug;
     DOTLENGTH = 298,
     PRINT = 299,
     PARSEINT = 300,
-    REALLIT = 301,
-    STRLIT = 302,
-    INTLIT = 303,
-    ID = 304,
-    RESERVED = 305
+    RESERVED = 301,
+    REALLIT = 302,
+    STRLIT = 303,
+    INTLIT = 304,
+    ID = 305
   };
 #endif
 /* Tokens.  */
@@ -143,17 +143,17 @@ extern int yydebug;
 #define DOTLENGTH 298
 #define PRINT 299
 #define PARSEINT 300
-#define REALLIT 301
-#define STRLIT 302
-#define INTLIT 303
-#define ID 304
-#define RESERVED 305
+#define RESERVED 301
+#define REALLIT 302
+#define STRLIT 303
+#define INTLIT 304
+#define ID 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 24 "jucompiler.y"
+#line 25 "jucompiler.y"
 
 char* string;
 struct AST* ast;

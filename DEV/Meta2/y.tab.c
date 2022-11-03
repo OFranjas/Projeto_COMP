@@ -76,13 +76,14 @@
 
 
 struct AST *root;
+struct AST *aux;
 int flag = 1;
 int error = 0;
 
 extern int yylex();
 void yyerror (char *s);
 
-#line 86 "y.tab.c"
+#line 87 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -173,11 +174,11 @@ extern int yydebug;
     DOTLENGTH = 298,
     PRINT = 299,
     PARSEINT = 300,
-    REALLIT = 301,
-    STRLIT = 302,
-    INTLIT = 303,
-    ID = 304,
-    RESERVED = 305
+    RESERVED = 301,
+    REALLIT = 302,
+    STRLIT = 303,
+    INTLIT = 304,
+    ID = 305
   };
 #endif
 /* Tokens.  */
@@ -224,22 +225,22 @@ extern int yydebug;
 #define DOTLENGTH 298
 #define PRINT 299
 #define PARSEINT 300
-#define REALLIT 301
-#define STRLIT 302
-#define INTLIT 303
-#define ID 304
-#define RESERVED 305
+#define RESERVED 301
+#define REALLIT 302
+#define STRLIT 303
+#define INTLIT 304
+#define ID 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 24 "jucompiler.y"
+#line 25 "jucompiler.y"
 
 char* string;
 struct AST* ast;
 
-#line 243 "y.tab.c"
+#line 244 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -558,7 +559,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   460
+#define YYLAST   462
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  51
@@ -619,15 +620,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    62,    62,    68,    69,    70,    71,    72,    73,    76,
-      79,    82,    83,    86,    87,    88,    91,    92,    93,    94,
-      98,    99,   102,   103,   106,   109,   110,   111,   112,   115,
-     118,   119,   123,   124,   125,   126,   127,   128,   129,   130,
-     131,   132,   133,   134,   135,   137,   138,   141,   142,   145,
-     146,   149,   152,   155,   156,   157,   158,   159,   160,   161,
-     162,   163,   164,   165,   166,   167,   168,   169,   170,   171,
-     172,   173,   174,   175,   176,   177,   178,   179,   180,   181,
-     182
+       0,    64,    64,    70,    71,    72,    73,    74,    75,    78,
+      81,    84,    85,    88,    89,    90,    93,    94,    95,    96,
+     100,   101,   104,   105,   108,   111,   112,   113,   114,   117,
+     120,   121,   125,   126,   127,   128,   129,   130,   131,   132,
+     133,   134,   135,   136,   137,   139,   140,   143,   144,   147,
+     148,   151,   154,   157,   162,   167,   172,   177,   182,   187,
+     192,   197,   202,   207,   212,   217,   222,   227,   232,   237,
+     238,   239,   240,   241,   242,   243,   244,   245,   246,   247,
+     248
 };
 #endif
 
@@ -641,8 +642,8 @@ static const char *const yytname[] =
   "RBRACE", "LPAR", "RPAR", "LSQ", "RSQ", "ASSIGN", "PLUS", "MINUS",
   "STAR", "DIV", "MOD", "XOR", "OR", "AND", "BOOLLIT", "EQ", "NE", "LE",
   "GE", "LT", "GT", "NOT", "WHILE", "IF", "ELSE", "RETURN", "ARROW",
-  "LSHIFT", "RSHIFT", "DOTLENGTH", "PRINT", "PARSEINT", "REALLIT",
-  "STRLIT", "INTLIT", "ID", "RESERVED", "$accept", "Program", "ClassBody",
+  "LSHIFT", "RSHIFT", "DOTLENGTH", "PRINT", "PARSEINT", "RESERVED",
+  "REALLIT", "STRLIT", "INTLIT", "ID", "$accept", "Program", "ClassBody",
   "MethodDecl", "FieldDecl", "FieldDeclCommaAux", "Type", "MethodHeader",
   "FormalParams", "FormalParamsAux", "MethodBody", "MethodBodyAux",
   "VarDecl", "VarDeclAux", "Statement", "MethodInvocation",
@@ -665,7 +666,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-45)
+#define YYPACT_NINF (-46)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -679,23 +680,23 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-       0,   -44,    13,     9,   -45,    24,    19,    24,    39,    24,
-      24,   148,   -45,   -45,   -45,   -45,    16,   -45,   -45,   -45,
-      35,    45,    71,    27,    46,   -45,   181,    38,   186,    78,
-     -45,     1,    81,    95,    77,    99,   101,    17,    64,   110,
-      46,    46,   116,   117,   118,   114,   -45,    83,   125,   121,
-     -45,   130,   -45,   -45,   136,   165,   165,   -45,   165,   165,
-     165,   -45,   165,   -45,   -45,    -9,   -45,   -45,   -45,   195,
-     124,   102,   133,   165,   150,   -45,   -45,   -45,   -45,   -45,
-     -45,   142,   171,   -45,   -45,   -45,   -45,   241,   264,   287,
-      84,    84,   -45,   -45,   -45,   165,   165,   165,   165,   165,
-     165,   165,   165,   165,   165,   165,   165,   165,   165,   165,
-     165,   168,   310,   182,   -45,   172,   218,   358,   149,   190,
-     154,   111,   -45,    98,    98,   -45,    84,    84,   -45,   -45,
-     -45,   411,   381,   396,   143,   143,    40,    40,    40,    40,
-     426,   426,   193,   194,   165,   -45,   165,   -45,   150,   -45,
-     -45,   158,   -45,   170,   -45,   -45,   335,   218,   -45,   171,
-      98,   196,   -45,   -45,   -45,   -45
+       0,   -45,    13,     9,   -46,    24,    19,    24,    44,    24,
+      24,   226,   -46,   -46,   -46,   -46,    15,   -46,   -46,   -46,
+      34,    73,    72,    27,    46,   -46,   182,    39,   187,    84,
+     -46,     1,    93,    95,    77,    99,   101,    17,    63,   109,
+      46,    46,   114,   117,   118,   115,   -46,    81,   125,   121,
+     -46,   130,   -46,   -46,   133,   166,   166,   -46,   166,   166,
+     166,   -46,   166,   -46,   -46,    -9,   -46,   -46,   -46,   197,
+     124,   103,   135,   166,   137,   -46,   -46,   -46,   -46,   -46,
+     -46,   136,   145,   -46,   -46,   -46,   -46,   243,   266,   289,
+      25,    25,   -46,   -46,   -46,   166,   166,   166,   166,   166,
+     166,   166,   166,   166,   166,   166,   166,   166,   166,   166,
+     166,   142,   312,   143,   -46,   146,   220,   360,   129,   150,
+     139,   111,   -46,    98,    98,   -46,    25,    25,   -46,   -46,
+     -46,   413,   383,   398,   144,   144,    40,    40,    40,    40,
+     428,   428,   172,   188,   166,   -46,   166,   -46,   137,   -46,
+     -46,   152,   -46,   162,   -46,   -46,   337,   220,   -46,   145,
+      98,   189,   -46,   -46,   -46,   -46
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -725,8 +726,8 @@ static const yytype_int8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -45,   -45,    42,   -45,   -45,   160,    -3,   -45,   203,    73,
-     -45,     7,   -45,    75,   -30,   -24,   -45,    76,   -22,   -20,
+     -46,   -46,    43,   -46,   -46,   155,    -3,   -46,   178,    48,
+     -46,    66,   -46,    61,   -30,   -24,   -46,    53,   -22,   -20,
      -29
 };
 
@@ -747,122 +748,122 @@ static const yytype_uint8 yytable[] =
       73,    44,    30,     4,    31,    53,    42,    42,    43,    43,
       44,    44,     5,    47,    11,    47,    87,    88,     6,    89,
       90,    91,    72,    92,    93,     7,    73,    32,    33,    27,
-      34,   112,    28,   116,   117,    35,    36,    76,    77,    12,
-      37,    14,    15,    13,    17,    18,    19,    30,    24,    31,
+      34,   112,    28,   116,   117,    35,    36,    97,    98,    99,
+      12,    37,    14,    15,    17,    18,    19,    30,    13,    31,
       95,    96,    97,    98,    99,    22,   126,   127,   128,   129,
      130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     140,   141,    32,    33,    23,    34,    26,    49,    57,    52,
-      35,    36,    58,   152,   153,    37,    55,    59,    60,    42,
-      42,    43,    43,    44,    44,    61,    97,    98,    99,    30,
+     140,   141,    32,    33,    23,    34,    24,    26,    57,    49,
+      35,    36,    58,   152,   153,    52,    37,    59,    60,    42,
+      42,    43,    43,    44,    44,    61,    76,    77,    55,    30,
       56,    31,    62,    74,    70,   156,    71,   157,   151,    17,
-      18,    19,    36,    63,    75,    64,    65,    78,    79,    80,
-     164,    81,    82,    27,    32,    33,    42,    34,    43,    58,
-      44,    83,    35,    36,    59,    60,    85,    37,    58,   114,
-      86,   113,    61,    59,    60,    16,    17,    18,    19,    62,
-     120,    61,   118,    95,    96,    97,    98,    99,    62,    36,
-      63,   111,    64,    65,   105,   106,   107,   108,    36,    63,
-      58,    64,    65,   121,   142,    59,    60,    45,   145,    17,
-      18,    19,    45,    61,    17,    18,    19,    46,   148,   144,
-      62,   149,    50,   150,   154,   155,    94,   159,   160,    84,
-      36,    63,   165,    64,    65,    95,    96,    97,    98,    99,
-     100,   101,   102,   158,   103,   104,   105,   106,   107,   108,
-     146,    51,   163,   162,     0,     0,   109,   110,    95,    96,
-      97,    98,    99,   100,   101,   102,     0,   103,   104,   105,
-     106,   107,   108,     0,     0,     0,     0,   123,     0,   109,
-     110,    95,    96,    97,    98,    99,   100,   101,   102,     0,
-     103,   104,   105,   106,   107,   108,     0,     0,     0,     0,
-     124,     0,   109,   110,    95,    96,    97,    98,    99,   100,
-     101,   102,     0,   103,   104,   105,   106,   107,   108,     0,
-       0,     0,     0,   125,     0,   109,   110,    95,    96,    97,
+      18,    19,    36,    75,    63,    78,    64,    65,    79,    80,
+     164,    82,    81,    27,    32,    33,    42,    34,    43,    58,
+      44,    83,    35,    36,    59,    60,    85,    86,    37,   118,
+      58,   114,    61,   113,   120,    59,    60,   121,   142,    62,
+     144,   149,   145,    61,    95,    96,    97,    98,    99,    36,
+      62,    63,   111,    64,    65,   105,   106,   107,   108,   148,
+      36,    58,    63,   154,    64,    65,    59,    60,    45,   150,
+      17,    18,    19,    45,    61,    17,    18,    19,    46,   155,
+     160,    62,   159,    50,    84,   165,    51,   163,    94,   158,
+     162,    36,     0,    63,     0,    64,    65,    95,    96,    97,
       98,    99,   100,   101,   102,     0,   103,   104,   105,   106,
-     107,   108,     0,     0,     0,     0,   143,     0,   109,   110,
+     107,   108,   146,    16,    17,    18,    19,     0,   109,   110,
+      95,    96,    97,    98,    99,   100,   101,   102,     0,   103,
+     104,   105,   106,   107,   108,     0,     0,     0,     0,   123,
+       0,   109,   110,    95,    96,    97,    98,    99,   100,   101,
+     102,     0,   103,   104,   105,   106,   107,   108,     0,     0,
+       0,     0,   124,     0,   109,   110,    95,    96,    97,    98,
+      99,   100,   101,   102,     0,   103,   104,   105,   106,   107,
+     108,     0,     0,     0,     0,   125,     0,   109,   110,    95,
+      96,    97,    98,    99,   100,   101,   102,     0,   103,   104,
+     105,   106,   107,   108,     0,     0,     0,     0,   143,     0,
+     109,   110,    95,    96,    97,    98,    99,   100,   101,   102,
+       0,   103,   104,   105,   106,   107,   108,     0,     0,     0,
+       0,     0,     0,   109,   110,   161,     0,    95,    96,    97,
+      98,    99,   100,   101,   102,     0,   103,   104,   105,   106,
+     107,   108,     0,     0,     0,     0,     0,     0,   109,   110,
       95,    96,    97,    98,    99,   100,   101,   102,     0,   103,
      104,   105,   106,   107,   108,     0,     0,     0,     0,     0,
-       0,   109,   110,   161,     0,    95,    96,    97,    98,    99,
-     100,   101,   102,     0,   103,   104,   105,   106,   107,   108,
-       0,     0,     0,     0,     0,     0,   109,   110,    95,    96,
-      97,    98,    99,   100,   101,   102,     0,   103,   104,   105,
-     106,   107,   108,     0,     0,     0,     0,     0,     0,   109,
-     110,    95,    96,    97,    98,    99,   100,     0,   102,     0,
-     103,   104,   105,   106,   107,   108,    95,    96,    97,    98,
-      99,   100,   109,   110,     0,   103,   104,   105,   106,   107,
-     108,    95,    96,    97,    98,    99,     0,   109,   110,     0,
-     103,   104,   105,   106,   107,   108,    95,    96,    97,    98,
-      99,     0,   109,   110,     0,   103,   104,   105,   106,   107,
-     108
+       0,   109,   110,    95,    96,    97,    98,    99,   100,     0,
+     102,     0,   103,   104,   105,   106,   107,   108,    95,    96,
+      97,    98,    99,   100,   109,   110,     0,   103,   104,   105,
+     106,   107,   108,    95,    96,    97,    98,    99,     0,   109,
+     110,     0,   103,   104,   105,   106,   107,   108,    95,    96,
+      97,    98,    99,     0,   109,   110,     0,   103,   104,   105,
+     106,   107,   108
 };
 
 static const yytype_int16 yycheck[] =
 {
-      24,    31,    24,     3,    24,    49,    15,    31,    11,    31,
+      24,    31,    24,     3,    24,    50,    15,    31,    11,    31,
       19,    31,    11,     0,    13,    14,    40,    41,    40,    41,
       40,    41,    13,    26,     5,    28,    55,    56,     4,    58,
       59,    60,    15,    62,    43,    11,    19,    36,    37,    12,
-      39,    70,    15,    72,    73,    44,    45,    40,    41,     7,
-      49,     9,    10,    14,     8,     9,    10,    11,    13,    13,
-      20,    21,    22,    23,    24,    49,    95,    96,    97,    98,
+      39,    70,    15,    72,    73,    44,    45,    22,    23,    24,
+       7,    50,     9,    10,     8,     9,    10,    11,    14,    13,
+      20,    21,    22,    23,    24,    50,    95,    96,    97,    98,
       99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
-     109,   110,    36,    37,    49,    39,    15,    49,    11,    11,
-      44,    45,    15,   123,   124,    49,    15,    20,    21,   123,
-     124,   123,   124,   123,   124,    28,    22,    23,    24,    11,
-      15,    13,    35,    49,    15,   144,    15,   146,   121,     8,
-       9,    10,    45,    46,    14,    48,    49,    11,    11,    11,
-     160,    17,    49,    12,    36,    37,   160,    39,   160,    15,
-     160,    16,    44,    45,    20,    21,    16,    49,    15,    16,
-      14,    49,    28,    20,    21,     7,     8,     9,    10,    35,
-      18,    28,    12,    20,    21,    22,    23,    24,    35,    45,
-      46,    47,    48,    49,    31,    32,    33,    34,    45,    46,
-      15,    48,    49,    12,    16,    20,    21,     6,    16,     8,
-       9,    10,     6,    28,     8,     9,    10,    16,    49,    17,
-      35,    11,    16,    49,    11,    11,    11,    49,    38,    49,
-      45,    46,    16,    48,    49,    20,    21,    22,    23,    24,
-      25,    26,    27,   148,    29,    30,    31,    32,    33,    34,
-      12,    28,   159,   157,    -1,    -1,    41,    42,    20,    21,
-      22,    23,    24,    25,    26,    27,    -1,    29,    30,    31,
-      32,    33,    34,    -1,    -1,    -1,    -1,    16,    -1,    41,
-      42,    20,    21,    22,    23,    24,    25,    26,    27,    -1,
-      29,    30,    31,    32,    33,    34,    -1,    -1,    -1,    -1,
-      16,    -1,    41,    42,    20,    21,    22,    23,    24,    25,
-      26,    27,    -1,    29,    30,    31,    32,    33,    34,    -1,
-      -1,    -1,    -1,    16,    -1,    41,    42,    20,    21,    22,
+     109,   110,    36,    37,    50,    39,    13,    15,    11,    50,
+      44,    45,    15,   123,   124,    11,    50,    20,    21,   123,
+     124,   123,   124,   123,   124,    28,    40,    41,    15,    11,
+      15,    13,    35,    50,    15,   144,    15,   146,   121,     8,
+       9,    10,    45,    14,    47,    11,    49,    50,    11,    11,
+     160,    50,    17,    12,    36,    37,   160,    39,   160,    15,
+     160,    16,    44,    45,    20,    21,    16,    14,    50,    12,
+      15,    16,    28,    50,    18,    20,    21,    12,    16,    35,
+      17,    11,    16,    28,    20,    21,    22,    23,    24,    45,
+      35,    47,    48,    49,    50,    31,    32,    33,    34,    50,
+      45,    15,    47,    11,    49,    50,    20,    21,     6,    50,
+       8,     9,    10,     6,    28,     8,     9,    10,    16,    11,
+      38,    35,    50,    16,    49,    16,    28,   159,    11,   148,
+     157,    45,    -1,    47,    -1,    49,    50,    20,    21,    22,
       23,    24,    25,    26,    27,    -1,    29,    30,    31,    32,
-      33,    34,    -1,    -1,    -1,    -1,    16,    -1,    41,    42,
+      33,    34,    12,     7,     8,     9,    10,    -1,    41,    42,
+      20,    21,    22,    23,    24,    25,    26,    27,    -1,    29,
+      30,    31,    32,    33,    34,    -1,    -1,    -1,    -1,    16,
+      -1,    41,    42,    20,    21,    22,    23,    24,    25,    26,
+      27,    -1,    29,    30,    31,    32,    33,    34,    -1,    -1,
+      -1,    -1,    16,    -1,    41,    42,    20,    21,    22,    23,
+      24,    25,    26,    27,    -1,    29,    30,    31,    32,    33,
+      34,    -1,    -1,    -1,    -1,    16,    -1,    41,    42,    20,
+      21,    22,    23,    24,    25,    26,    27,    -1,    29,    30,
+      31,    32,    33,    34,    -1,    -1,    -1,    -1,    16,    -1,
+      41,    42,    20,    21,    22,    23,    24,    25,    26,    27,
+      -1,    29,    30,    31,    32,    33,    34,    -1,    -1,    -1,
+      -1,    -1,    -1,    41,    42,    18,    -1,    20,    21,    22,
+      23,    24,    25,    26,    27,    -1,    29,    30,    31,    32,
+      33,    34,    -1,    -1,    -1,    -1,    -1,    -1,    41,    42,
       20,    21,    22,    23,    24,    25,    26,    27,    -1,    29,
       30,    31,    32,    33,    34,    -1,    -1,    -1,    -1,    -1,
-      -1,    41,    42,    18,    -1,    20,    21,    22,    23,    24,
-      25,    26,    27,    -1,    29,    30,    31,    32,    33,    34,
-      -1,    -1,    -1,    -1,    -1,    -1,    41,    42,    20,    21,
-      22,    23,    24,    25,    26,    27,    -1,    29,    30,    31,
-      32,    33,    34,    -1,    -1,    -1,    -1,    -1,    -1,    41,
-      42,    20,    21,    22,    23,    24,    25,    -1,    27,    -1,
-      29,    30,    31,    32,    33,    34,    20,    21,    22,    23,
-      24,    25,    41,    42,    -1,    29,    30,    31,    32,    33,
-      34,    20,    21,    22,    23,    24,    -1,    41,    42,    -1,
-      29,    30,    31,    32,    33,    34,    20,    21,    22,    23,
-      24,    -1,    41,    42,    -1,    29,    30,    31,    32,    33,
-      34
+      -1,    41,    42,    20,    21,    22,    23,    24,    25,    -1,
+      27,    -1,    29,    30,    31,    32,    33,    34,    20,    21,
+      22,    23,    24,    25,    41,    42,    -1,    29,    30,    31,
+      32,    33,    34,    20,    21,    22,    23,    24,    -1,    41,
+      42,    -1,    29,    30,    31,    32,    33,    34,    20,    21,
+      22,    23,    24,    -1,    41,    42,    -1,    29,    30,    31,
+      32,    33,    34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    52,    49,     0,    13,     4,    11,    53,    54,
+       0,     3,    52,    50,     0,    13,     4,    11,    53,    54,
       55,     5,    53,    14,    53,    53,     7,     8,     9,    10,
-      57,    58,    49,    49,    13,    61,    15,    12,    15,    56,
-      11,    13,    36,    37,    39,    44,    45,    49,    57,    62,
-      63,    65,    66,    69,    70,     6,    16,    57,    59,    49,
+      57,    58,    50,    50,    13,    61,    15,    12,    15,    56,
+      11,    13,    36,    37,    39,    44,    45,    50,    57,    62,
+      63,    65,    66,    69,    70,     6,    16,    57,    59,    50,
       16,    59,    11,    14,    65,    15,    15,    11,    15,    20,
-      21,    28,    35,    46,    48,    49,    66,    69,    70,    71,
-      15,    15,    15,    19,    49,    14,    62,    62,    11,    11,
-      11,    17,    49,    16,    56,    16,    14,    71,    71,    71,
+      21,    28,    35,    47,    49,    50,    66,    69,    70,    71,
+      15,    15,    15,    19,    50,    14,    62,    62,    11,    11,
+      11,    17,    50,    16,    56,    16,    14,    71,    71,    71,
       71,    71,    71,    43,    11,    20,    21,    22,    23,    24,
       25,    26,    27,    29,    30,    31,    32,    33,    34,    41,
-      42,    47,    71,    49,    16,    67,    71,    71,    12,    64,
+      42,    48,    71,    50,    16,    67,    71,    71,    12,    64,
       18,    12,    60,    16,    16,    16,    71,    71,    71,    71,
       71,    71,    71,    71,    71,    71,    71,    71,    71,    71,
-      71,    71,    16,    16,    17,    16,    12,    68,    49,    11,
-      49,    57,    65,    65,    11,    11,    71,    71,    64,    49,
+      71,    71,    16,    16,    17,    16,    12,    68,    50,    11,
+      50,    57,    65,    65,    11,    11,    71,    71,    64,    50,
       38,    18,    68,    60,    65,    16
 };
 
@@ -1587,484 +1588,548 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 62 "jucompiler.y"
-                                                                                    {																
-																                        root = AST_newNode("Program","");
-																                        (yyval.ast) = root;
-                                                                                     }
-#line 1596 "y.tab.c"
+#line 64 "jucompiler.y"
+                                                                                    {
+
+																
+                                                                                }
+#line 1597 "y.tab.c"
     break;
 
   case 3:
-#line 68 "jucompiler.y"
+#line 70 "jucompiler.y"
                                                                                     {;}
-#line 1602 "y.tab.c"
+#line 1603 "y.tab.c"
     break;
 
   case 4:
-#line 69 "jucompiler.y"
+#line 71 "jucompiler.y"
                                                                                     {;}
-#line 1608 "y.tab.c"
+#line 1609 "y.tab.c"
     break;
 
   case 5:
-#line 70 "jucompiler.y"
+#line 72 "jucompiler.y"
                                                                                     {;}
-#line 1614 "y.tab.c"
+#line 1615 "y.tab.c"
     break;
 
   case 6:
-#line 71 "jucompiler.y"
+#line 73 "jucompiler.y"
                                                                                     {;}
-#line 1620 "y.tab.c"
+#line 1621 "y.tab.c"
     break;
 
   case 7:
-#line 72 "jucompiler.y"
+#line 74 "jucompiler.y"
                                                                                     {;}
-#line 1626 "y.tab.c"
+#line 1627 "y.tab.c"
     break;
 
   case 8:
-#line 73 "jucompiler.y"
+#line 75 "jucompiler.y"
                                                                                     {;}
-#line 1632 "y.tab.c"
+#line 1633 "y.tab.c"
     break;
 
   case 9:
-#line 76 "jucompiler.y"
+#line 78 "jucompiler.y"
                                                                                     {;}
-#line 1638 "y.tab.c"
+#line 1639 "y.tab.c"
     break;
 
   case 10:
-#line 79 "jucompiler.y"
+#line 81 "jucompiler.y"
                                                                                     {;}
-#line 1644 "y.tab.c"
+#line 1645 "y.tab.c"
     break;
 
   case 11:
-#line 82 "jucompiler.y"
+#line 84 "jucompiler.y"
                                                                                     {;}
-#line 1650 "y.tab.c"
+#line 1651 "y.tab.c"
     break;
 
   case 12:
-#line 83 "jucompiler.y"
+#line 85 "jucompiler.y"
                                                                                     {;}
-#line 1656 "y.tab.c"
+#line 1657 "y.tab.c"
     break;
 
   case 13:
-#line 86 "jucompiler.y"
+#line 88 "jucompiler.y"
                                                                                     {;}
-#line 1662 "y.tab.c"
+#line 1663 "y.tab.c"
     break;
 
   case 14:
-#line 87 "jucompiler.y"
+#line 89 "jucompiler.y"
                                                                                     {;}
-#line 1668 "y.tab.c"
+#line 1669 "y.tab.c"
     break;
 
   case 15:
-#line 88 "jucompiler.y"
+#line 90 "jucompiler.y"
                                                                                     {;}
-#line 1674 "y.tab.c"
+#line 1675 "y.tab.c"
     break;
 
   case 16:
-#line 91 "jucompiler.y"
+#line 93 "jucompiler.y"
                                                                                     {;}
-#line 1680 "y.tab.c"
+#line 1681 "y.tab.c"
     break;
 
   case 17:
-#line 92 "jucompiler.y"
+#line 94 "jucompiler.y"
                                                                                     {;}
-#line 1686 "y.tab.c"
+#line 1687 "y.tab.c"
     break;
 
   case 18:
-#line 93 "jucompiler.y"
+#line 95 "jucompiler.y"
                                                                                     {;}
-#line 1692 "y.tab.c"
+#line 1693 "y.tab.c"
     break;
 
   case 19:
-#line 94 "jucompiler.y"
+#line 96 "jucompiler.y"
                                                                                     {;}
-#line 1698 "y.tab.c"
+#line 1699 "y.tab.c"
     break;
 
   case 20:
-#line 98 "jucompiler.y"
+#line 100 "jucompiler.y"
                                                                                     {;}
-#line 1704 "y.tab.c"
+#line 1705 "y.tab.c"
     break;
 
   case 21:
-#line 99 "jucompiler.y"
+#line 101 "jucompiler.y"
                                                                                     {;}
-#line 1710 "y.tab.c"
+#line 1711 "y.tab.c"
     break;
 
   case 22:
-#line 102 "jucompiler.y"
+#line 104 "jucompiler.y"
                                                                                     {;}
-#line 1716 "y.tab.c"
+#line 1717 "y.tab.c"
     break;
 
   case 23:
-#line 103 "jucompiler.y"
+#line 105 "jucompiler.y"
                                                                                     {;}
-#line 1722 "y.tab.c"
+#line 1723 "y.tab.c"
     break;
 
   case 24:
-#line 106 "jucompiler.y"
+#line 108 "jucompiler.y"
                                                                                     {;}
-#line 1728 "y.tab.c"
+#line 1729 "y.tab.c"
     break;
 
   case 25:
-#line 109 "jucompiler.y"
+#line 111 "jucompiler.y"
                                                                                     {;}
-#line 1734 "y.tab.c"
+#line 1735 "y.tab.c"
     break;
 
   case 26:
-#line 110 "jucompiler.y"
+#line 112 "jucompiler.y"
                                                                                     {;}
-#line 1740 "y.tab.c"
+#line 1741 "y.tab.c"
     break;
 
   case 27:
-#line 111 "jucompiler.y"
+#line 113 "jucompiler.y"
                                                                                     {;}
-#line 1746 "y.tab.c"
+#line 1747 "y.tab.c"
     break;
 
   case 28:
-#line 112 "jucompiler.y"
+#line 114 "jucompiler.y"
                                                                                     {;}
-#line 1752 "y.tab.c"
+#line 1753 "y.tab.c"
     break;
 
   case 29:
-#line 115 "jucompiler.y"
+#line 117 "jucompiler.y"
                                                                                     {;}
-#line 1758 "y.tab.c"
+#line 1759 "y.tab.c"
     break;
 
   case 30:
-#line 118 "jucompiler.y"
+#line 120 "jucompiler.y"
                                                                                     {;}
-#line 1764 "y.tab.c"
+#line 1765 "y.tab.c"
     break;
 
   case 31:
-#line 119 "jucompiler.y"
+#line 121 "jucompiler.y"
                                                                                     {;}
-#line 1770 "y.tab.c"
+#line 1771 "y.tab.c"
     break;
 
   case 32:
-#line 123 "jucompiler.y"
+#line 125 "jucompiler.y"
                                                                                     {;}
-#line 1776 "y.tab.c"
+#line 1777 "y.tab.c"
     break;
 
   case 33:
-#line 124 "jucompiler.y"
+#line 126 "jucompiler.y"
                                                                                     {;}
-#line 1782 "y.tab.c"
+#line 1783 "y.tab.c"
     break;
 
   case 34:
-#line 125 "jucompiler.y"
+#line 127 "jucompiler.y"
                                                                                     {;}
-#line 1788 "y.tab.c"
+#line 1789 "y.tab.c"
     break;
 
   case 35:
-#line 126 "jucompiler.y"
+#line 128 "jucompiler.y"
                                                                                     {;}
-#line 1794 "y.tab.c"
+#line 1795 "y.tab.c"
     break;
 
   case 36:
-#line 127 "jucompiler.y"
+#line 129 "jucompiler.y"
                                                                                     {;}
-#line 1800 "y.tab.c"
+#line 1801 "y.tab.c"
     break;
 
   case 37:
-#line 128 "jucompiler.y"
+#line 130 "jucompiler.y"
                                                                                     {;}
-#line 1806 "y.tab.c"
+#line 1807 "y.tab.c"
     break;
 
   case 38:
-#line 129 "jucompiler.y"
+#line 131 "jucompiler.y"
                                                                                     {;}
-#line 1812 "y.tab.c"
+#line 1813 "y.tab.c"
     break;
 
   case 39:
-#line 130 "jucompiler.y"
+#line 132 "jucompiler.y"
                                                                                     {;}
-#line 1818 "y.tab.c"
+#line 1819 "y.tab.c"
     break;
 
   case 40:
-#line 131 "jucompiler.y"
+#line 133 "jucompiler.y"
                                                                                     {;}
-#line 1824 "y.tab.c"
+#line 1825 "y.tab.c"
     break;
 
   case 41:
-#line 132 "jucompiler.y"
+#line 134 "jucompiler.y"
                                                                                     {;}
-#line 1830 "y.tab.c"
+#line 1831 "y.tab.c"
     break;
 
   case 42:
-#line 133 "jucompiler.y"
+#line 135 "jucompiler.y"
                                                                                     {;}
-#line 1836 "y.tab.c"
+#line 1837 "y.tab.c"
     break;
 
   case 43:
-#line 134 "jucompiler.y"
+#line 136 "jucompiler.y"
                                                                                     {;}
-#line 1842 "y.tab.c"
+#line 1843 "y.tab.c"
     break;
 
   case 44:
-#line 135 "jucompiler.y"
+#line 137 "jucompiler.y"
                                                                                     {;}
-#line 1848 "y.tab.c"
+#line 1849 "y.tab.c"
     break;
 
   case 45:
-#line 137 "jucompiler.y"
+#line 139 "jucompiler.y"
                                                                                     {;}
-#line 1854 "y.tab.c"
+#line 1855 "y.tab.c"
     break;
 
   case 46:
-#line 138 "jucompiler.y"
+#line 140 "jucompiler.y"
                                                                                     {;}
-#line 1860 "y.tab.c"
+#line 1861 "y.tab.c"
     break;
 
   case 47:
-#line 141 "jucompiler.y"
+#line 143 "jucompiler.y"
                                                                                     {;}
-#line 1866 "y.tab.c"
+#line 1867 "y.tab.c"
     break;
 
   case 48:
-#line 142 "jucompiler.y"
+#line 144 "jucompiler.y"
                                                                                     {;}
-#line 1872 "y.tab.c"
+#line 1873 "y.tab.c"
     break;
 
   case 49:
-#line 145 "jucompiler.y"
+#line 147 "jucompiler.y"
                                                                                     {;}
-#line 1878 "y.tab.c"
+#line 1879 "y.tab.c"
     break;
 
   case 50:
-#line 146 "jucompiler.y"
+#line 148 "jucompiler.y"
                                                                                     {;}
-#line 1884 "y.tab.c"
+#line 1885 "y.tab.c"
     break;
 
   case 51:
-#line 149 "jucompiler.y"
+#line 151 "jucompiler.y"
                                                                                     {;}
-#line 1890 "y.tab.c"
+#line 1891 "y.tab.c"
     break;
 
   case 52:
-#line 152 "jucompiler.y"
+#line 154 "jucompiler.y"
                                                                                     {;}
-#line 1896 "y.tab.c"
+#line 1897 "y.tab.c"
     break;
 
   case 53:
-#line 155 "jucompiler.y"
-                                                                                    {;}
-#line 1902 "y.tab.c"
+#line 157 "jucompiler.y"
+                                                                                    {																
+                                                                (yyval.ast) = AST_newNode("PLUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1907 "y.tab.c"
     break;
 
   case 54:
-#line 156 "jucompiler.y"
-                                                                                    {;}
-#line 1908 "y.tab.c"
+#line 162 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1917 "y.tab.c"
     break;
 
   case 55:
-#line 157 "jucompiler.y"
-                                                                                    {;}
-#line 1914 "y.tab.c"
+#line 167 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("STAR","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1927 "y.tab.c"
     break;
 
   case 56:
-#line 158 "jucompiler.y"
-                                                                                    {;}
-#line 1920 "y.tab.c"
+#line 172 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("DIV","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1937 "y.tab.c"
     break;
 
   case 57:
-#line 159 "jucompiler.y"
-                                                                                    {;}
-#line 1926 "y.tab.c"
+#line 177 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MOD","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1947 "y.tab.c"
     break;
 
   case 58:
-#line 160 "jucompiler.y"
-                                                                                    {;}
-#line 1932 "y.tab.c"
+#line 182 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1957 "y.tab.c"
     break;
 
   case 59:
-#line 161 "jucompiler.y"
-                                                                                    {;}
-#line 1938 "y.tab.c"
+#line 187 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1967 "y.tab.c"
     break;
 
   case 60:
-#line 162 "jucompiler.y"
-                                                                                    {;}
-#line 1944 "y.tab.c"
+#line 192 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1977 "y.tab.c"
     break;
 
   case 61:
-#line 163 "jucompiler.y"
-                                                                                    {;}
-#line 1950 "y.tab.c"
+#line 197 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1987 "y.tab.c"
     break;
 
   case 62:
-#line 164 "jucompiler.y"
-                                                                                    {;}
-#line 1956 "y.tab.c"
+#line 202 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1997 "y.tab.c"
     break;
 
   case 63:
-#line 165 "jucompiler.y"
-                                                                                    {;}
-#line 1962 "y.tab.c"
+#line 207 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2007 "y.tab.c"
     break;
 
   case 64:
-#line 166 "jucompiler.y"
-                                                                                    {;}
-#line 1968 "y.tab.c"
+#line 212 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2017 "y.tab.c"
     break;
 
   case 65:
-#line 167 "jucompiler.y"
-                                                                                    {;}
-#line 1974 "y.tab.c"
+#line 217 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2027 "y.tab.c"
     break;
 
   case 66:
-#line 168 "jucompiler.y"
-                                                                                    {;}
-#line 1980 "y.tab.c"
+#line 222 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2037 "y.tab.c"
     break;
 
   case 67:
-#line 169 "jucompiler.y"
-                                                                                    {;}
-#line 1986 "y.tab.c"
+#line 227 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2047 "y.tab.c"
     break;
 
   case 68:
-#line 170 "jucompiler.y"
-                                                                                    {;}
-#line 1992 "y.tab.c"
+#line 232 "jucompiler.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MINUS","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 2057 "y.tab.c"
     break;
 
   case 69:
-#line 171 "jucompiler.y"
+#line 237 "jucompiler.y"
                                                                                     {;}
-#line 1998 "y.tab.c"
+#line 2063 "y.tab.c"
     break;
 
   case 70:
-#line 172 "jucompiler.y"
+#line 238 "jucompiler.y"
                                                                                     {;}
-#line 2004 "y.tab.c"
+#line 2069 "y.tab.c"
     break;
 
   case 71:
-#line 173 "jucompiler.y"
+#line 239 "jucompiler.y"
                                                                                     {;}
-#line 2010 "y.tab.c"
+#line 2075 "y.tab.c"
     break;
 
   case 72:
-#line 174 "jucompiler.y"
+#line 240 "jucompiler.y"
                                                                                     {;}
-#line 2016 "y.tab.c"
+#line 2081 "y.tab.c"
     break;
 
   case 73:
-#line 175 "jucompiler.y"
+#line 241 "jucompiler.y"
                                                                                     {;}
-#line 2022 "y.tab.c"
+#line 2087 "y.tab.c"
     break;
 
   case 74:
-#line 176 "jucompiler.y"
+#line 242 "jucompiler.y"
                                                                                     {;}
-#line 2028 "y.tab.c"
+#line 2093 "y.tab.c"
     break;
 
   case 75:
-#line 177 "jucompiler.y"
+#line 243 "jucompiler.y"
                                                                                     {;}
-#line 2034 "y.tab.c"
+#line 2099 "y.tab.c"
     break;
 
   case 76:
-#line 178 "jucompiler.y"
+#line 244 "jucompiler.y"
                                                                                     {;}
-#line 2040 "y.tab.c"
+#line 2105 "y.tab.c"
     break;
 
   case 77:
-#line 179 "jucompiler.y"
+#line 245 "jucompiler.y"
                                                                                     {;}
-#line 2046 "y.tab.c"
+#line 2111 "y.tab.c"
     break;
 
   case 78:
-#line 180 "jucompiler.y"
+#line 246 "jucompiler.y"
                                                                                     {;}
-#line 2052 "y.tab.c"
+#line 2117 "y.tab.c"
     break;
 
   case 79:
-#line 181 "jucompiler.y"
+#line 247 "jucompiler.y"
                                                                                     {;}
-#line 2058 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
   case 80:
-#line 182 "jucompiler.y"
+#line 248 "jucompiler.y"
                                                                                     {;}
-#line 2064 "y.tab.c"
+#line 2129 "y.tab.c"
     break;
 
 
-#line 2068 "y.tab.c"
+#line 2133 "y.tab.c"
 
       default: break;
     }
@@ -2296,7 +2361,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 192 "jucompiler.y"
+#line 258 "jucompiler.y"
 
 /* META2 CORRER:
     lex juccompiler.l
@@ -2317,13 +2382,13 @@ int main(int argc, char *argv[]){
             yylex();
         }else if(strcmp(argv[1],"-e2") == 0){
             /* Analise Lexical & Sintatica : Mostra so os erros */
-            flag = 1;
+            flag = 2;
             yyparse();  
 	}else{
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            //AST_print(root);
+            AST_print(root);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */
