@@ -139,8 +139,11 @@ VarDeclAux: COMMA ID VarDeclAux                                                 
 
 
 Statement: LBRACE RBRACE                                                            {$$ = NULL;}
-         | LBRACE Statement RBRACE                                                  {;}
-         
+         | LBRACE Statement RBRACE                                                  {
+                                                                                    if($2 != NULL && $2->)
+
+                                                                                    }
+
          | IF LPAR Expr RPAR Statement                                              {
                                                                                     $$ = AST_newNode("If","");
                                                                                     AST_addSon($$, $3);
