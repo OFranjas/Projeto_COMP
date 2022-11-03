@@ -193,7 +193,7 @@ Expr: Expr PLUS Expr                                                            
 /* META2 CORRER:
     lex juccompiler.l
     yacc -d -v juccompiler.y		
-    cc -o uccompiler y.tab.c lex.yy.c functions.c
+    cc -o juccompiler y.tab.c lex.yy.c Tree.c
     ./juccompiler
     ./juccompiler -t < INPUT
 */
@@ -215,7 +215,7 @@ int main(int argc, char *argv[]){
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root);
+            //AST_print(root);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */

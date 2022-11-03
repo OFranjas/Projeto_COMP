@@ -2298,7 +2298,13 @@ yyreturn:
 }
 #line 192 "jucompiler.y"
 
-
+/* META2 CORRER:
+    lex juccompiler.l
+    yacc -d -v juccompiler.y		
+    cc -o juccompiler y.tab.c lex.yy.c Tree.c
+    ./juccompiler
+    ./juccompiler -t < INPUT
+*/
 int main(int argc, char *argv[]){
     if(argc > 1){
 		if(strcmp(argv[1],"-e1") == 0){
@@ -2311,13 +2317,13 @@ int main(int argc, char *argv[]){
             yylex();
         }else if(strcmp(argv[1],"-e2") == 0){
             /* Analise Lexical & Sintatica : Mostra so os erros */
-            flag = 2;
+            flag = 1;
             yyparse();  
 	}else{
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root);
+            //AST_print(root);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */

@@ -80,8 +80,13 @@ void AST_print(AST* AST)
     }else{
         printf("\n");
     }
-    AST_print(AST->brother);
-    AST_print(AST->son);
+
+    if(AST->brother != NULL){
+        AST_print(AST->brother);
+    }
+    if(AST->son != NULL){
+        AST_print(AST->son);
+    }
 }
 
 /* Function to free the memory of the tree */
