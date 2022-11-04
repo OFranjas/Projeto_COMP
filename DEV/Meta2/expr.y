@@ -42,7 +42,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux
+%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FormalParams FormalParamsAux
 
 /* Precedências */
 %left COMMA
@@ -85,6 +85,27 @@ Type: INT                                                   {$$ = AST_newNode("I
     | DOUBLE                                                {$$ = AST_newNode("Double", "");}
     | BOOL                                                  {$$ = AST_newNode("Bool", "");}                
     ;
+
+FormalParams: Type ID FormalParamsAux                                      {$$ = AST_newNode("ParamDecl","");
+                                                                            AST_addSon($$,$1);
+                                                                            aux = AST_newNode("ID", $2);
+                                                                            AST_addSon($$,aux);
+                                                                            AST_addSon($$,$3);
+                                                                            }
+            | STRING LSQ RSQ ID                                            {
+                                                                            $$ = AST_newNode("StringArray","");
+                                                                           aux =  AST_newNode("ID",$4);
+                                                                           AST_addBrother($$,aux);
+                                                                           }
+            ;                               
+
+
+FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ID",$3);
+                                                                            AST_addBrother($$,$2);
+                                                                            }
+                |                                                         {$$ = NULL;}
+                ;
+
 
 VarDecl: Type ID VarDeclAux SEMICOLON                                   {
                                                                 $$ = AST_newNode("VarDecl", "");
