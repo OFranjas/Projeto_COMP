@@ -82,7 +82,7 @@ Expr: Expr PLUS Expr                                                            
                                                                 printf("addson1\n");
                                                                 $$ = aux;
                                                                 printf("antes addbrothret\n");
-																AST_addBrother($1,$3);
+																AST_addSon($$,$3);
                                                                 printf(" depois addbrother\n");
                                                                                     }
     | Expr MINUS Expr                                                               {
