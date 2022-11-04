@@ -79,6 +79,7 @@ Xona: Expr                                                  {$$ = $1;}
     //| Statement                                             {$$ = $1;}
     | VarDecl                                               {$$ = $1;}
     | FieldDecl                                             {$$ = $1;}
+    | FormalParams                                          {$$ = $1;}
     ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
@@ -106,10 +107,12 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
                                                                             AST_addSon($$,aux);
                                                                             AST_addSon($$,$3);
                                                                             }
-            | STRING LSQ RSQ ID                                            {
-                                                                            $$ = AST_newNode("StringArray","");
+
+            | STRING LSQ RSQ ID                                            {$$ = AST_newNode("ParamDecl","");
                                                                            aux =  AST_newNode("ID",$4);
-                                                                           AST_addBrother($$,aux);
+                                                                           AST_addSon($$,aux);
+                                                                           aux = AST_newNode("StringArray","");
+                                                                           AST_addSon($$,aux);
                                                                            }
             ;                               
 
@@ -117,6 +120,7 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
 FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ID",$3);
                                                                             AST_addBrother($$,$2);
                                                                             }
+                                                                            
                 |                                                         {$$ = NULL;}
                 ;
 
