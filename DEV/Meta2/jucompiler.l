@@ -35,7 +35,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 "true"|"false"              {if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}else if (flag == 2){return(BOOLLIT);}coluna += yyleng;}
 "&&"                        {if(flag == 1){printf("AND\n");}else if (flag == 2){return(AND);}coluna += yyleng;}
-"="                         {if(flag == 1){printf("ASSIGN\n");}else if (flag == 2){return(AND);}coluna += yyleng;}
+"="                         {if(flag == 1){printf("ASSIGN\n");}else if (flag == 2){return(ASSIGN);}coluna += yyleng;}
 "*"                         {if(flag == 1){printf("STAR\n");}else if (flag == 2){return(STAR);}coluna += yyleng;}
 ","                         {if(flag == 1){printf("COMMA\n");}else if (flag == 2){return(COMMA);}coluna += yyleng;coluna += yyleng;}
 "/"                         {if(flag == 1){printf("DIV\n");}else if (flag == 2){return(DIV);}coluna += yyleng;coluna += yyleng;}

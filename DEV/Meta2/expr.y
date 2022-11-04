@@ -41,7 +41,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Program Expr MethodInvocation Assignment ParseArgs
+%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona
 
 /* Precedências */
 %left COMMA
@@ -62,15 +62,27 @@ struct AST* ast;
 
 %%
 
-Program: CLASS ID LBRACE Expr RBRACE                           {
+Program: CLASS ID LBRACE Xona RBRACE                           {
                                                                 root = AST_newNode("Program","");
                                                                 aux = AST_newNode("ID", $2); 
                                                                 AST_addSon(root, $4);
                                                                 AST_addBrother(root, aux);
                                                                 $$ = root;
                                                             }
+        ;
 
+Xona: Expr{$$ = $1;}
+    | Assignment{$$ = $1;}
+    ;
 
+Assignment: ID ASSIGN Expr                                  {
+                                                                $$ = AST_newNode("Assign", "");
+                                                                aux = AST_newNode("ID", $1);
+                                                                AST_addSon($$,$3);
+                                                                AST_addBrother($3,aux);
+                                                            }
+    ;
+    
 Expr: Expr PLUS Expr                                                                {	
                                                                 aux = AST_newNode("ADD","");
                                                                 $$ = aux;

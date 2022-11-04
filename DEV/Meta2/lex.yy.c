@@ -1036,7 +1036,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 38 "jucompiler.l"
-{if(flag == 1){printf("ASSIGN\n");}else if (flag == 2){return(AND);}coluna += yyleng;}
+{if(flag == 1){printf("ASSIGN\n");}else if (flag == 2){return(ASSIGN);}coluna += yyleng;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
