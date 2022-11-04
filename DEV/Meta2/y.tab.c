@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 8 "jucompiler.y"
+#line 8 "expr.y"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -237,7 +237,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 27 "jucompiler.y"
+#line 27 "expr.y"
 
 char* string;
 struct AST* ast;
@@ -356,7 +356,7 @@ typedef int yytype_uint16;
 #define YYSIZEOF(X) YY_CAST (YYPTRDIFF_T, sizeof (X))
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_uint8 yy_state_t;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -561,16 +561,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   468
+#define YYLAST   178
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  51
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  21
+#define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  81
+#define YYNRULES  25
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  167
+#define YYNSTATES  51
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   305
@@ -620,17 +620,11 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int16 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    66,    66,    77,    81,    84,    88,    91,    94,    97,
-     104,   111,   112,   115,   119,   123,   127,   133,   140,   146,
-     151,   160,   165,   170,   175,   181,   184,   185,   186,   187,
-     190,   193,   194,   198,   199,   210,   221,   239,   250,   253,
-     257,   258,   259,   260,   261,   262,   264,   265,   268,   269,
-     272,   273,   276,   279,   287,   293,   299,   305,   311,   317,
-     323,   329,   335,   341,   347,   353,   359,   365,   371,   377,
-     383,   388,   393,   398,   403,   404,   405,   406,   407,   408,
-     409,   410
+       0,    65,    65,    76,    88,    94,   100,   106,   112,   118,
+     124,   130,   136,   142,   148,   154,   160,   166,   172,   178,
+     183,   188,   193,   198,   202,   206
 };
 #endif
 
@@ -645,12 +639,7 @@ static const char *const yytname[] =
   "STAR", "DIV", "MOD", "XOR", "OR", "AND", "BOOLLIT", "EQ", "NE", "LE",
   "GE", "LT", "GT", "NOT", "WHILE", "IF", "ELSE", "RETURN", "ARROW",
   "LSHIFT", "RSHIFT", "DOTLENGTH", "PRINT", "PARSEINT", "RESERVED",
-  "REALLIT", "STRLIT", "INTLIT", "ID", "$accept", "Program", "ClassBody",
-  "MethodDecl", "FieldDecl", "FieldDeclCommaAux", "Type", "MethodHeader",
-  "FormalParams", "FormalParamsAux", "MethodBody", "MethodBodyAux",
-  "VarDecl", "VarDeclAux", "Statement", "MethodInvocation",
-  "MethodInvocationAux", "MethodBodyAux2", "Assignment", "ParseArgs",
-  "Expr", YY_NULLPTR
+  "REALLIT", "STRLIT", "INTLIT", "ID", "$accept", "Program", "Expr", YY_NULLPTR
 };
 #endif
 
@@ -668,7 +657,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-46)
+#define YYPACT_NINF (-22)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -682,23 +671,12 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      30,   -45,    14,    22,   -46,    -1,    32,    -1,    26,    -1,
-      -1,    55,   -46,   -46,   -46,   -46,   -46,     4,   -46,   -46,
-     -46,     9,    36,    28,    11,    47,   -46,    79,    16,   188,
-      85,   -46,   110,    75,    83,    94,    98,   104,    10,    70,
-     114,    47,    47,   126,   131,   137,   135,   -46,   109,   147,
-     152,   -46,   151,   -46,   -46,   139,   172,   172,   -46,   172,
-     172,   172,   -46,   172,   -46,   -46,    -7,   -46,   -46,   -46,
-     203,   130,   116,   141,   172,   156,   -46,   -46,   -46,   -46,
-     -46,   -46,   167,   177,   -46,   -46,   -46,   -46,   249,   272,
-     295,   103,   103,   -46,   -46,   -46,   172,   172,   172,   172,
-     172,   172,   172,   172,   172,   172,   172,   172,   172,   172,
-     172,   172,   179,   318,   182,   -46,   185,   226,   366,   153,
-     191,   155,   102,   -46,     2,     2,   -46,   103,   103,   -46,
-     -46,   -46,   419,   389,   404,   150,   150,   111,   111,   111,
-     111,   434,   434,   195,   197,   172,   -46,   172,   -46,   156,
-     -46,   -46,   159,   -46,   173,   -46,   -46,   343,   226,   -46,
-     177,     2,   194,   -46,   -46,   -46,   -46
+       1,    -1,    13,   -15,   -22,   -15,   -15,   -15,   -15,   -22,
+     -22,   -22,    38,    61,   -21,   -21,   -22,   -22,   -15,   -15,
+     -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,
+     -15,   -15,   -15,   -15,   -22,   -21,   -21,   -22,   -22,   -22,
+     114,    84,    99,   144,   144,   -13,   -13,   -13,   -13,   129,
+     129
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -706,195 +684,99 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     1,     0,     0,     8,     0,     4,
-       6,     0,     7,     2,     3,     5,    16,     0,    14,    15,
-      13,     0,     0,     0,     0,     0,     9,     0,     0,     0,
-       0,    43,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    29,    27,     0,     0,     0,    16,    20,     0,     0,
-      12,    18,     0,    10,    33,     0,     0,     0,    39,     0,
-       0,     0,    81,     0,    80,    79,    77,    74,    75,    76,
-       0,     0,     0,     0,     0,     0,    25,    28,    26,    40,
-      41,    42,     0,     0,    19,    11,    17,    34,     0,     0,
-       0,    72,    70,    71,    78,    38,     0,     0,     0,     0,
+       0,     0,     0,     0,     1,     0,     0,     0,     0,    25,
+      24,    23,     0,     0,    21,    19,    20,     2,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,    47,     0,    48,    52,     0,
-       0,     0,     0,    21,     0,     0,    73,    54,    55,    56,
-      57,    58,    60,    59,    61,    64,    65,    68,    69,    66,
-      67,    62,    63,     0,     0,     0,    46,     0,    49,    32,
-      30,    22,     0,    37,    35,    45,    44,     0,    51,    31,
-      24,     0,     0,    50,    23,    36,    53
+       0,     0,     0,     0,    22,     3,     4,     5,     6,     7,
+       9,     8,    10,    13,    14,    17,    18,    15,    16,    11,
+      12
 };
 
   /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int16 yypgoto[] =
+static const yytype_int8 yypgoto[] =
 {
-     -46,   -46,    41,   -46,   -46,   162,    -5,   -46,   184,    56,
-     -46,    65,   -46,    66,   -31,   -25,   -46,    60,   -23,   -21,
-     -29
+     -22,   -22,    18
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
-static const yytype_int16 yydefgoto[] =
+static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     8,     9,    10,    30,    39,    22,    49,   123,
-      26,    40,    41,   120,    42,    67,   116,   148,    68,    69,
-      70
+      -1,     2,    12
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule whose
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint8 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      43,    55,    44,     6,    45,     3,    21,    43,    73,    44,
-       7,    45,    74,    31,     4,    32,    43,    43,    44,    44,
-      45,    45,    48,    28,    48,    73,    29,    88,    89,    74,
-      90,    91,    92,     1,    93,     5,    94,    11,    33,    34,
-      13,    35,   113,    27,   117,   118,    36,    37,    12,    25,
-      14,    15,    38,    16,    23,    18,    19,    20,    31,    24,
-      32,    16,    17,    18,    19,    20,    50,   127,   128,   129,
-     130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     140,   141,   142,    33,    34,    46,    35,    18,    19,    20,
-      56,    36,    37,   153,   154,    47,    53,    38,    57,    43,
-      43,    44,    44,    45,    45,    58,    77,    78,    16,    59,
-      18,    19,    20,    71,    60,    61,   157,   152,   158,    72,
-      75,    31,    62,    32,    54,    98,    99,   100,    76,    63,
-     165,    96,    97,    98,    99,   100,    43,    79,    44,    37,
-      45,    64,    80,    65,    66,    59,    33,    34,    81,    35,
-      60,    61,    82,    87,    36,    37,    59,   115,    62,    83,
-      38,    60,    61,    84,    28,    63,   114,    86,   119,    62,
-      96,    97,    98,    99,   100,    37,    63,    64,   112,    65,
-      66,   106,   107,   108,   109,   121,    37,    59,    64,   122,
-      65,    66,    60,    61,    46,   143,    18,    19,    20,   145,
-      62,   146,   150,   149,    51,   151,   155,    63,   156,   160,
-     166,   161,    85,    52,    95,   159,   164,    37,   163,    64,
-       0,    65,    66,    96,    97,    98,    99,   100,   101,   102,
-     103,     0,   104,   105,   106,   107,   108,   109,   147,     0,
-       0,     0,     0,     0,   110,   111,    96,    97,    98,    99,
-     100,   101,   102,   103,     0,   104,   105,   106,   107,   108,
-     109,     0,     0,     0,     0,   124,     0,   110,   111,    96,
-      97,    98,    99,   100,   101,   102,   103,     0,   104,   105,
-     106,   107,   108,   109,     0,     0,     0,     0,   125,     0,
-     110,   111,    96,    97,    98,    99,   100,   101,   102,   103,
-       0,   104,   105,   106,   107,   108,   109,     0,     0,     0,
-       0,   126,     0,   110,   111,    96,    97,    98,    99,   100,
-     101,   102,   103,     0,   104,   105,   106,   107,   108,   109,
-       0,     0,     0,     0,   144,     0,   110,   111,    96,    97,
-      98,    99,   100,   101,   102,   103,     0,   104,   105,   106,
-     107,   108,   109,     0,     0,     0,     0,     0,     0,   110,
-     111,   162,     0,    96,    97,    98,    99,   100,   101,   102,
-     103,     0,   104,   105,   106,   107,   108,   109,     0,     0,
-       0,     0,     0,     0,   110,   111,    96,    97,    98,    99,
-     100,   101,   102,   103,     0,   104,   105,   106,   107,   108,
-     109,     0,     0,     0,     0,     0,     0,   110,   111,    96,
-      97,    98,    99,   100,   101,     0,   103,     0,   104,   105,
-     106,   107,   108,   109,    96,    97,    98,    99,   100,   101,
-     110,   111,     0,   104,   105,   106,   107,   108,   109,    96,
-      97,    98,    99,   100,     0,   110,   111,     0,   104,   105,
-     106,   107,   108,   109,    96,    97,    98,    99,   100,     0,
-     110,   111,     0,   104,   105,   106,   107,   108,   109
+       5,    20,    21,    22,     1,     6,     7,    18,    19,    20,
+      21,    22,     3,     4,     0,     0,     0,     0,     0,     0,
+       8,     0,     0,    13,    14,    15,    16,     0,     0,     0,
+       0,     0,     9,     0,    10,    11,    35,    36,    37,    38,
+      39,    40,    41,    42,    43,    44,    45,    46,    47,    48,
+      49,    50,    17,     0,     0,     0,     0,     0,    18,    19,
+      20,    21,    22,    23,    24,    25,     0,    26,    27,    28,
+      29,    30,    31,     0,     0,     0,     0,    34,     0,    32,
+      33,    18,    19,    20,    21,    22,    23,    24,    25,     0,
+      26,    27,    28,    29,    30,    31,     0,     0,     0,     0,
+       0,     0,    32,    33,    18,    19,    20,    21,    22,    23,
+       0,    25,     0,    26,    27,    28,    29,    30,    31,    18,
+      19,    20,    21,    22,    23,    32,    33,     0,    26,    27,
+      28,    29,    30,    31,    18,    19,    20,    21,    22,     0,
+      32,    33,     0,    26,    27,    28,    29,    30,    31,    18,
+      19,    20,    21,    22,     0,    32,    33,     0,    26,    27,
+      28,    29,    30,    31,    18,    19,    20,    21,    22,     0,
+       0,     0,     0,     0,     0,    28,    29,    30,    31
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      25,    32,    25,     4,    25,    50,    11,    32,    15,    32,
-      11,    32,    19,    11,     0,    13,    41,    42,    41,    42,
-      41,    42,    27,    12,    29,    15,    15,    56,    57,    19,
-      59,    60,    61,     3,    63,    13,    43,     5,    36,    37,
-      14,    39,    71,    15,    73,    74,    44,    45,     7,    13,
-       9,    10,    50,     6,    50,     8,     9,    10,    11,    50,
-      13,     6,     7,     8,     9,    10,    50,    96,    97,    98,
-      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
-     109,   110,   111,    36,    37,     6,    39,     8,     9,    10,
-      15,    44,    45,   124,   125,    16,    11,    50,    15,   124,
-     125,   124,   125,   124,   125,    11,    41,    42,     6,    15,
-       8,     9,    10,    15,    20,    21,   145,   122,   147,    15,
-      50,    11,    28,    13,    14,    22,    23,    24,    14,    35,
-     161,    20,    21,    22,    23,    24,   161,    11,   161,    45,
-     161,    47,    11,    49,    50,    15,    36,    37,    11,    39,
-      20,    21,    17,    14,    44,    45,    15,    16,    28,    50,
-      50,    20,    21,    16,    12,    35,    50,    16,    12,    28,
-      20,    21,    22,    23,    24,    45,    35,    47,    48,    49,
-      50,    31,    32,    33,    34,    18,    45,    15,    47,    12,
-      49,    50,    20,    21,     6,    16,     8,     9,    10,    17,
-      28,    16,    11,    50,    16,    50,    11,    35,    11,    50,
-      16,    38,    50,    29,    11,   149,   160,    45,   158,    47,
-      -1,    49,    50,    20,    21,    22,    23,    24,    25,    26,
-      27,    -1,    29,    30,    31,    32,    33,    34,    12,    -1,
-      -1,    -1,    -1,    -1,    41,    42,    20,    21,    22,    23,
-      24,    25,    26,    27,    -1,    29,    30,    31,    32,    33,
-      34,    -1,    -1,    -1,    -1,    16,    -1,    41,    42,    20,
-      21,    22,    23,    24,    25,    26,    27,    -1,    29,    30,
-      31,    32,    33,    34,    -1,    -1,    -1,    -1,    16,    -1,
-      41,    42,    20,    21,    22,    23,    24,    25,    26,    27,
-      -1,    29,    30,    31,    32,    33,    34,    -1,    -1,    -1,
-      -1,    16,    -1,    41,    42,    20,    21,    22,    23,    24,
-      25,    26,    27,    -1,    29,    30,    31,    32,    33,    34,
-      -1,    -1,    -1,    -1,    16,    -1,    41,    42,    20,    21,
+      15,    22,    23,    24,     3,    20,    21,    20,    21,    22,
+      23,    24,    13,     0,    -1,    -1,    -1,    -1,    -1,    -1,
+      35,    -1,    -1,     5,     6,     7,     8,    -1,    -1,    -1,
+      -1,    -1,    47,    -1,    49,    50,    18,    19,    20,    21,
+      22,    23,    24,    25,    26,    27,    28,    29,    30,    31,
+      32,    33,    14,    -1,    -1,    -1,    -1,    -1,    20,    21,
       22,    23,    24,    25,    26,    27,    -1,    29,    30,    31,
-      32,    33,    34,    -1,    -1,    -1,    -1,    -1,    -1,    41,
-      42,    18,    -1,    20,    21,    22,    23,    24,    25,    26,
-      27,    -1,    29,    30,    31,    32,    33,    34,    -1,    -1,
-      -1,    -1,    -1,    -1,    41,    42,    20,    21,    22,    23,
-      24,    25,    26,    27,    -1,    29,    30,    31,    32,    33,
-      34,    -1,    -1,    -1,    -1,    -1,    -1,    41,    42,    20,
-      21,    22,    23,    24,    25,    -1,    27,    -1,    29,    30,
-      31,    32,    33,    34,    20,    21,    22,    23,    24,    25,
+      32,    33,    34,    -1,    -1,    -1,    -1,    16,    -1,    41,
+      42,    20,    21,    22,    23,    24,    25,    26,    27,    -1,
+      29,    30,    31,    32,    33,    34,    -1,    -1,    -1,    -1,
+      -1,    -1,    41,    42,    20,    21,    22,    23,    24,    25,
+      -1,    27,    -1,    29,    30,    31,    32,    33,    34,    20,
+      21,    22,    23,    24,    25,    41,    42,    -1,    29,    30,
+      31,    32,    33,    34,    20,    21,    22,    23,    24,    -1,
       41,    42,    -1,    29,    30,    31,    32,    33,    34,    20,
       21,    22,    23,    24,    -1,    41,    42,    -1,    29,    30,
       31,    32,    33,    34,    20,    21,    22,    23,    24,    -1,
-      41,    42,    -1,    29,    30,    31,    32,    33,    34
+      -1,    -1,    -1,    -1,    -1,    31,    32,    33,    34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    52,    50,     0,    13,     4,    11,    53,    54,
-      55,     5,    53,    14,    53,    53,     6,     7,     8,     9,
-      10,    57,    58,    50,    50,    13,    61,    15,    12,    15,
-      56,    11,    13,    36,    37,    39,    44,    45,    50,    57,
-      62,    63,    65,    66,    69,    70,     6,    16,    57,    59,
-      50,    16,    59,    11,    14,    65,    15,    15,    11,    15,
-      20,    21,    28,    35,    47,    49,    50,    66,    69,    70,
-      71,    15,    15,    15,    19,    50,    14,    62,    62,    11,
-      11,    11,    17,    50,    16,    56,    16,    14,    71,    71,
-      71,    71,    71,    71,    43,    11,    20,    21,    22,    23,
-      24,    25,    26,    27,    29,    30,    31,    32,    33,    34,
-      41,    42,    48,    71,    50,    16,    67,    71,    71,    12,
-      64,    18,    12,    60,    16,    16,    16,    71,    71,    71,
-      71,    71,    71,    71,    71,    71,    71,    71,    71,    71,
-      71,    71,    71,    16,    16,    17,    16,    12,    68,    50,
-      11,    50,    57,    65,    65,    11,    11,    71,    71,    64,
-      50,    38,    18,    68,    60,    65,    16
+       0,     3,    52,    13,     0,    15,    20,    21,    35,    47,
+      49,    50,    53,    53,    53,    53,    53,    14,    20,    21,
+      22,    23,    24,    25,    26,    27,    29,    30,    31,    32,
+      33,    34,    41,    42,    16,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
+      53
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    51,    52,    53,    53,    53,    53,    53,    53,    54,
-      55,    56,    56,    57,    57,    57,    57,    58,    58,    58,
-      58,    59,    59,    60,    60,    61,    62,    62,    62,    62,
-      63,    64,    64,    65,    65,    65,    65,    65,    65,    65,
-      65,    65,    65,    65,    65,    65,    66,    66,    67,    67,
-      68,    68,    69,    70,    71,    71,    71,    71,    71,    71,
-      71,    71,    71,    71,    71,    71,    71,    71,    71,    71,
-      71,    71,    71,    71,    71,    71,    71,    71,    71,    71,
-      71,    71
+       0,    51,    52,    53,    53,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     5,     2,     1,     2,     1,     2,     1,     4,
-       6,     3,     2,     1,     1,     1,     1,     5,     4,     5,
-       4,     3,     4,     4,     3,     3,     2,     1,     2,     1,
-       4,     3,     2,     2,     3,     5,     7,     5,     3,     2,
-       2,     2,     2,     1,     5,     5,     4,     3,     1,     2,
-       3,     2,     3,     7,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       2,     2,     2,     3,     1,     1,     1,     1,     2,     1,
-       1,     1
+       0,     2,     4,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     3,     3,     3,     3,     3,     2,
+       2,     2,     3,     1,     1,     1
 };
 
 
@@ -1590,708 +1472,268 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 66 "jucompiler.y"
-                                                                                    {
-                                                                root = AST_newNode("Program","");
+#line 65 "expr.y"
+                                                            {
                                                                 printf("Program\n");
-                                                                //TODO: COLOCAR O ID
-																(yyval.ast) = AST_newNode("MethodDecl","");
-                                                                printf("MethodDecl\n");
-                                                                AST_addSon(root,(yyval.ast));
-                                                                
-                                                                                    }
-#line 1604 "y.tab.c"
+                                                                root = AST_newNode("Program","");
+                                                                //TODO: COLOCAR O ID 
+                                                                //aux = AST_newNode("Expr","");
+                                                                AST_addSon(root, aux);
+                                                                printf("addson\n");
+                                                                (yyval.ast) = root;
+                                                            }
+#line 1486 "y.tab.c"
     break;
 
   case 3:
-#line 77 "jucompiler.y"
-                                                                                    {
-                                                                AST_addBrother((yyval.ast), (yyvsp[-1].ast));
-                                                                (yyval.ast) = (yyvsp[0].ast); 
+#line 76 "expr.y"
+                                                                                    {	
+                                                                printf("Expr\n");															
+                                                                aux = AST_newNode("PLUS","");
+                                                                printf("aux criado\n");
+                                                                //printf("PLUS\n");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+                                                                printf("addson1\n");
+                                                                (yyval.ast) = aux;
+                                                                printf("antes addbrothret\n");
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                printf(" depois addbrother\n");
                                                                                     }
-#line 1613 "y.tab.c"
+#line 1503 "y.tab.c"
     break;
 
   case 4:
-#line 81 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = (yyvsp[0].ast); 
-                                                                                    }
-#line 1621 "y.tab.c"
-    break;
-
-  case 5:
-#line 84 "jucompiler.y"
-                                                                                    {
-                                                                AST_addBrother((yyval.ast), (yyvsp[-1].ast));
-                                                                (yyval.ast) = (yyvsp[0].ast); 
-                                                                                    }
-#line 1630 "y.tab.c"
-    break;
-
-  case 6:
-#line 88 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = (yyvsp[0].ast); 
-                                                                                    }
-#line 1638 "y.tab.c"
-    break;
-
-  case 7:
-#line 91 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = (yyvsp[0].ast);
-                                                                                    }
-#line 1646 "y.tab.c"
-    break;
-
-  case 8:
-#line 94 "jucompiler.y"
-                                                                                    {(yyval.ast) = NULL;}
-#line 1652 "y.tab.c"
-    break;
-
-  case 9:
-#line 97 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodDecl","");
-                                                                AST_addSon((yyval.ast),(yyvsp[-1].ast));
-                                                                AST_addBrother((yyvsp[-1].ast),(yyvsp[0].ast));
-                                                                                    }
-#line 1662 "y.tab.c"
-    break;
-
-  case 10:
-#line 104 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("FieldDecl","");
-                                                                // Adicionar Type
-                                                                // Adicionar ID
-                                                                                    }
-#line 1672 "y.tab.c"
-    break;
-
-  case 11:
-#line 111 "jucompiler.y"
-                                                                                    {;}
-#line 1678 "y.tab.c"
-    break;
-
-  case 12:
-#line 112 "jucompiler.y"
-                                                                                    {;}
-#line 1684 "y.tab.c"
-    break;
-
-  case 13:
-#line 115 "jucompiler.y"
-                                                                                    {
-                                                                                        (yyval.ast) = AST_newNode("Bool","");
-                                                                                        type = (yyval.ast)->type;
-                                                                                    }
-#line 1693 "y.tab.c"
-    break;
-
-  case 14:
-#line 119 "jucompiler.y"
-                                                                                    {
-                                                                                        (yyval.ast) = AST_newNode("Int","");
-                                                                                        type = (yyval.ast)->type;
-                                                                                    }
-#line 1702 "y.tab.c"
-    break;
-
-  case 15:
-#line 123 "jucompiler.y"
-                                                                                    {
-                                                                                        (yyval.ast) = AST_newNode("Double","");
-                                                                                        type = (yyval.ast)->type;
-                                                                                    }
-#line 1711 "y.tab.c"
-    break;
-
-  case 16:
-#line 127 "jucompiler.y"
-                                                                                    {
-                                                                                        (yyval.ast) = AST_newNode("String","");
-                                                                                        type = (yyval.ast)->type;
-                                                                                    }
-#line 1720 "y.tab.c"
-    break;
-
-  case 17:
-#line 133 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodHeader","");
-                                                                // Adicionar Type (filho)
-                                                                AST_addBrother((yyvsp[-4].ast),(yyvsp[-1].ast));
-                                                                // Adicionar ID
-
-                                                                                    }
-#line 1732 "y.tab.c"
-    break;
-
-  case 18:
-#line 140 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodHeader","");
-                                                                // Adicionar Type (filho)
-                                                                // Adicionar ID
-
-                                                                                    }
-#line 1743 "y.tab.c"
-    break;
-
-  case 19:
-#line 146 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodHeader","");
-                                                                // Adicionar VOID (filho)
-                                                                //AST_addBrother($1,$4);
-                                                                                    }
-#line 1753 "y.tab.c"
-    break;
-
-  case 20:
-#line 151 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodHeader","");
-                                                                // Adicionar VOID (filho)
-                                                                // Adicionar ID
-                                                                                    }
-#line 1763 "y.tab.c"
-    break;
-
-  case 21:
-#line 160 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("MethodParams","");
-                                                                // Adicionar Type (filho)
-                                                                // Adicionar ID
-                                                                                    }
-#line 1773 "y.tab.c"
-    break;
-
-  case 22:
-#line 165 "jucompiler.y"
-                                                                                    {
-                                                                // Adicionar filho
-                                                                                    }
-#line 1781 "y.tab.c"
-    break;
-
-  case 23:
-#line 170 "jucompiler.y"
-                                                                                    {
-                                                                // Adicionar Type (irmao)
-                                                                // Adicionar ID (irmao)
-                                                                (yyval.ast) = (yyvsp[0].ast);
-                                                                                    }
-#line 1791 "y.tab.c"
-    break;
-
-  case 24:
-#line 175 "jucompiler.y"
-                                                                                    {
-                                                                // Adicionar Type (irmao)
-                                                                // Adicionar ID (irmao)
-                                                                                    }
-#line 1800 "y.tab.c"
-    break;
-
-  case 25:
-#line 181 "jucompiler.y"
-                                                                                    {;}
-#line 1806 "y.tab.c"
-    break;
-
-  case 26:
-#line 184 "jucompiler.y"
-                                                                                    {;}
-#line 1812 "y.tab.c"
-    break;
-
-  case 27:
-#line 185 "jucompiler.y"
-                                                                                    {;}
-#line 1818 "y.tab.c"
-    break;
-
-  case 28:
-#line 186 "jucompiler.y"
-                                                                                    {;}
-#line 1824 "y.tab.c"
-    break;
-
-  case 29:
-#line 187 "jucompiler.y"
-                                                                                    {;}
-#line 1830 "y.tab.c"
-    break;
-
-  case 30:
-#line 190 "jucompiler.y"
-                                                                                    {;}
-#line 1836 "y.tab.c"
-    break;
-
-  case 31:
-#line 193 "jucompiler.y"
-                                                                                    {;}
-#line 1842 "y.tab.c"
-    break;
-
-  case 32:
-#line 194 "jucompiler.y"
-                                                                                    {;}
-#line 1848 "y.tab.c"
-    break;
-
-  case 33:
-#line 198 "jucompiler.y"
-                                                                                    {(yyval.ast) = NULL;}
-#line 1854 "y.tab.c"
-    break;
-
-  case 34:
-#line 199 "jucompiler.y"
-                                                                                    {
-                                                                                    if((yyvsp[-1].ast) != NULL && (yyvsp[-1].ast)->brother != NULL){
-                                                                                        (yyval.ast) = AST_newNode("Statement","");
-                                                                                        AST_addSon((yyval.ast),(yyvsp[-1].ast));
-                                                                                    }else if((yyvsp[-1].ast) != NULL && (yyvsp[-1].ast)->brother == NULL){
-                                                                                        (yyval.ast) = (yyvsp[-1].ast);
-                                                                                    }else{
-                                                                                        (yyval.ast) = NULL;
-                                                                                    }
-                                                                                    }
-#line 1869 "y.tab.c"
-    break;
-
-  case 35:
-#line 210 "jucompiler.y"
-                                                                                    {
-                                                                                    (yyval.ast) = AST_newNode("If","");
-                                                                                    AST_addSon((yyval.ast), (yyvsp[-2].ast));
-                                                                                    if((yyvsp[0].ast) != NULL){
-                                                                                        AST_addBrother((yyvsp[-2].ast), (yyvsp[0].ast));
-                                                                                    }else{
-                                                                                        aux = AST_newNode("Null","");
-                                                                                        AST_addBrother((yyvsp[-2].ast), aux);
-                                                                                    }
-                                                                                    }
-#line 1884 "y.tab.c"
-    break;
-
-  case 36:
-#line 221 "jucompiler.y"
-                                                                                    {
-                                                                                    (yyval.ast) = AST_newNode("If","");
-                                                                                    AST_addSon((yyval.ast), (yyvsp[-4].ast));
-                                                                                    if((yyvsp[-2].ast) != NULL){
-                                                                                        AST_addBrother((yyvsp[-4].ast), (yyvsp[-2].ast));
-                                                                                    }else{
-                                                                                        aux = AST_newNode("Null","");
-                                                                                        AST_addBrother((yyvsp[-4].ast), aux);
-                                                                                    }
-                                                                                    if((yyvsp[0].ast) != NULL){
-                                                                                        AST_addBrother((yyvsp[-4].ast), (yyvsp[0].ast));
-
-                                                                                    }else{
-                                                                                        aux = AST_newNode("Null","");
-                                                                                        //AST_addBrother($53, aux);
-                                                                                    }                                                                               
-                                                                                    }
-#line 1906 "y.tab.c"
-    break;
-
-  case 37:
-#line 239 "jucompiler.y"
-                                                                                    {
-                                                                                    (yyval.ast) = AST_newNode("While","");
-                                                                                    AST_addSon((yyval.ast),(yyvsp[-2].ast));
-                                                                                    if((yyvsp[0].ast) != NULL){
-                                                                                        AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                                    }else{
-                                                                                        aux = AST_newNode("Null","");
-                                                                                        AST_addBrother((yyvsp[-2].ast),aux);
-                                                                                    }
-                                                                                    }
-#line 1921 "y.tab.c"
-    break;
-
-  case 38:
-#line 250 "jucompiler.y"
-                                                                                    {(yyval.ast) = AST_newNode("Return","");
-                                                                                    AST_addSon((yyval.ast),(yyvsp[-1].ast));
-                                                                                    }
-#line 1929 "y.tab.c"
-    break;
-
-  case 39:
-#line 253 "jucompiler.y"
-                                                                                    {(yyval.ast) = AST_newNode("Return","");
-                                                                                    aux = AST_newNode("NULL","");
-                                                                                    AST_addSon((yyval.ast),aux);
-                                                                                    }
-#line 1938 "y.tab.c"
-    break;
-
-  case 40:
-#line 257 "jucompiler.y"
-                                                                                    {;}
-#line 1944 "y.tab.c"
-    break;
-
-  case 41:
-#line 258 "jucompiler.y"
-                                                                                    {;}
-#line 1950 "y.tab.c"
-    break;
-
-  case 42:
-#line 259 "jucompiler.y"
-                                                                                    {;}
-#line 1956 "y.tab.c"
-    break;
-
-  case 43:
-#line 260 "jucompiler.y"
-                                                                                    {(yyval.ast) = NULL;}
-#line 1962 "y.tab.c"
-    break;
-
-  case 44:
-#line 261 "jucompiler.y"
-                                                                                    {;}
-#line 1968 "y.tab.c"
-    break;
-
-  case 45:
-#line 262 "jucompiler.y"
-                                                                                    {;}
-#line 1974 "y.tab.c"
-    break;
-
-  case 46:
-#line 264 "jucompiler.y"
-                                                                                    {;}
-#line 1980 "y.tab.c"
-    break;
-
-  case 47:
-#line 265 "jucompiler.y"
-                                                                                    {;}
-#line 1986 "y.tab.c"
-    break;
-
-  case 48:
-#line 268 "jucompiler.y"
-                                                                                    {;}
-#line 1992 "y.tab.c"
-    break;
-
-  case 49:
-#line 269 "jucompiler.y"
-                                                                                    {;}
-#line 1998 "y.tab.c"
-    break;
-
-  case 50:
-#line 272 "jucompiler.y"
-                                                                                    {;}
-#line 2004 "y.tab.c"
-    break;
-
-  case 51:
-#line 273 "jucompiler.y"
-                                                                                    {;}
-#line 2010 "y.tab.c"
-    break;
-
-  case 52:
-#line 276 "jucompiler.y"
-                                                                                    {;}
-#line 2016 "y.tab.c"
-    break;
-
-  case 53:
-#line 279 "jucompiler.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("ParseArgs","");
-                                                                printf("ParseArgs\n");
-                                                                // Adicionar ID (irmao)
-                                                                (yyval.ast) = (yyvsp[-2].ast);
-                                                                                    }
-#line 2027 "y.tab.c"
-    break;
-
-  case 54:
-#line 287 "jucompiler.y"
-                                                                                    {																
-                                                                (yyval.ast) = AST_newNode("PLUS","");
-                                                                printf("PLUS\n");
-																AST_addSon((yyval.ast),(yyvsp[-2].ast));
-																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                                    }
-#line 2038 "y.tab.c"
-    break;
-
-  case 55:
-#line 293 "jucompiler.y"
+#line 88 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("MINUS","");
                                                                 printf("MINUS\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2049 "y.tab.c"
+#line 1514 "y.tab.c"
     break;
 
-  case 56:
-#line 299 "jucompiler.y"
+  case 5:
+#line 94 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("STAR","");
                                                                 printf("STAR\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2060 "y.tab.c"
+#line 1525 "y.tab.c"
     break;
 
-  case 57:
-#line 305 "jucompiler.y"
+  case 6:
+#line 100 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("DIV","");
                                                                 printf("DIV\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2071 "y.tab.c"
+#line 1536 "y.tab.c"
     break;
 
-  case 58:
-#line 311 "jucompiler.y"
+  case 7:
+#line 106 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("MOD","");
                                                                 printf("MOD\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2082 "y.tab.c"
+#line 1547 "y.tab.c"
     break;
 
-  case 59:
-#line 317 "jucompiler.y"
+  case 8:
+#line 112 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("OR","");
                                                                 printf("OR\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2093 "y.tab.c"
+#line 1558 "y.tab.c"
     break;
 
-  case 60:
-#line 323 "jucompiler.y"
+  case 9:
+#line 118 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("XOR","");
                                                                 printf("XOR\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2104 "y.tab.c"
+#line 1569 "y.tab.c"
     break;
 
-  case 61:
-#line 329 "jucompiler.y"
+  case 10:
+#line 124 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("AND","");
                                                                 printf("AND\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2115 "y.tab.c"
+#line 1580 "y.tab.c"
     break;
 
-  case 62:
-#line 335 "jucompiler.y"
+  case 11:
+#line 130 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("LSHIFT","");
                                                                 printf("LSHIFT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2126 "y.tab.c"
+#line 1591 "y.tab.c"
     break;
 
-  case 63:
-#line 341 "jucompiler.y"
+  case 12:
+#line 136 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("RSHIFT","");
                                                                 printf("RSHIFT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2137 "y.tab.c"
+#line 1602 "y.tab.c"
     break;
 
-  case 64:
-#line 347 "jucompiler.y"
+  case 13:
+#line 142 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("EQ","");
                                                                 printf("EQ\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2148 "y.tab.c"
+#line 1613 "y.tab.c"
     break;
 
-  case 65:
-#line 353 "jucompiler.y"
+  case 14:
+#line 148 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("NE","");
                                                                 printf("NE\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2159 "y.tab.c"
+#line 1624 "y.tab.c"
     break;
 
-  case 66:
-#line 359 "jucompiler.y"
+  case 15:
+#line 154 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("LT","");
                                                                 printf("LT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2170 "y.tab.c"
+#line 1635 "y.tab.c"
     break;
 
-  case 67:
-#line 365 "jucompiler.y"
+  case 16:
+#line 160 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("GT","");
                                                                 printf("GT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2181 "y.tab.c"
+#line 1646 "y.tab.c"
     break;
 
-  case 68:
-#line 371 "jucompiler.y"
+  case 17:
+#line 166 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("LE","");
                                                                 printf("LE\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2192 "y.tab.c"
+#line 1657 "y.tab.c"
     break;
 
-  case 69:
-#line 377 "jucompiler.y"
+  case 18:
+#line 172 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("GE","");
                                                                 printf("GE\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 2203 "y.tab.c"
+#line 1668 "y.tab.c"
     break;
 
-  case 70:
-#line 383 "jucompiler.y"
+  case 19:
+#line 178 "expr.y"
                                                                                     {
         														(yyval.ast) = AST_newNode("MINUS","");
                                                                 printf("MINUS\n");
 																AST_addSon((yyval.ast),(yyvsp[0].ast));
                                                                                     }
-#line 2213 "y.tab.c"
+#line 1678 "y.tab.c"
     break;
 
-  case 71:
-#line 388 "jucompiler.y"
+  case 20:
+#line 183 "expr.y"
                                                                                     {
-                                                                                    (yyval.ast) = AST_newNode("NOT","");
-                                                                                    printf("NOT\n");
-                                                                                    AST_addSon((yyval.ast),(yyvsp[0].ast));
+                                                                (yyval.ast) = AST_newNode("NOT","");
+                                                                printf("NOT\n");
+                                                                AST_addSon((yyval.ast),(yyvsp[0].ast));
                                                                                     }
-#line 2223 "y.tab.c"
+#line 1688 "y.tab.c"
     break;
 
-  case 72:
-#line 393 "jucompiler.y"
+  case 21:
+#line 188 "expr.y"
                                                                                     {
-                                                                                    (yyval.ast) = AST_newNode("PLUS","");
-                                                                                    printf("PLUS\n");
-                                                                                    AST_addSon((yyval.ast),(yyvsp[0].ast));
+                                                                (yyval.ast) = AST_newNode("PLUS","");
+                                                                printf("PLUS\n");
+                                                                AST_addSon((yyval.ast),(yyvsp[0].ast));
                                                                                     }
-#line 2233 "y.tab.c"
+#line 1698 "y.tab.c"
     break;
 
-  case 73:
-#line 398 "jucompiler.y"
+  case 22:
+#line 193 "expr.y"
                                                                                     {
-                                                                                    (yyval.ast) = AST_newNode("ENTRE PARS","");
-                                                                                    printf("ENTRE PARS\n");
-                                                                                    AST_addSon((yyval.ast),(yyvsp[-1].ast));
+                                                                (yyval.ast) = AST_newNode("ENTRE PARS","");
+                                                                printf("ENTRE PARS\n");
+                                                                AST_addSon((yyval.ast),(yyvsp[-1].ast));
                                                                                     }
-#line 2243 "y.tab.c"
+#line 1708 "y.tab.c"
     break;
 
-  case 74:
-#line 403 "jucompiler.y"
-                                                                                    {;}
-#line 2249 "y.tab.c"
+  case 23:
+#line 198 "expr.y"
+                                                                                    {
+                                                                AST_newNode("ID",(yyvsp[0].string));
+                                                                                    }
+#line 1716 "y.tab.c"
     break;
 
-  case 75:
-#line 404 "jucompiler.y"
-                                                                                    {;}
-#line 2255 "y.tab.c"
+  case 24:
+#line 202 "expr.y"
+                                                                                    {
+                                                                printf("INTLIT\n");
+                                                                (yyval.ast) = AST_newNode("INTLIT",(yyvsp[0].string));
+                                                                                    }
+#line 1725 "y.tab.c"
     break;
 
-  case 76:
-#line 405 "jucompiler.y"
-                                                                                    {;}
-#line 2261 "y.tab.c"
-    break;
-
-  case 77:
-#line 406 "jucompiler.y"
-                                                                                    {AST_newNode("ID",(yyvsp[0].string));}
-#line 2267 "y.tab.c"
-    break;
-
-  case 78:
-#line 407 "jucompiler.y"
-                                                                                    {;}
-#line 2273 "y.tab.c"
-    break;
-
-  case 79:
-#line 408 "jucompiler.y"
-                                                                                    {(yyval.ast) = AST_newNode("INTLIT",(yyvsp[0].string));}
-#line 2279 "y.tab.c"
-    break;
-
-  case 80:
-#line 409 "jucompiler.y"
-                                                                                    {(yyval.ast) = AST_newNode("REALLIT",(yyvsp[0].string));}
-#line 2285 "y.tab.c"
-    break;
-
-  case 81:
-#line 410 "jucompiler.y"
-                                                                                    {;}
-#line 2291 "y.tab.c"
+  case 25:
+#line 206 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("REALLIT",(yyvsp[0].string));
+                                                                                    }
+#line 1733 "y.tab.c"
     break;
 
 
-#line 2295 "y.tab.c"
+#line 1737 "y.tab.c"
 
       default: break;
     }
@@ -2523,15 +1965,9 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 413 "jucompiler.y"
+#line 211 "expr.y"
 
-/* META2 CORRER:
-    lex juccompiler.l
-    yacc -d -v juccompiler.y		
-    cc -o juccompiler y.tab.c lex.yy.c Tree.c
-    ./juccompiler
-    ./juccompiler -t < INPUT
-*/
+
 int main(int argc, char *argv[]){
     if(argc > 1){
 		if(strcmp(argv[1],"-e1") == 0){

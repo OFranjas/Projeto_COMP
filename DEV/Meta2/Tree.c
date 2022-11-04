@@ -9,12 +9,14 @@
 /* Create a new node */
 AST *AST_newNode(char *type, char *value)
 {
+    printf("Antes do malloc\n");
     AST* new = (AST*)malloc(sizeof(AST));
     new->type = type;
     new->value = value;
     new->father = NULL;
     new->son = NULL;
     new->brother = NULL;
+    printf("Depois do malloc\n");
     return new;
 }
 
@@ -69,6 +71,7 @@ void AST_addBrother(AST* brother, AST* new)
 /* Function to print the AST tree */
 void AST_print(AST* AST)
 {
+    //printf("estou aqui \n");
     if (AST == NULL)
     {
         printf("A RAIZ ESTA A NULL\n");
