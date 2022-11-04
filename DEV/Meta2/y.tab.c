@@ -561,16 +561,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   178
+#define YYLAST   163
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  51
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  25
+#define YYNRULES  27
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  51
+#define YYNSTATES  54
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   305
@@ -622,9 +622,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    65,    65,    76,    88,    94,   100,   106,   112,   118,
-     124,   130,   136,   142,   148,   154,   160,   166,   172,   178,
-     183,   188,   193,   198,   202,   206
+       0,    65,    65,    74,    81,    86,    91,    96,   101,   106,
+     111,   116,   121,   126,   131,   136,   141,   146,   151,   156,
+     160,   164,   168,   171,   175,   179,   182,   186
 };
 #endif
 
@@ -657,7 +657,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-22)
+#define YYPACT_NINF (-39)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -671,12 +671,12 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-       1,    -1,    13,   -15,   -22,   -15,   -15,   -15,   -15,   -22,
-     -22,   -22,    38,    61,   -21,   -21,   -22,   -22,   -15,   -15,
-     -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,
-     -15,   -15,   -15,   -15,   -22,   -21,   -21,   -22,   -22,   -22,
-     114,    84,    99,   144,   144,   -13,   -13,   -13,   -13,   129,
-     129
+       1,   -38,    14,    11,   -39,   -15,   -15,   -15,   -15,   -39,
+     -15,   -39,   -39,   -12,    38,    61,   -21,   -21,   -39,   -39,
+     -39,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15,
+     -15,   -15,   -15,   -15,   -15,   -15,   -15,   -39,   -21,   -21,
+     -39,   -39,   -39,   114,    84,    99,    -5,    -5,   -13,   -13,
+     -13,   -13,   129,   129
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -684,24 +684,24 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     1,     0,     0,     0,     0,    25,
-      24,    23,     0,     0,    21,    19,    20,     2,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    22,     3,     4,     5,     6,     7,
-       9,     8,    10,    13,    14,    17,    18,    15,    16,    11,
-      12
+       0,     0,     0,     0,     1,     0,     0,     0,     0,    27,
+       0,    26,    25,    23,     0,     0,    21,    19,    20,    24,
+       2,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,    22,     3,     4,
+       5,     6,     7,     9,     8,    10,    13,    14,    17,    18,
+      15,    16,    11,    12
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -22,   -22,    18
+     -39,   -39,    15
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,    12
+      -1,     2,    14
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -709,34 +709,33 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       5,    20,    21,    22,     1,     6,     7,    18,    19,    20,
-      21,    22,     3,     4,     0,     0,     0,     0,     0,     0,
-       8,     0,     0,    13,    14,    15,    16,     0,     0,     0,
-       0,     0,     9,     0,    10,    11,    35,    36,    37,    38,
-      39,    40,    41,    42,    43,    44,    45,    46,    47,    48,
-      49,    50,    17,     0,     0,     0,     0,     0,    18,    19,
-      20,    21,    22,    23,    24,    25,     0,    26,    27,    28,
-      29,    30,    31,     0,     0,     0,     0,    34,     0,    32,
-      33,    18,    19,    20,    21,    22,    23,    24,    25,     0,
-      26,    27,    28,    29,    30,    31,     0,     0,     0,     0,
-       0,     0,    32,    33,    18,    19,    20,    21,    22,    23,
-       0,    25,     0,    26,    27,    28,    29,    30,    31,    18,
-      19,    20,    21,    22,    23,    32,    33,     0,    26,    27,
-      28,    29,    30,    31,    18,    19,    20,    21,    22,     0,
-      32,    33,     0,    26,    27,    28,    29,    30,    31,    18,
-      19,    20,    21,    22,     0,    32,    33,     0,    26,    27,
-      28,    29,    30,    31,    18,    19,    20,    21,    22,     0,
-       0,     0,     0,     0,     0,    28,    29,    30,    31
+       6,    23,    24,    25,     1,     7,     8,    21,    22,    23,
+      24,    25,     3,     9,     4,    21,    22,    23,    24,    25,
+      10,    15,    16,    17,     5,    18,    31,    32,    33,    34,
+       0,    19,    11,     0,    12,    13,    38,    39,    40,    41,
+      42,    43,    44,    45,    46,    47,    48,    49,    50,    51,
+      52,    53,    20,     0,     0,     0,     0,     0,    21,    22,
+      23,    24,    25,    26,    27,    28,     0,    29,    30,    31,
+      32,    33,    34,     0,     0,     0,     0,    37,     0,    35,
+      36,    21,    22,    23,    24,    25,    26,    27,    28,     0,
+      29,    30,    31,    32,    33,    34,     0,     0,     0,     0,
+       0,     0,    35,    36,    21,    22,    23,    24,    25,    26,
+       0,    28,     0,    29,    30,    31,    32,    33,    34,    21,
+      22,    23,    24,    25,    26,    35,    36,     0,    29,    30,
+      31,    32,    33,    34,    21,    22,    23,    24,    25,     0,
+      35,    36,     0,    29,    30,    31,    32,    33,    34,    21,
+      22,    23,    24,    25,     0,    35,    36,     0,    29,    30,
+      31,    32,    33,    34
 };
 
 static const yytype_int8 yycheck[] =
 {
       15,    22,    23,    24,     3,    20,    21,    20,    21,    22,
-      23,    24,    13,     0,    -1,    -1,    -1,    -1,    -1,    -1,
-      35,    -1,    -1,     5,     6,     7,     8,    -1,    -1,    -1,
-      -1,    -1,    47,    -1,    49,    50,    18,    19,    20,    21,
-      22,    23,    24,    25,    26,    27,    28,    29,    30,    31,
-      32,    33,    14,    -1,    -1,    -1,    -1,    -1,    20,    21,
+      23,    24,    50,    28,     0,    20,    21,    22,    23,    24,
+      35,     6,     7,     8,    13,    10,    31,    32,    33,    34,
+      -1,    43,    47,    -1,    49,    50,    21,    22,    23,    24,
+      25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
+      35,    36,    14,    -1,    -1,    -1,    -1,    -1,    20,    21,
       22,    23,    24,    25,    26,    27,    -1,    29,    30,    31,
       32,    33,    34,    -1,    -1,    -1,    -1,    16,    -1,    41,
       42,    20,    21,    22,    23,    24,    25,    26,    27,    -1,
@@ -747,20 +746,19 @@ static const yytype_int8 yycheck[] =
       31,    32,    33,    34,    20,    21,    22,    23,    24,    -1,
       41,    42,    -1,    29,    30,    31,    32,    33,    34,    20,
       21,    22,    23,    24,    -1,    41,    42,    -1,    29,    30,
-      31,    32,    33,    34,    20,    21,    22,    23,    24,    -1,
-      -1,    -1,    -1,    -1,    -1,    31,    32,    33,    34
+      31,    32,    33,    34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,    52,    13,     0,    15,    20,    21,    35,    47,
-      49,    50,    53,    53,    53,    53,    53,    14,    20,    21,
-      22,    23,    24,    25,    26,    27,    29,    30,    31,    32,
-      33,    34,    41,    42,    16,    53,    53,    53,    53,    53,
+       0,     3,    52,    50,     0,    13,    15,    20,    21,    28,
+      35,    47,    49,    50,    53,    53,    53,    53,    53,    43,
+      14,    20,    21,    22,    23,    24,    25,    26,    27,    29,
+      30,    31,    32,    33,    34,    41,    42,    16,    53,    53,
       53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
-      53
+      53,    53,    53,    53
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -768,15 +766,15 @@ static const yytype_int8 yyr1[] =
 {
        0,    51,    52,    53,    53,    53,    53,    53,    53,    53,
       53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
-      53,    53,    53,    53,    53,    53
+      53,    53,    53,    53,    53,    53,    53,    53
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     4,     3,     3,     3,     3,     3,     3,     3,
+       0,     2,     5,     3,     3,     3,     3,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     2,
-       2,     2,     3,     1,     1,     1
+       2,     2,     3,     1,     2,     1,     1,     1
 };
 
 
@@ -1473,267 +1471,256 @@ yyreduce:
     {
   case 2:
 #line 65 "expr.y"
-                                                            {
-                                                                printf("Program\n");
+                                                               {
                                                                 root = AST_newNode("Program","");
-                                                                //TODO: COLOCAR O ID 
-                                                                //aux = AST_newNode("Expr","");
-                                                                AST_addSon(root, aux);
-                                                                printf("addson\n");
+                                                                aux = AST_newNode("ID", (yyvsp[-3].string)); 
+                                                                AST_addSon(root, (yyvsp[-1].ast));
+                                                                AST_addBrother(root, aux);
                                                                 (yyval.ast) = root;
                                                             }
-#line 1486 "y.tab.c"
+#line 1482 "y.tab.c"
     break;
 
   case 3:
-#line 76 "expr.y"
+#line 74 "expr.y"
                                                                                     {	
-                                                                printf("Expr\n");															
-                                                                aux = AST_newNode("PLUS","");
-                                                                printf("aux criado\n");
-                                                                //printf("PLUS\n");
-																AST_addSon((yyval.ast),(yyvsp[-2].ast));
-                                                                printf("addson1\n");
+                                                                aux = AST_newNode("ADD","");
                                                                 (yyval.ast) = aux;
-                                                                printf("antes addbrothret\n");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                printf(" depois addbrother\n");
+                                                                
                                                                                     }
-#line 1503 "y.tab.c"
+#line 1494 "y.tab.c"
     break;
 
   case 4:
-#line 88 "expr.y"
+#line 81 "expr.y"
                                                                                     {
-                                                                (yyval.ast) = AST_newNode("MINUS","");
-                                                                printf("MINUS\n");
+                                                                (yyval.ast) = AST_newNode("SUB","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1504 "y.tab.c"
+    break;
+
+  case 5:
+#line 86 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("MUL","");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
 #line 1514 "y.tab.c"
     break;
 
-  case 5:
-#line 94 "expr.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("STAR","");
-                                                                printf("STAR\n");
-																AST_addSon((yyval.ast),(yyvsp[-2].ast));
-																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                                    }
-#line 1525 "y.tab.c"
-    break;
-
   case 6:
-#line 100 "expr.y"
+#line 91 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("DIV","");
-                                                                printf("DIV\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1536 "y.tab.c"
+#line 1524 "y.tab.c"
     break;
 
   case 7:
-#line 106 "expr.y"
+#line 96 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("MOD","");
-                                                                printf("MOD\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1547 "y.tab.c"
+#line 1534 "y.tab.c"
     break;
 
   case 8:
-#line 112 "expr.y"
+#line 101 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("OR","");
-                                                                printf("OR\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1558 "y.tab.c"
+#line 1544 "y.tab.c"
     break;
 
   case 9:
-#line 118 "expr.y"
+#line 106 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("XOR","");
-                                                                printf("XOR\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1569 "y.tab.c"
+#line 1554 "y.tab.c"
     break;
 
   case 10:
-#line 124 "expr.y"
+#line 111 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("AND","");
-                                                                printf("AND\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1580 "y.tab.c"
+#line 1564 "y.tab.c"
     break;
 
   case 11:
-#line 130 "expr.y"
+#line 116 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("LSHIFT","");
-                                                                printf("LSHIFT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1591 "y.tab.c"
+#line 1574 "y.tab.c"
     break;
 
   case 12:
-#line 136 "expr.y"
+#line 121 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("RSHIFT","");
-                                                                printf("RSHIFT\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1602 "y.tab.c"
+#line 1584 "y.tab.c"
     break;
 
   case 13:
-#line 142 "expr.y"
+#line 126 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("EQ","");
-                                                                printf("EQ\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1613 "y.tab.c"
+#line 1594 "y.tab.c"
     break;
 
   case 14:
-#line 148 "expr.y"
+#line 131 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("NE","");
-                                                                printf("NE\n");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1604 "y.tab.c"
+    break;
+
+  case 15:
+#line 136 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("LT","");
+																AST_addSon((yyval.ast),(yyvsp[-2].ast));
+																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1614 "y.tab.c"
+    break;
+
+  case 16:
+#line 141 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("GT","");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
 #line 1624 "y.tab.c"
     break;
 
-  case 15:
-#line 154 "expr.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("LT","");
-                                                                printf("LT\n");
-																AST_addSon((yyval.ast),(yyvsp[-2].ast));
-																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                                    }
-#line 1635 "y.tab.c"
-    break;
-
-  case 16:
-#line 160 "expr.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("GT","");
-                                                                printf("GT\n");
-																AST_addSon((yyval.ast),(yyvsp[-2].ast));
-																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
-                                                                                    }
-#line 1646 "y.tab.c"
-    break;
-
   case 17:
-#line 166 "expr.y"
+#line 146 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("LE","");
-                                                                printf("LE\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1657 "y.tab.c"
+#line 1634 "y.tab.c"
     break;
 
   case 18:
-#line 172 "expr.y"
+#line 151 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("GE","");
-                                                                printf("GE\n");
 																AST_addSon((yyval.ast),(yyvsp[-2].ast));
 																AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));
                                                                                     }
-#line 1668 "y.tab.c"
+#line 1644 "y.tab.c"
     break;
 
   case 19:
-#line 178 "expr.y"
+#line 156 "expr.y"
                                                                                     {
         														(yyval.ast) = AST_newNode("MINUS","");
-                                                                printf("MINUS\n");
 																AST_addSon((yyval.ast),(yyvsp[0].ast));
                                                                                     }
-#line 1678 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 20:
-#line 183 "expr.y"
+#line 160 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("NOT","");
-                                                                printf("NOT\n");
                                                                 AST_addSon((yyval.ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1662 "y.tab.c"
+    break;
+
+  case 21:
+#line 164 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("PLUS","");
+                                                                AST_addSon((yyval.ast),(yyvsp[0].ast));
+                                                                                    }
+#line 1671 "y.tab.c"
+    break;
+
+  case 22:
+#line 168 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = (yyvsp[-1].ast);
+                                                                                    }
+#line 1679 "y.tab.c"
+    break;
+
+  case 23:
+#line 171 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("ID",(yyvsp[0].string));
+
                                                                                     }
 #line 1688 "y.tab.c"
     break;
 
-  case 21:
-#line 188 "expr.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("PLUS","");
-                                                                printf("PLUS\n");
-                                                                AST_addSon((yyval.ast),(yyvsp[0].ast));
-                                                                                    }
-#line 1698 "y.tab.c"
-    break;
-
-  case 22:
-#line 193 "expr.y"
-                                                                                    {
-                                                                (yyval.ast) = AST_newNode("ENTRE PARS","");
-                                                                printf("ENTRE PARS\n");
-                                                                AST_addSon((yyval.ast),(yyvsp[-1].ast));
-                                                                                    }
-#line 1708 "y.tab.c"
-    break;
-
-  case 23:
-#line 198 "expr.y"
-                                                                                    {
-                                                                AST_newNode("ID",(yyvsp[0].string));
-                                                                                    }
-#line 1716 "y.tab.c"
-    break;
-
   case 24:
-#line 202 "expr.y"
+#line 175 "expr.y"
                                                                                     {
-                                                                printf("INTLIT\n");
-                                                                (yyval.ast) = AST_newNode("INTLIT",(yyvsp[0].string));
+                                                                (yyval.ast) = AST_newNode("ID",(yyvsp[-1].string));
                                                                                     }
-#line 1725 "y.tab.c"
+#line 1696 "y.tab.c"
     break;
 
   case 25:
-#line 206 "expr.y"
+#line 179 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("DecLit",(yyvsp[0].string));
+                                                                                    }
+#line 1704 "y.tab.c"
+    break;
+
+  case 26:
+#line 182 "expr.y"
                                                                                     {
                                                                 (yyval.ast) = AST_newNode("REALLIT",(yyvsp[0].string));
                                                                                     }
-#line 1733 "y.tab.c"
+#line 1712 "y.tab.c"
+    break;
+
+  case 27:
+#line 186 "expr.y"
+                                                                                    {
+                                                                (yyval.ast) = AST_newNode("BOOLLIT","");
+                                                                                    }
+#line 1720 "y.tab.c"
     break;
 
 
-#line 1737 "y.tab.c"
+#line 1724 "y.tab.c"
 
       default: break;
     }
@@ -1965,7 +1952,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 211 "expr.y"
+#line 191 "expr.y"
 
 
 int main(int argc, char *argv[]){
@@ -1986,13 +1973,13 @@ int main(int argc, char *argv[]){
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root);
+            AST_print(root,0);
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root);
+            AST_print(root,0);
         }       
     return 0;
 }

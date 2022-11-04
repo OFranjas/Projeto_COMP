@@ -9,14 +9,12 @@
 /* Create a new node */
 AST *AST_newNode(char *type, char *value)
 {
-    printf("Antes do malloc\n");
     AST* new = (AST*)malloc(sizeof(AST));
     new->type = type;
     new->value = value;
     new->father = NULL;
     new->son = NULL;
     new->brother = NULL;
-    printf("Depois do malloc\n");
     return new;
 }
 
@@ -58,7 +56,7 @@ void AST_addBrother(AST* brother, AST* new)
     }
     else
     {
-        AST* temp = brother->brother;
+        AST* temp = brother;
         while (temp->brother != NULL)
         {
             temp = temp->brother;
@@ -66,29 +64,33 @@ void AST_addBrother(AST* brother, AST* new)
         temp->brother = new;
     }
     new->father = brother->father;
+    
 }
 
 /* Function to print the AST tree */
-void AST_print(AST* AST)
+void AST_print(AST* AST,int n_pontos)
 {
     //printf("estou aqui \n");
     if (AST == NULL)
     {
         printf("A RAIZ ESTA A NULL\n");
     }
-    printf("%s ", AST->type);
+    for (int i = 0; i < n_pontos; i++)
+        printf(".");
+    
+    printf("%s", AST->type);
     if (strcmp(AST->value, "") != 0)
     {
-        printf("%s ", AST->value);
+        printf("(%s)\n", AST->value);
     }else{
         printf("\n");
     }
 
     if(AST->brother != NULL){
-        AST_print(AST->brother);
+        AST_print(AST->brother,n_pontos);
     }
     if(AST->son != NULL){
-        AST_print(AST->son);
+        AST_print(AST->son,n_pontos+=2);
     }
 }
 
