@@ -105,3 +105,17 @@ void AST_free(AST* AST)
     AST_free(AST->son);
     free(AST);
 }
+
+void AST_getNumberOfSons(AST* AST, int* count)
+{
+    if (AST == NULL)
+    {
+        return;
+    }
+    if (AST->son != NULL)
+    {
+        *count += 1;
+    }
+    AST_getNumberOfSons(AST->brother, count);
+    AST_getNumberOfSons(AST->son, count);
+}
