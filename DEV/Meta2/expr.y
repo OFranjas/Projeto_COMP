@@ -42,7 +42,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FormalParams FormalParamsAux
+%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux
 
 /* Precedências */
 %left COMMA
@@ -66,8 +66,8 @@ struct AST* ast;
 Program: CLASS ID LBRACE Xona RBRACE                           {
                                                                 root = AST_newNode("Program","");
                                                                 aux = AST_newNode("ID", $2); 
-                                                                AST_addSon(root, $4);
-                                                                AST_addBrother(root, aux);
+                                                                AST_addSon(root, aux);
+                                                                AST_addBrother(aux,$4);
                                                                 $$ = root;
                                                             }
         ;
@@ -76,10 +76,24 @@ Xona: Expr                                                  {$$ = $1;}
     | Assignment                                            {$$ = $1;}
     | ParseArgs                                             {$$ = $1;}
     | MethodInvocation                                      {$$ = $1;}
-    | MethodInvocationaux                                   {$$ = $1;}
     //| Statement                                             {$$ = $1;}
     | VarDecl                                               {$$ = $1;}
+    | FieldDecl                                             {$$ = $1;}
     ;
+
+FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
+                                                                $$ = AST_newNode("FieldDecl", "");
+                                                                AST_addSon($$,$3);
+                                                                AST_addBrother($3, AST_newNode("ID", $4));
+                                                            }
+        ;
+
+FieldDeclAux: COMMA ID FieldDeclAux                         {
+                                                                $$ = AST_newNode("ID", $2);
+                                                                AST_addBrother($$, $3);
+                                                            }
+
+            |                                              {$$ = NULL;}                                                
 
 Type: INT                                                   {$$ = AST_newNode("Int", "");}
     | DOUBLE                                                {$$ = AST_newNode("Double", "");}
