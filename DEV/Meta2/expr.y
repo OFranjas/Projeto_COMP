@@ -41,7 +41,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona
+%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux
 
 /* Precedências */
 %left COMMA
@@ -71,9 +71,43 @@ Program: CLASS ID LBRACE Xona RBRACE                           {
                                                             }
         ;
 
-Xona: Expr{$$ = $1;}
-    | Assignment{$$ = $1;}
+Xona: Expr                                                  {$$ = $1;}
+    | Assignment                                            {$$ = $1;}
+    | ParseArgs                                             {$$ = $1;}
+    | MethodInvocation                                      {$$ = $1;}
+    | MethodInvocationaux                                   {$$ = $1;}
     ;
+
+MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {  
+                                                                            $$ = AST_newNode("Call", "");
+                                                                            aux = AST_newNode("ID", $1);
+                                                                            AST_addSon($$, aux);
+                                                                            AST_addBrother(aux, $3);
+                                                                            AST_addBrother($3, $4);
+                                                                        }
+                                                                        
+                | ID LPAR RPAR                                          { 
+                                                                            $$ = AST_newNode("Call", "");
+                                                                            aux = AST_newNode("ID", $1);
+                                                                            AST_addSon($$, aux);
+                                                                        }                             
+                ;
+
+MethodInvocationaux: COMMA Expr MethodInvocationaux                     {
+                                                                            $$ = $2;
+                                                                            AST_addBrother($$, $3);
+                                                                        }
+
+                    |                                                   {$$ = NULL;}                    
+                    ;
+
+ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
+                                                                $$ = AST_newNode("ParseArgs","");
+                                                                aux = AST_newNode("ID", $3);
+                                                                AST_addSon($$, aux);
+                                                                AST_addBrother(aux, $5);
+                                                            }
+        ;
 
 Assignment: ID ASSIGN Expr                                  {
                                                                 $$ = AST_newNode("Assign", "");
