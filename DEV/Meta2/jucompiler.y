@@ -128,10 +128,7 @@ Type: BOOL                                                                      
                                                                                         $$ = AST_newNode("String","");
                                                                                         type = $$->type;
                                                                                     }
-    | VOID                                                                          {
-                                                                                        $$ = AST_newNode("Void","");
-                                                                                        type = $$->type;
-                                                                                    }
+
     ;
 
 MethodHeader: Type ID LPAR FormalParams RPAR                                        {
@@ -192,10 +189,11 @@ MethodBodyAux: Statement MethodBodyAux                                          
              ;
 
 VarDecl: Type ID VarDeclAux SEMICOLON                                               {;}
+       | Type ID SEMICOLON                                                         {;}
        ;
 
 VarDeclAux: COMMA ID VarDeclAux                                                     {;}
-          | COMMA ID                                                                {;}
+          | COMMA ID                                                                {;} 
           ;
 
 
@@ -250,7 +248,7 @@ Statement: LBRACE RBRACE                                                        
                                                                                         AST_addBrother($3,aux);
                                                                                     }
                                                                                     }
-                                                                                    
+
          | RETURN Expr SEMICOLON                                                    {$$ = AST_newNode("Return","");
                                                                                     AST_addSon($$,$2);
                                                                                     }
