@@ -11,7 +11,7 @@ DEV/*
 
 # Na pasta DEV ignorar tudo menos estes ficheiros e pastas
 !DEV/Meta2/
-
+!DEV/Meta1/
 
 # Ignorar tudo na pasta DEV/Meta2
 DEV/Meta2/*
