@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "symtab.h"
+//#include "symtab.h"
 #include "Tree.h"
 
 
@@ -161,7 +161,7 @@ VarDecl: Type ID VarDeclAux SEMICOLON                                   {
                                                                 $$ = AST_newNode("VarDecl", "");
                                                                 AST_addSon($$, $1);
                                                                 AST_addBrother($1, AST_newNode("ID", $2));
-                                                            }
+                                                                        }
         ;
 
 VarDeclAux: COMMA ID VarDeclAux                            {
@@ -172,13 +172,14 @@ VarDeclAux: COMMA ID VarDeclAux                            {
         ;
 
 Statement: 
-           /* | WHILE LPAR Expr RPAR Statement                               {$$ = AST_newNode("While","");
+           /* | WHILE LPAR Expr RPAR Statement                               {
+                                                                            $$ = AST_newNode("While","");
                                                                             AST_addSon($$,$3);
                                                                             AST_addSon($$,$5);
                                                                             } */
             RETURN SEMICOLON                                            {$$ = AST_newNode("Return", "");}
 
-           | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
+            | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
                                                                             AST_addSon($$,$2);
                                                                             }
             | SEMICOLON                                                  {$$ = NULL;}
@@ -194,7 +195,7 @@ Statement:
             | MethodInvocation SEMICOLON                                               {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
-           ;
+            ;
 
 
 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {  
