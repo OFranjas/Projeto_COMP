@@ -2,10 +2,10 @@
 *
 
 #Menos estes ficheiros
-!*/Meta2/gitignore
-!*/Meta2/gitattributes
-!*/Meta2/jucompiler.l
-!*/Meta2/jucompiler.y
-!*/Meta2/TODOs.md
-!*/Meta2/Tree.c
-!*/Meta2/Tree.h
+!/Meta2/gitignore
+!/Meta2/gitattributes
+!/Meta2/jucompiler.l
+!/Meta2/jucompiler.y
+!/Meta2/TODOs.md
+!/Meta2/Tree.c
+!/Meta2/Tree.h
