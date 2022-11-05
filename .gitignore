@@ -1,12 +1,24 @@
-# Ignorar tudo
+# Ignorar tudo na raiz
 /*
 
-#Menos estes ficheiros
+#Na Raiz ignorar tudo menos estes ficheiros e pastas
+!.gitignore
+!DEV/
 
-!/Meta2/.gitignore
-!/Meta2/.gitattributes
-!/Meta2/jucompiler.l
-!/Meta2/jucompiler.y
-!/Meta2/TODOs.md
-!/Meta2/Tree.c
-!/Meta2/Tree.h
+
+# Ignorar tudo na pasta DEV
+DEV/*
+
+# Na pasta DEV ignorar tudo menos estes ficheiros e pastas
+!DEV/Meta2/
+
+
+# Ignorar tudo na pasta DEV/Meta2
+DEV/Meta2/*
+
+# Na pasta DEV/Meta2 ignorar tudo menos estes ficheiros e pastas
+!DEV/Meta2/jucompiler.l
+!DEV/Meta2/jucompiler.y
+!DEV/Meta2/Tree.c
+!DEV/Meta2/Tree.h
+!DEV/Meta2/TODOs.md
