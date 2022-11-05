@@ -142,7 +142,9 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
             | STRING LSQ RSQ ID                                            {
                                                                            $$ = AST_newNode("StringArray","");
                                                                            aux =  AST_newNode("ID",$4);
-                                                                           AST_addBrother($$,aux);
+                                                                           AST_addSon($$,aux);
+                                                                           aux = AST_newNode("StringArray","");
+                                                                           AST_addSon($$,aux);
                                                                            }
             ;                               
 
@@ -150,6 +152,7 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
 FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ID",$3);
                                                                             AST_addBrother($$,$2);
                                                                             }
+                                                                            
                 |                                                         {$$ = NULL;}
                 ;
 
