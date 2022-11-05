@@ -2,25 +2,25 @@
 
 - [x] Program
 
-- [x] MethodHeader
-
-- [ ] MethodDecl
-
 - [ ] ClassBody
 
-- [x] FormalParam
+- [x] MethodDecl
 
-- [x] FieldDecl
+- [x] MethodHeader
 
-- [ ] MethodBody
+- [x] MethodBody **AUX**
+
+- [x] FormalParam **AUX**
+
+- [x] FieldDecl **AUX**
 
 - [x] Type
 
-- [x] VarDecl
+- [x] VarDecl **AUX**
 
-- [ ] Statement: **QUASE**
+- [x] Statement **QUASE**
 
-- [x] MethodInvocation
+- [x] MethodInvocation **AUX**
 
 - [x] ParseArgs
 

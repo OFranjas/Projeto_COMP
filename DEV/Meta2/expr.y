@@ -44,7 +44,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Statement Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
+%type <ast> Statement MethodDecl MethodBody MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
 /* Precedências */
 %left COMMA
@@ -85,6 +85,14 @@ Xona: Expr                                                  {$$ = $1;}
     | MethodHeader                                          {$$ = $1;}
     ;
 
+MethodDecl: PUBLIC STATIC MethodHeader MethodBody                                   {
+                                                                                    $$ = AST_newNode("MethodDecl","");
+                                                                                    AST_addSon($$,$3);
+                                                                                    AST_addSon($$,$4);
+                                                                                    }                                             
+           ;
+
+
 MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 AST_addSon($$,$1);
@@ -115,6 +123,17 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 AST_addBrother(aux,AST_newNode("ID", $2));
                                                                }
         ;
+
+MethodBody: LBRACE MethodBodyAux RBRACE                                             {$$ = AST_newNode("MethodBody",""); 
+                                                                                    AST_addSon($$,$2);
+                                                                                    }
+          ;
+
+
+MethodBodyAux: Statement MethodBodyAux                                              {$$ = $1; AST_addSon($$, $2);}
+             | VarDecl MethodBodyAux                                                {$$ = $1; AST_addSon($$, $2);}
+             |                                                                      {$$ = NULL;}
+             ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                 $$ = AST_newNode("FieldDecl", "");
