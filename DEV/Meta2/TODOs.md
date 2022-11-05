@@ -1,18 +1,20 @@
 Program - []
 
-MethodDecl - []
+MethodDecl - [?]
+
+ClassBody - [?]
 
 FieldDecl - [x]
 
 FormalParam - [x]
 
-MethodBody - [] 
+MethodBody - [?] 
 
 Type - [x]
 
 VarDecl - [x]
 
-Statement - []
+Statement - [?]
 
 MethodInvocation - [x]
 
