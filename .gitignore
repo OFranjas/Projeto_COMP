@@ -4,7 +4,7 @@
 #Na Raiz ignorar tudo menos estes ficheiros e pastas
 !.gitignore
 !.gitattributes
-!.README.md
+!README.md
 !DEV/
 
 
