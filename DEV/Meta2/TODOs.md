@@ -1,25 +1,29 @@
-Program - []
+## TODO
 
-MethodDecl - [?]
+- [x] Program
 
-ClassBody - [?]
+- [x] MethodHeader
 
-FieldDecl - [x]
+- [ ] MethodDecl
 
-FormalParam - [x]
+- [ ] ClassBody
 
-MethodBody - [?] 
+- [x] FormalParam
 
-Type - [x]
+- [x] FieldDecl
 
-VarDecl - [x]
+- [ ] MethodBody
 
-Statement - [?]
+- [x] Type
 
-MethodInvocation - [x]
+- [x] VarDecl
 
-ParseArgs - [x]
+- [ ] Statement: **QUASE**
 
-Assignment - [x]
+- [x] MethodInvocation
 
-Expr - [x]
+- [x] ParseArgs
+
+- [x] Assignment
+
+- [x] Expr
