@@ -21,7 +21,5 @@ DEV/Meta2/*
 !DEV/Meta2/jucompiler.y
 !DEV/Meta2/Tree.c
 !DEV/Meta2/Tree.h
+!DEV/Meta2/expr.y
 !DEV/Meta2/TODOs.md
-
-# Ignorar tudo na pasta DEV/Meta2/Tests
-DEV/Meta2/Tests/*
