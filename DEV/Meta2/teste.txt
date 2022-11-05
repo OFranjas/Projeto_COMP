@@ -1,0 +1,3 @@
+class main{
+    System.out.print("The value is something!");
+}
