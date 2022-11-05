@@ -184,10 +184,10 @@ Statement:
             | SEMICOLON                                                  {$$ = NULL;}
 
             | PRINT LPAR Expr RPAR SEMICOLON                             {$$ = AST_newNode("Print","");
-                                                                            printf("Print\n");
                                                                             AST_addSon($$,$3);
                                                                             }   
-            | PRINT LPAR STRLIT RPAR SEMICOLON                                         {$$ = AST_newNode("Print","");
+            | PRINT LPAR STRLIT RPAR SEMICOLON                                         {
+                                                                                    $$ = AST_newNode("Print","");
                                                                                     aux = AST_newNode("STRLIT", $3);
                                                                                     AST_addSon($$, aux);
                                                                                     }
