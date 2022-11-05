@@ -2,11 +2,11 @@ Program - []
 
 MethodDecl - []
 
-FieldDecl - []
+FieldDecl - [x]
 
-FormalParam - [w]
+FormalParam - [x]
 
-MethodBody - [?] 
+MethodBody - [] 
 
 Type - [x]
 

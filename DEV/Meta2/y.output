@@ -4,11 +4,8 @@ Terminals unused in grammar
     WHILE
     IF
     ELSE
-    RETURN
     ARROW
-    PRINT
     RESERVED
-    STRLIT
 
 
 Grammar
@@ -21,65 +18,75 @@ Grammar
     3     | Assignment
     4     | ParseArgs
     5     | MethodInvocation
-    6     | VarDecl
-    7     | FieldDecl
-    8     | FormalParams
+    6     | Statement
+    7     | VarDecl
+    8     | FieldDecl
+    9     | FormalParams
 
-    9 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON
+   10 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON
 
-   10 FieldDeclAux: COMMA ID FieldDeclAux
-   11             | ε
+   11 FieldDeclAux: COMMA ID FieldDeclAux
+   12             | ε
 
-   12 Type: INT
-   13     | DOUBLE
-   14     | BOOL
+   13 Type: INT
+   14     | DOUBLE
+   15     | BOOL
 
-   15 FormalParams: Type ID FormalParamsAux
-   16             | STRING LSQ RSQ ID
+   16 FormalParams: Type ID FormalParamsAux
+   17             | STRING LSQ RSQ ID
 
-   17 FormalParamsAux: COMMA Type ID FormalParamsAux
-   18                | ε
+   18 FormalParamsAux: COMMA Type ID FormalParamsAux
+   19                | ε
 
-   19 VarDecl: Type ID VarDeclAux SEMICOLON
+   20 VarDecl: Type ID VarDeclAux SEMICOLON
 
-   20 VarDeclAux: COMMA ID VarDeclAux
-   21           | ε
+   21 VarDeclAux: COMMA ID VarDeclAux
+   22           | ε
 
-   22 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR
-   23                 | ID LPAR RPAR
+   23 Statement: RETURN SEMICOLON
+   24          | RETURN Expr SEMICOLON
+   25          | SEMICOLON
+   26          | PRINT LPAR Expr RPAR SEMICOLON
+   27          | PRINT LPAR STRLIT RPAR SEMICOLON
+   28          | MethodInvocation SEMICOLON
+   29          | Assignment SEMICOLON
+   30          | ParseArgs SEMICOLON
 
-   24 MethodInvocationaux: COMMA Expr MethodInvocationaux
-   25                    | ε
+   31 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR
+   32                 | ID LPAR RPAR
 
-   26 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR
+   33 MethodInvocationaux: COMMA Expr MethodInvocationaux
+   34                    | ε
 
-   27 Assignment: ID ASSIGN Expr
+   35 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR
 
-   28 Expr: Expr PLUS Expr
-   29     | Expr MINUS Expr
-   30     | Expr STAR Expr
-   31     | Expr DIV Expr
-   32     | Expr MOD Expr
-   33     | Expr OR Expr
-   34     | Expr XOR Expr
-   35     | Expr AND Expr
-   36     | Expr LSHIFT Expr
-   37     | Expr RSHIFT Expr
-   38     | Expr EQ Expr
-   39     | Expr NE Expr
-   40     | Expr LT Expr
-   41     | Expr GT Expr
-   42     | Expr LE Expr
-   43     | Expr GE Expr
-   44     | MINUS Expr
-   45     | NOT Expr
-   46     | PLUS Expr
-   47     | LPAR Expr RPAR
-   48     | ID
-   49     | ID DOTLENGTH
-   50     | INTLIT
-   51     | REALLIT
-   52     | BOOLLIT
+   36 Assignment: ID ASSIGN Expr
+
+   37 Expr: Expr PLUS Expr
+   38     | Expr MINUS Expr
+   39     | Expr STAR Expr
+   40     | Expr DIV Expr
+   41     | Expr MOD Expr
+   42     | Expr OR Expr
+   43     | Expr XOR Expr
+   44     | Expr AND Expr
+   45     | Expr LSHIFT Expr
+   46     | Expr RSHIFT Expr
+   47     | Expr EQ Expr
+   48     | Expr NE Expr
+   49     | Expr LT Expr
+   50     | Expr GT Expr
+   51     | Expr LE Expr
+   52     | Expr GE Expr
+   53     | MINUS Expr
+   54     | NOT Expr
+   55     | PLUS Expr
+   56     | LPAR Expr RPAR
+   57     | ID
+   58     | ID DOTLENGTH
+   59     | INTLIT
+   60     | REALLIT
+   61     | BOOLLIT
 
 
 Terminals, with rules where they appear
@@ -87,53 +94,53 @@ Terminals, with rules where they appear
     $end (0) 0
     error (256)
     CLASS (258) 1
-    PUBLIC (259) 9
-    STATIC (260) 9
-    STRING (261) 16
+    PUBLIC (259) 10
+    STATIC (260) 10
+    STRING (261) 17
     VOID (262)
-    INT (263) 12
-    DOUBLE (264) 13
-    BOOL (265) 14
-    SEMICOLON (266) 9 19
-    COMMA (267) 10 17 20 24
+    INT (263) 13
+    DOUBLE (264) 14
+    BOOL (265) 15
+    SEMICOLON (266) 10 20 23 24 25 26 27 28 29 30
+    COMMA (267) 11 18 21 33
     LBRACE (268) 1
     RBRACE (269) 1
-    LPAR (270) 22 23 26 47
-    RPAR (271) 22 23 26 47
-    LSQ (272) 16 26
-    RSQ (273) 16 26
-    ASSIGN (274) 27
-    PLUS (275) 28 46
-    MINUS (276) 29 44
-    STAR (277) 30
-    DIV (278) 31
-    MOD (279) 32
-    XOR (280) 34
-    OR (281) 33
-    AND (282) 35
-    BOOLLIT (283) 52
-    EQ (284) 38
-    NE (285) 39
-    LE (286) 42
-    GE (287) 43
-    LT (288) 40
-    GT (289) 41
-    NOT (290) 45
+    LPAR (270) 26 27 31 32 35 56
+    RPAR (271) 26 27 31 32 35 56
+    LSQ (272) 17 35
+    RSQ (273) 17 35
+    ASSIGN (274) 36
+    PLUS (275) 37 55
+    MINUS (276) 38 53
+    STAR (277) 39
+    DIV (278) 40
+    MOD (279) 41
+    XOR (280) 43
+    OR (281) 42
+    AND (282) 44
+    BOOLLIT (283) 61
+    EQ (284) 47
+    NE (285) 48
+    LE (286) 51
+    GE (287) 52
+    LT (288) 49
+    GT (289) 50
+    NOT (290) 54
     WHILE (291)
     IF (292)
     ELSE (293)
-    RETURN (294)
+    RETURN (294) 23 24
     ARROW (295)
-    LSHIFT (296) 36
-    RSHIFT (297) 37
-    DOTLENGTH (298) 49
-    PRINT (299)
-    PARSEINT (300) 26
+    LSHIFT (296) 45
+    RSHIFT (297) 46
+    DOTLENGTH (298) 58
+    PRINT (299) 26 27
+    PARSEINT (300) 35
     RESERVED (301)
-    REALLIT <string> (302) 51
-    STRLIT <string> (303)
-    INTLIT <string> (304) 50
-    ID <string> (305) 1 9 10 15 16 17 19 20 22 23 26 27 48 49
+    REALLIT <string> (302) 60
+    STRLIT <string> (303) 27
+    INTLIT <string> (304) 59
+    ID <string> (305) 1 10 11 16 17 18 20 21 31 32 35 36 57 58
 
 
 Nonterminals, with rules where they appear
@@ -144,44 +151,47 @@ Nonterminals, with rules where they appear
         on left: 1
         on right: 0
     Xona <ast> (53)
-        on left: 2 3 4 5 6 7 8
+        on left: 2 3 4 5 6 7 8 9
         on right: 1
     FieldDecl <ast> (54)
-        on left: 9
-        on right: 7
-    FieldDeclAux <ast> (55)
-        on left: 10 11
-        on right: 9 10
-    Type <ast> (56)
-        on left: 12 13 14
-        on right: 9 15 17 19
-    FormalParams <ast> (57)
-        on left: 15 16
+        on left: 10
         on right: 8
+    FieldDeclAux <ast> (55)
+        on left: 11 12
+        on right: 10 11
+    Type <ast> (56)
+        on left: 13 14 15
+        on right: 10 16 18 20
+    FormalParams <ast> (57)
+        on left: 16 17
+        on right: 9
     FormalParamsAux <ast> (58)
-        on left: 17 18
-        on right: 15 17
+        on left: 18 19
+        on right: 16 18
     VarDecl <ast> (59)
-        on left: 19
-        on right: 6
+        on left: 20
+        on right: 7
     VarDeclAux <ast> (60)
-        on left: 20 21
-        on right: 19 20
-    MethodInvocation <ast> (61)
-        on left: 22 23
-        on right: 5
-    MethodInvocationaux <ast> (62)
-        on left: 24 25
-        on right: 22 24
-    ParseArgs <ast> (63)
-        on left: 26
-        on right: 4
-    Assignment <ast> (64)
-        on left: 27
-        on right: 3
-    Expr <ast> (65)
-        on left: 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
-        on right: 2 22 24 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47
+        on left: 21 22
+        on right: 20 21
+    Statement <ast> (61)
+        on left: 23 24 25 26 27 28 29 30
+        on right: 6
+    MethodInvocation <ast> (62)
+        on left: 31 32
+        on right: 5 28
+    MethodInvocationaux <ast> (63)
+        on left: 33 34
+        on right: 31 33
+    ParseArgs <ast> (64)
+        on left: 35
+        on right: 4 30
+    Assignment <ast> (65)
+        on left: 36
+        on right: 3 29
+    Expr <ast> (66)
+        on left: 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
+        on right: 2 24 26 31 33 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56
 
 
 State 0
@@ -225,1643 +235,1862 @@ State 5
 
     1 Program: CLASS ID LBRACE • Xona RBRACE
 
-    PUBLIC    shift, and go to state 6
-    STRING    shift, and go to state 7
-    INT       shift, and go to state 8
-    DOUBLE    shift, and go to state 9
-    BOOL      shift, and go to state 10
-    LPAR      shift, and go to state 11
-    PLUS      shift, and go to state 12
-    MINUS     shift, and go to state 13
-    BOOLLIT   shift, and go to state 14
-    NOT       shift, and go to state 15
-    PARSEINT  shift, and go to state 16
-    REALLIT   shift, and go to state 17
-    INTLIT    shift, and go to state 18
-    ID        shift, and go to state 19
+    PUBLIC     shift, and go to state 6
+    STRING     shift, and go to state 7
+    INT        shift, and go to state 8
+    DOUBLE     shift, and go to state 9
+    BOOL       shift, and go to state 10
+    SEMICOLON  shift, and go to state 11
+    LPAR       shift, and go to state 12
+    PLUS       shift, and go to state 13
+    MINUS      shift, and go to state 14
+    BOOLLIT    shift, and go to state 15
+    NOT        shift, and go to state 16
+    RETURN     shift, and go to state 17
+    PRINT      shift, and go to state 18
+    PARSEINT   shift, and go to state 19
+    REALLIT    shift, and go to state 20
+    INTLIT     shift, and go to state 21
+    ID         shift, and go to state 22
 
-    Xona              go to state 20
-    FieldDecl         go to state 21
-    Type              go to state 22
-    FormalParams      go to state 23
-    VarDecl           go to state 24
-    MethodInvocation  go to state 25
-    ParseArgs         go to state 26
-    Assignment        go to state 27
-    Expr              go to state 28
+    Xona              go to state 23
+    FieldDecl         go to state 24
+    Type              go to state 25
+    FormalParams      go to state 26
+    VarDecl           go to state 27
+    Statement         go to state 28
+    MethodInvocation  go to state 29
+    ParseArgs         go to state 30
+    Assignment        go to state 31
+    Expr              go to state 32
 
 
 State 6
 
-    9 FieldDecl: PUBLIC • STATIC Type ID FieldDeclAux SEMICOLON
+   10 FieldDecl: PUBLIC • STATIC Type ID FieldDeclAux SEMICOLON
 
-    STATIC  shift, and go to state 29
+    STATIC  shift, and go to state 33
 
 
 State 7
 
-   16 FormalParams: STRING • LSQ RSQ ID
+   17 FormalParams: STRING • LSQ RSQ ID
 
-    LSQ  shift, and go to state 30
+    LSQ  shift, and go to state 34
 
 
 State 8
 
-   12 Type: INT •
-
-    $default  reduce using rule 12 (Type)
-
-
-State 9
-
-   13 Type: DOUBLE •
+   13 Type: INT •
 
     $default  reduce using rule 13 (Type)
 
 
-State 10
+State 9
 
-   14 Type: BOOL •
+   14 Type: DOUBLE •
 
     $default  reduce using rule 14 (Type)
 
 
+State 10
+
+   15 Type: BOOL •
+
+    $default  reduce using rule 15 (Type)
+
+
 State 11
 
-   47 Expr: LPAR • Expr RPAR
+   25 Statement: SEMICOLON •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 32
+    $default  reduce using rule 25 (Statement)
 
 
 State 12
 
-   46 Expr: PLUS • Expr
+   56 Expr: LPAR • Expr RPAR
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
-    Expr  go to state 33
+    Expr  go to state 36
 
 
 State 13
 
-   44 Expr: MINUS • Expr
+   55 Expr: PLUS • Expr
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
-    Expr  go to state 34
+    Expr  go to state 37
 
 
 State 14
 
-   52 Expr: BOOLLIT •
+   53 Expr: MINUS • Expr
 
-    $default  reduce using rule 52 (Expr)
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 38
 
 
 State 15
 
-   45 Expr: NOT • Expr
+   61 Expr: BOOLLIT •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 35
+    $default  reduce using rule 61 (Expr)
 
 
 State 16
 
-   26 ParseArgs: PARSEINT • LPAR ID LSQ Expr RSQ RPAR
+   54 Expr: NOT • Expr
 
-    LPAR  shift, and go to state 36
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 39
 
 
 State 17
 
-   51 Expr: REALLIT •
+   23 Statement: RETURN • SEMICOLON
+   24          | RETURN • Expr SEMICOLON
 
-    $default  reduce using rule 51 (Expr)
+    SEMICOLON  shift, and go to state 40
+    LPAR       shift, and go to state 12
+    PLUS       shift, and go to state 13
+    MINUS      shift, and go to state 14
+    BOOLLIT    shift, and go to state 15
+    NOT        shift, and go to state 16
+    REALLIT    shift, and go to state 20
+    INTLIT     shift, and go to state 21
+    ID         shift, and go to state 35
+
+    Expr  go to state 41
 
 
 State 18
 
-   50 Expr: INTLIT •
+   26 Statement: PRINT • LPAR Expr RPAR SEMICOLON
+   27          | PRINT • LPAR STRLIT RPAR SEMICOLON
 
-    $default  reduce using rule 50 (Expr)
+    LPAR  shift, and go to state 42
 
 
 State 19
 
-   22 MethodInvocation: ID • LPAR Expr MethodInvocationaux RPAR
-   23                 | ID • LPAR RPAR
-   27 Assignment: ID • ASSIGN Expr
-   48 Expr: ID •
-   49     | ID • DOTLENGTH
+   35 ParseArgs: PARSEINT • LPAR ID LSQ Expr RSQ RPAR
 
-    LPAR       shift, and go to state 37
-    ASSIGN     shift, and go to state 38
-    DOTLENGTH  shift, and go to state 39
-
-    $default  reduce using rule 48 (Expr)
+    LPAR  shift, and go to state 43
 
 
 State 20
 
-    1 Program: CLASS ID LBRACE Xona • RBRACE
+   60 Expr: REALLIT •
 
-    RBRACE  shift, and go to state 40
+    $default  reduce using rule 60 (Expr)
 
 
 State 21
 
-    7 Xona: FieldDecl •
+   59 Expr: INTLIT •
 
-    $default  reduce using rule 7 (Xona)
+    $default  reduce using rule 59 (Expr)
 
 
 State 22
 
-   15 FormalParams: Type • ID FormalParamsAux
-   19 VarDecl: Type • ID VarDeclAux SEMICOLON
+   31 MethodInvocation: ID • LPAR Expr MethodInvocationaux RPAR
+   32                 | ID • LPAR RPAR
+   36 Assignment: ID • ASSIGN Expr
+   57 Expr: ID •
+   58     | ID • DOTLENGTH
 
-    ID  shift, and go to state 41
+    LPAR       shift, and go to state 44
+    ASSIGN     shift, and go to state 45
+    DOTLENGTH  shift, and go to state 46
+
+    $default  reduce using rule 57 (Expr)
 
 
 State 23
 
-    8 Xona: FormalParams •
+    1 Program: CLASS ID LBRACE Xona • RBRACE
 
-    $default  reduce using rule 8 (Xona)
+    RBRACE  shift, and go to state 47
 
 
 State 24
 
-    6 Xona: VarDecl •
+    8 Xona: FieldDecl •
 
-    $default  reduce using rule 6 (Xona)
+    $default  reduce using rule 8 (Xona)
 
 
 State 25
 
-    5 Xona: MethodInvocation •
+   16 FormalParams: Type • ID FormalParamsAux
+   20 VarDecl: Type • ID VarDeclAux SEMICOLON
 
-    $default  reduce using rule 5 (Xona)
+    ID  shift, and go to state 48
 
 
 State 26
 
-    4 Xona: ParseArgs •
+    9 Xona: FormalParams •
 
-    $default  reduce using rule 4 (Xona)
+    $default  reduce using rule 9 (Xona)
 
 
 State 27
 
-    3 Xona: Assignment •
+    7 Xona: VarDecl •
 
-    $default  reduce using rule 3 (Xona)
+    $default  reduce using rule 7 (Xona)
 
 
 State 28
 
-    2 Xona: Expr •
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
+    6 Xona: Statement •
 
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
-
-    $default  reduce using rule 2 (Xona)
+    $default  reduce using rule 6 (Xona)
 
 
 State 29
 
-    9 FieldDecl: PUBLIC STATIC • Type ID FieldDeclAux SEMICOLON
+    5 Xona: MethodInvocation •
+   28 Statement: MethodInvocation • SEMICOLON
+
+    SEMICOLON  shift, and go to state 49
+
+    $default  reduce using rule 5 (Xona)
+
+
+State 30
+
+    4 Xona: ParseArgs •
+   30 Statement: ParseArgs • SEMICOLON
+
+    SEMICOLON  shift, and go to state 50
+
+    $default  reduce using rule 4 (Xona)
+
+
+State 31
+
+    3 Xona: Assignment •
+   29 Statement: Assignment • SEMICOLON
+
+    SEMICOLON  shift, and go to state 51
+
+    $default  reduce using rule 3 (Xona)
+
+
+State 32
+
+    2 Xona: Expr •
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 2 (Xona)
+
+
+State 33
+
+   10 FieldDecl: PUBLIC STATIC • Type ID FieldDeclAux SEMICOLON
 
     INT     shift, and go to state 8
     DOUBLE  shift, and go to state 9
     BOOL    shift, and go to state 10
 
-    Type  go to state 58
-
-
-State 30
-
-   16 FormalParams: STRING LSQ • RSQ ID
-
-    RSQ  shift, and go to state 59
-
-
-State 31
-
-   48 Expr: ID •
-   49     | ID • DOTLENGTH
-
-    DOTLENGTH  shift, and go to state 39
-
-    $default  reduce using rule 48 (Expr)
-
-
-State 32
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-   47     | LPAR Expr • RPAR
-
-    RPAR    shift, and go to state 60
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
-
-
-State 33
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-   46     | PLUS Expr •
-
-    STAR  shift, and go to state 44
-    DIV   shift, and go to state 45
-    MOD   shift, and go to state 46
-
-    $default  reduce using rule 46 (Expr)
+    Type  go to state 68
 
 
 State 34
 
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-   44     | MINUS Expr •
+   17 FormalParams: STRING LSQ • RSQ ID
 
-    STAR  shift, and go to state 44
-    DIV   shift, and go to state 45
-    MOD   shift, and go to state 46
-
-    $default  reduce using rule 44 (Expr)
+    RSQ  shift, and go to state 69
 
 
 State 35
 
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-   45     | NOT Expr •
+   57 Expr: ID •
+   58     | ID • DOTLENGTH
 
-    $default  reduce using rule 45 (Expr)
+    DOTLENGTH  shift, and go to state 46
+
+    $default  reduce using rule 57 (Expr)
 
 
 State 36
 
-   26 ParseArgs: PARSEINT LPAR • ID LSQ Expr RSQ RPAR
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+   56     | LPAR Expr • RPAR
 
-    ID  shift, and go to state 61
+    RPAR    shift, and go to state 70
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
 
 
 State 37
 
-   22 MethodInvocation: ID LPAR • Expr MethodInvocationaux RPAR
-   23                 | ID LPAR • RPAR
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+   55     | PLUS Expr •
 
-    LPAR     shift, and go to state 11
-    RPAR     shift, and go to state 62
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    STAR  shift, and go to state 54
+    DIV   shift, and go to state 55
+    MOD   shift, and go to state 56
 
-    Expr  go to state 63
+    $default  reduce using rule 55 (Expr)
 
 
 State 38
 
-   27 Assignment: ID ASSIGN • Expr
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+   53     | MINUS Expr •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    STAR  shift, and go to state 54
+    DIV   shift, and go to state 55
+    MOD   shift, and go to state 56
 
-    Expr  go to state 64
+    $default  reduce using rule 53 (Expr)
 
 
 State 39
 
-   49 Expr: ID DOTLENGTH •
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+   54     | NOT Expr •
 
-    $default  reduce using rule 49 (Expr)
+    $default  reduce using rule 54 (Expr)
 
 
 State 40
+
+   23 Statement: RETURN SEMICOLON •
+
+    $default  reduce using rule 23 (Statement)
+
+
+State 41
+
+   24 Statement: RETURN Expr • SEMICOLON
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    SEMICOLON  shift, and go to state 71
+    PLUS       shift, and go to state 52
+    MINUS      shift, and go to state 53
+    STAR       shift, and go to state 54
+    DIV        shift, and go to state 55
+    MOD        shift, and go to state 56
+    XOR        shift, and go to state 57
+    OR         shift, and go to state 58
+    AND        shift, and go to state 59
+    EQ         shift, and go to state 60
+    NE         shift, and go to state 61
+    LE         shift, and go to state 62
+    GE         shift, and go to state 63
+    LT         shift, and go to state 64
+    GT         shift, and go to state 65
+    LSHIFT     shift, and go to state 66
+    RSHIFT     shift, and go to state 67
+
+
+State 42
+
+   26 Statement: PRINT LPAR • Expr RPAR SEMICOLON
+   27          | PRINT LPAR • STRLIT RPAR SEMICOLON
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    STRLIT   shift, and go to state 72
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 73
+
+
+State 43
+
+   35 ParseArgs: PARSEINT LPAR • ID LSQ Expr RSQ RPAR
+
+    ID  shift, and go to state 74
+
+
+State 44
+
+   31 MethodInvocation: ID LPAR • Expr MethodInvocationaux RPAR
+   32                 | ID LPAR • RPAR
+
+    LPAR     shift, and go to state 12
+    RPAR     shift, and go to state 75
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 76
+
+
+State 45
+
+   36 Assignment: ID ASSIGN • Expr
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 77
+
+
+State 46
+
+   58 Expr: ID DOTLENGTH •
+
+    $default  reduce using rule 58 (Expr)
+
+
+State 47
 
     1 Program: CLASS ID LBRACE Xona RBRACE •
 
     $default  reduce using rule 1 (Program)
 
 
-State 41
-
-   15 FormalParams: Type ID • FormalParamsAux
-   19 VarDecl: Type ID • VarDeclAux SEMICOLON
-
-    COMMA  shift, and go to state 65
-
-    SEMICOLON  reduce using rule 21 (VarDeclAux)
-    $default   reduce using rule 18 (FormalParamsAux)
-
-    FormalParamsAux  go to state 66
-    VarDeclAux       go to state 67
-
-
-State 42
-
-   28 Expr: Expr PLUS • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 68
-
-
-State 43
-
-   29 Expr: Expr MINUS • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 69
-
-
-State 44
-
-   30 Expr: Expr STAR • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 70
-
-
-State 45
-
-   31 Expr: Expr DIV • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 71
-
-
-State 46
-
-   32 Expr: Expr MOD • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 72
-
-
-State 47
-
-   34 Expr: Expr XOR • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 73
-
-
 State 48
 
-   33 Expr: Expr OR • Expr
+   16 FormalParams: Type ID • FormalParamsAux
+   20 VarDecl: Type ID • VarDeclAux SEMICOLON
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    COMMA  shift, and go to state 78
 
-    Expr  go to state 74
+    SEMICOLON  reduce using rule 22 (VarDeclAux)
+    $default   reduce using rule 19 (FormalParamsAux)
+
+    FormalParamsAux  go to state 79
+    VarDeclAux       go to state 80
 
 
 State 49
 
-   35 Expr: Expr AND • Expr
+   28 Statement: MethodInvocation SEMICOLON •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 75
+    $default  reduce using rule 28 (Statement)
 
 
 State 50
 
-   38 Expr: Expr EQ • Expr
+   30 Statement: ParseArgs SEMICOLON •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 76
+    $default  reduce using rule 30 (Statement)
 
 
 State 51
 
-   39 Expr: Expr NE • Expr
+   29 Statement: Assignment SEMICOLON •
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 77
+    $default  reduce using rule 29 (Statement)
 
 
 State 52
 
-   42 Expr: Expr LE • Expr
+   37 Expr: Expr PLUS • Expr
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 78
-
-
-State 53
-
-   43 Expr: Expr GE • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 79
-
-
-State 54
-
-   40 Expr: Expr LT • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
-
-    Expr  go to state 80
-
-
-State 55
-
-   41 Expr: Expr GT • Expr
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
     Expr  go to state 81
 
 
-State 56
+State 53
 
-   36 Expr: Expr LSHIFT • Expr
+   38 Expr: Expr MINUS • Expr
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
     Expr  go to state 82
 
 
-State 57
+State 54
 
-   37 Expr: Expr RSHIFT • Expr
+   39 Expr: Expr STAR • Expr
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
     Expr  go to state 83
 
 
+State 55
+
+   40 Expr: Expr DIV • Expr
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 84
+
+
+State 56
+
+   41 Expr: Expr MOD • Expr
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 85
+
+
+State 57
+
+   43 Expr: Expr XOR • Expr
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 86
+
+
 State 58
 
-    9 FieldDecl: PUBLIC STATIC Type • ID FieldDeclAux SEMICOLON
+   42 Expr: Expr OR • Expr
 
-    ID  shift, and go to state 84
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 87
 
 
 State 59
 
-   16 FormalParams: STRING LSQ RSQ • ID
+   44 Expr: Expr AND • Expr
 
-    ID  shift, and go to state 85
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 88
 
 
 State 60
 
-   47 Expr: LPAR Expr RPAR •
+   47 Expr: Expr EQ • Expr
 
-    $default  reduce using rule 47 (Expr)
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 89
 
 
 State 61
 
-   26 ParseArgs: PARSEINT LPAR ID • LSQ Expr RSQ RPAR
+   48 Expr: Expr NE • Expr
 
-    LSQ  shift, and go to state 86
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 90
 
 
 State 62
 
-   23 MethodInvocation: ID LPAR RPAR •
+   51 Expr: Expr LE • Expr
 
-    $default  reduce using rule 23 (MethodInvocation)
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 91
 
 
 State 63
 
-   22 MethodInvocation: ID LPAR Expr • MethodInvocationaux RPAR
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
+   52 Expr: Expr GE • Expr
 
-    COMMA   shift, and go to state 87
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
-    $default  reduce using rule 25 (MethodInvocationaux)
-
-    MethodInvocationaux  go to state 88
+    Expr  go to state 92
 
 
 State 64
 
-   27 Assignment: ID ASSIGN Expr •
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
+   49 Expr: Expr LT • Expr
 
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
-    $default  reduce using rule 27 (Assignment)
+    Expr  go to state 93
 
 
 State 65
 
-   17 FormalParamsAux: COMMA • Type ID FormalParamsAux
-   20 VarDeclAux: COMMA • ID VarDeclAux
-
-    INT     shift, and go to state 8
-    DOUBLE  shift, and go to state 9
-    BOOL    shift, and go to state 10
-    ID      shift, and go to state 89
-
-    Type  go to state 90
-
-
-State 66
-
-   15 FormalParams: Type ID FormalParamsAux •
-
-    $default  reduce using rule 15 (FormalParams)
-
-
-State 67
-
-   19 VarDecl: Type ID VarDeclAux • SEMICOLON
-
-    SEMICOLON  shift, and go to state 91
-
-
-State 68
-
-   28 Expr: Expr • PLUS Expr
-   28     | Expr PLUS Expr •
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    STAR  shift, and go to state 44
-    DIV   shift, and go to state 45
-    MOD   shift, and go to state 46
-
-    $default  reduce using rule 28 (Expr)
-
-
-State 69
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   29     | Expr MINUS Expr •
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    STAR  shift, and go to state 44
-    DIV   shift, and go to state 45
-    MOD   shift, and go to state 46
-
-    $default  reduce using rule 29 (Expr)
-
-
-State 70
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   30     | Expr STAR Expr •
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    $default  reduce using rule 30 (Expr)
-
-
-State 71
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   31     | Expr DIV Expr •
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    $default  reduce using rule 31 (Expr)
-
-
-State 72
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   32     | Expr MOD Expr •
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    $default  reduce using rule 32 (Expr)
-
-
-State 73
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   34     | Expr XOR Expr •
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
-
-    $default  reduce using rule 34 (Expr)
-
-
-State 74
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   33     | Expr OR Expr •
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
-
-    $default  reduce using rule 33 (Expr)
-
-
-State 75
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   35     | Expr AND Expr •
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
-
-    $default  reduce using rule 35 (Expr)
-
-
-State 76
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   38     | Expr EQ Expr •
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-    LE     shift, and go to state 52
-    GE     shift, and go to state 53
-    LT     shift, and go to state 54
-    GT     shift, and go to state 55
-
-    $default  reduce using rule 38 (Expr)
-
-
-State 77
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   39     | Expr NE Expr •
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-    LE     shift, and go to state 52
-    GE     shift, and go to state 53
-    LT     shift, and go to state 54
-    GT     shift, and go to state 55
-
-    $default  reduce using rule 39 (Expr)
-
-
-State 78
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   42     | Expr LE Expr •
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-
-    $default  reduce using rule 42 (Expr)
-
-
-State 79
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-   43     | Expr GE Expr •
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-
-    $default  reduce using rule 43 (Expr)
-
-
-State 80
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   40     | Expr LT Expr •
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-
-    $default  reduce using rule 40 (Expr)
-
-
-State 81
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   41     | Expr GT Expr •
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-
-    $default  reduce using rule 41 (Expr)
-
-
-State 82
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   36     | Expr LSHIFT Expr •
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-    EQ     shift, and go to state 50
-    NE     shift, and go to state 51
-    LE     shift, and go to state 52
-    GE     shift, and go to state 53
-    LT     shift, and go to state 54
-    GT     shift, and go to state 55
-
-    $default  reduce using rule 36 (Expr)
-
-
-State 83
-
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   37     | Expr RSHIFT Expr •
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
-
-    PLUS   shift, and go to state 42
-    MINUS  shift, and go to state 43
-    STAR   shift, and go to state 44
-    DIV    shift, and go to state 45
-    MOD    shift, and go to state 46
-    EQ     shift, and go to state 50
-    NE     shift, and go to state 51
-    LE     shift, and go to state 52
-    GE     shift, and go to state 53
-    LT     shift, and go to state 54
-    GT     shift, and go to state 55
-
-    $default  reduce using rule 37 (Expr)
-
-
-State 84
-
-    9 FieldDecl: PUBLIC STATIC Type ID • FieldDeclAux SEMICOLON
-
-    COMMA  shift, and go to state 92
-
-    $default  reduce using rule 11 (FieldDeclAux)
-
-    FieldDeclAux  go to state 93
-
-
-State 85
-
-   16 FormalParams: STRING LSQ RSQ ID •
-
-    $default  reduce using rule 16 (FormalParams)
-
-
-State 86
-
-   26 ParseArgs: PARSEINT LPAR ID LSQ • Expr RSQ RPAR
-
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+   50 Expr: Expr GT • Expr
+
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
     Expr  go to state 94
 
 
-State 87
+State 66
 
-   24 MethodInvocationaux: COMMA • Expr MethodInvocationaux
+   45 Expr: Expr LSHIFT • Expr
 
-    LPAR     shift, and go to state 11
-    PLUS     shift, and go to state 12
-    MINUS    shift, and go to state 13
-    BOOLLIT  shift, and go to state 14
-    NOT      shift, and go to state 15
-    REALLIT  shift, and go to state 17
-    INTLIT   shift, and go to state 18
-    ID       shift, and go to state 31
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
     Expr  go to state 95
 
 
-State 88
+State 67
 
-   22 MethodInvocation: ID LPAR Expr MethodInvocationaux • RPAR
+   46 Expr: Expr RSHIFT • Expr
 
-    RPAR  shift, and go to state 96
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
 
-
-State 89
-
-   20 VarDeclAux: COMMA ID • VarDeclAux
-
-    COMMA  shift, and go to state 97
-
-    $default  reduce using rule 21 (VarDeclAux)
-
-    VarDeclAux  go to state 98
+    Expr  go to state 96
 
 
-State 90
+State 68
 
-   17 FormalParamsAux: COMMA Type • ID FormalParamsAux
+   10 FieldDecl: PUBLIC STATIC Type • ID FieldDeclAux SEMICOLON
 
-    ID  shift, and go to state 99
-
-
-State 91
-
-   19 VarDecl: Type ID VarDeclAux SEMICOLON •
-
-    $default  reduce using rule 19 (VarDecl)
+    ID  shift, and go to state 97
 
 
-State 92
+State 69
 
-   10 FieldDeclAux: COMMA • ID FieldDeclAux
+   17 FormalParams: STRING LSQ RSQ • ID
 
-    ID  shift, and go to state 100
-
-
-State 93
-
-    9 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux • SEMICOLON
-
-    SEMICOLON  shift, and go to state 101
+    ID  shift, and go to state 98
 
 
-State 94
+State 70
 
-   26 ParseArgs: PARSEINT LPAR ID LSQ Expr • RSQ RPAR
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
+   56 Expr: LPAR Expr RPAR •
 
-    RSQ     shift, and go to state 102
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
+    $default  reduce using rule 56 (Expr)
 
 
-State 95
+State 71
 
-   24 MethodInvocationaux: COMMA Expr • MethodInvocationaux
-   28 Expr: Expr • PLUS Expr
-   29     | Expr • MINUS Expr
-   30     | Expr • STAR Expr
-   31     | Expr • DIV Expr
-   32     | Expr • MOD Expr
-   33     | Expr • OR Expr
-   34     | Expr • XOR Expr
-   35     | Expr • AND Expr
-   36     | Expr • LSHIFT Expr
-   37     | Expr • RSHIFT Expr
-   38     | Expr • EQ Expr
-   39     | Expr • NE Expr
-   40     | Expr • LT Expr
-   41     | Expr • GT Expr
-   42     | Expr • LE Expr
-   43     | Expr • GE Expr
+   24 Statement: RETURN Expr SEMICOLON •
 
-    COMMA   shift, and go to state 87
-    PLUS    shift, and go to state 42
-    MINUS   shift, and go to state 43
-    STAR    shift, and go to state 44
-    DIV     shift, and go to state 45
-    MOD     shift, and go to state 46
-    XOR     shift, and go to state 47
-    OR      shift, and go to state 48
-    AND     shift, and go to state 49
-    EQ      shift, and go to state 50
-    NE      shift, and go to state 51
-    LE      shift, and go to state 52
-    GE      shift, and go to state 53
-    LT      shift, and go to state 54
-    GT      shift, and go to state 55
-    LSHIFT  shift, and go to state 56
-    RSHIFT  shift, and go to state 57
+    $default  reduce using rule 24 (Statement)
 
-    $default  reduce using rule 25 (MethodInvocationaux)
+
+State 72
+
+   27 Statement: PRINT LPAR STRLIT • RPAR SEMICOLON
+
+    RPAR  shift, and go to state 99
+
+
+State 73
+
+   26 Statement: PRINT LPAR Expr • RPAR SEMICOLON
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    RPAR    shift, and go to state 100
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+
+State 74
+
+   35 ParseArgs: PARSEINT LPAR ID • LSQ Expr RSQ RPAR
+
+    LSQ  shift, and go to state 101
+
+
+State 75
+
+   32 MethodInvocation: ID LPAR RPAR •
+
+    $default  reduce using rule 32 (MethodInvocation)
+
+
+State 76
+
+   31 MethodInvocation: ID LPAR Expr • MethodInvocationaux RPAR
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    COMMA   shift, and go to state 102
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 34 (MethodInvocationaux)
 
     MethodInvocationaux  go to state 103
 
 
+State 77
+
+   36 Assignment: ID ASSIGN Expr •
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 36 (Assignment)
+
+
+State 78
+
+   18 FormalParamsAux: COMMA • Type ID FormalParamsAux
+   21 VarDeclAux: COMMA • ID VarDeclAux
+
+    INT     shift, and go to state 8
+    DOUBLE  shift, and go to state 9
+    BOOL    shift, and go to state 10
+    ID      shift, and go to state 104
+
+    Type  go to state 105
+
+
+State 79
+
+   16 FormalParams: Type ID FormalParamsAux •
+
+    $default  reduce using rule 16 (FormalParams)
+
+
+State 80
+
+   20 VarDecl: Type ID VarDeclAux • SEMICOLON
+
+    SEMICOLON  shift, and go to state 106
+
+
+State 81
+
+   37 Expr: Expr • PLUS Expr
+   37     | Expr PLUS Expr •
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    STAR  shift, and go to state 54
+    DIV   shift, and go to state 55
+    MOD   shift, and go to state 56
+
+    $default  reduce using rule 37 (Expr)
+
+
+State 82
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   38     | Expr MINUS Expr •
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    STAR  shift, and go to state 54
+    DIV   shift, and go to state 55
+    MOD   shift, and go to state 56
+
+    $default  reduce using rule 38 (Expr)
+
+
+State 83
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   39     | Expr STAR Expr •
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    $default  reduce using rule 39 (Expr)
+
+
+State 84
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   40     | Expr DIV Expr •
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    $default  reduce using rule 40 (Expr)
+
+
+State 85
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   41     | Expr MOD Expr •
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    $default  reduce using rule 41 (Expr)
+
+
+State 86
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   43     | Expr XOR Expr •
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 43 (Expr)
+
+
+State 87
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   42     | Expr OR Expr •
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 42 (Expr)
+
+
+State 88
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   44     | Expr AND Expr •
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 44 (Expr)
+
+
+State 89
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   47     | Expr EQ Expr •
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+    LE     shift, and go to state 62
+    GE     shift, and go to state 63
+    LT     shift, and go to state 64
+    GT     shift, and go to state 65
+
+    $default  reduce using rule 47 (Expr)
+
+
+State 90
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   48     | Expr NE Expr •
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+    LE     shift, and go to state 62
+    GE     shift, and go to state 63
+    LT     shift, and go to state 64
+    GT     shift, and go to state 65
+
+    $default  reduce using rule 48 (Expr)
+
+
+State 91
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   51     | Expr LE Expr •
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 51 (Expr)
+
+
+State 92
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+   52     | Expr GE Expr •
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 52 (Expr)
+
+
+State 93
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   49     | Expr LT Expr •
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 49 (Expr)
+
+
+State 94
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   50     | Expr GT Expr •
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+
+    $default  reduce using rule 50 (Expr)
+
+
+State 95
+
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   45     | Expr LSHIFT Expr •
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+    EQ     shift, and go to state 60
+    NE     shift, and go to state 61
+    LE     shift, and go to state 62
+    GE     shift, and go to state 63
+    LT     shift, and go to state 64
+    GT     shift, and go to state 65
+
+    $default  reduce using rule 45 (Expr)
+
+
 State 96
 
-   22 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR •
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   46     | Expr RSHIFT Expr •
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
 
-    $default  reduce using rule 22 (MethodInvocation)
+    PLUS   shift, and go to state 52
+    MINUS  shift, and go to state 53
+    STAR   shift, and go to state 54
+    DIV    shift, and go to state 55
+    MOD    shift, and go to state 56
+    EQ     shift, and go to state 60
+    NE     shift, and go to state 61
+    LE     shift, and go to state 62
+    GE     shift, and go to state 63
+    LT     shift, and go to state 64
+    GT     shift, and go to state 65
+
+    $default  reduce using rule 46 (Expr)
 
 
 State 97
 
-   20 VarDeclAux: COMMA • ID VarDeclAux
+   10 FieldDecl: PUBLIC STATIC Type ID • FieldDeclAux SEMICOLON
 
-    ID  shift, and go to state 89
+    COMMA  shift, and go to state 107
+
+    $default  reduce using rule 12 (FieldDeclAux)
+
+    FieldDeclAux  go to state 108
 
 
 State 98
 
-   20 VarDeclAux: COMMA ID VarDeclAux •
+   17 FormalParams: STRING LSQ RSQ ID •
 
-    $default  reduce using rule 20 (VarDeclAux)
+    $default  reduce using rule 17 (FormalParams)
 
 
 State 99
 
-   17 FormalParamsAux: COMMA Type ID • FormalParamsAux
+   27 Statement: PRINT LPAR STRLIT RPAR • SEMICOLON
 
-    COMMA  shift, and go to state 104
-
-    $default  reduce using rule 18 (FormalParamsAux)
-
-    FormalParamsAux  go to state 105
+    SEMICOLON  shift, and go to state 109
 
 
 State 100
 
-   10 FieldDeclAux: COMMA ID • FieldDeclAux
+   26 Statement: PRINT LPAR Expr RPAR • SEMICOLON
 
-    COMMA  shift, and go to state 92
-
-    $default  reduce using rule 11 (FieldDeclAux)
-
-    FieldDeclAux  go to state 106
+    SEMICOLON  shift, and go to state 110
 
 
 State 101
 
-    9 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON •
+   35 ParseArgs: PARSEINT LPAR ID LSQ • Expr RSQ RPAR
 
-    $default  reduce using rule 9 (FieldDecl)
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 111
 
 
 State 102
 
-   26 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ • RPAR
+   33 MethodInvocationaux: COMMA • Expr MethodInvocationaux
 
-    RPAR  shift, and go to state 107
+    LPAR     shift, and go to state 12
+    PLUS     shift, and go to state 13
+    MINUS    shift, and go to state 14
+    BOOLLIT  shift, and go to state 15
+    NOT      shift, and go to state 16
+    REALLIT  shift, and go to state 20
+    INTLIT   shift, and go to state 21
+    ID       shift, and go to state 35
+
+    Expr  go to state 112
 
 
 State 103
 
-   24 MethodInvocationaux: COMMA Expr MethodInvocationaux •
+   31 MethodInvocation: ID LPAR Expr MethodInvocationaux • RPAR
 
-    $default  reduce using rule 24 (MethodInvocationaux)
+    RPAR  shift, and go to state 113
 
 
 State 104
 
-   17 FormalParamsAux: COMMA • Type ID FormalParamsAux
+   21 VarDeclAux: COMMA ID • VarDeclAux
+
+    COMMA  shift, and go to state 114
+
+    $default  reduce using rule 22 (VarDeclAux)
+
+    VarDeclAux  go to state 115
+
+
+State 105
+
+   18 FormalParamsAux: COMMA Type • ID FormalParamsAux
+
+    ID  shift, and go to state 116
+
+
+State 106
+
+   20 VarDecl: Type ID VarDeclAux SEMICOLON •
+
+    $default  reduce using rule 20 (VarDecl)
+
+
+State 107
+
+   11 FieldDeclAux: COMMA • ID FieldDeclAux
+
+    ID  shift, and go to state 117
+
+
+State 108
+
+   10 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux • SEMICOLON
+
+    SEMICOLON  shift, and go to state 118
+
+
+State 109
+
+   27 Statement: PRINT LPAR STRLIT RPAR SEMICOLON •
+
+    $default  reduce using rule 27 (Statement)
+
+
+State 110
+
+   26 Statement: PRINT LPAR Expr RPAR SEMICOLON •
+
+    $default  reduce using rule 26 (Statement)
+
+
+State 111
+
+   35 ParseArgs: PARSEINT LPAR ID LSQ Expr • RSQ RPAR
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    RSQ     shift, and go to state 119
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+
+State 112
+
+   33 MethodInvocationaux: COMMA Expr • MethodInvocationaux
+   37 Expr: Expr • PLUS Expr
+   38     | Expr • MINUS Expr
+   39     | Expr • STAR Expr
+   40     | Expr • DIV Expr
+   41     | Expr • MOD Expr
+   42     | Expr • OR Expr
+   43     | Expr • XOR Expr
+   44     | Expr • AND Expr
+   45     | Expr • LSHIFT Expr
+   46     | Expr • RSHIFT Expr
+   47     | Expr • EQ Expr
+   48     | Expr • NE Expr
+   49     | Expr • LT Expr
+   50     | Expr • GT Expr
+   51     | Expr • LE Expr
+   52     | Expr • GE Expr
+
+    COMMA   shift, and go to state 102
+    PLUS    shift, and go to state 52
+    MINUS   shift, and go to state 53
+    STAR    shift, and go to state 54
+    DIV     shift, and go to state 55
+    MOD     shift, and go to state 56
+    XOR     shift, and go to state 57
+    OR      shift, and go to state 58
+    AND     shift, and go to state 59
+    EQ      shift, and go to state 60
+    NE      shift, and go to state 61
+    LE      shift, and go to state 62
+    GE      shift, and go to state 63
+    LT      shift, and go to state 64
+    GT      shift, and go to state 65
+    LSHIFT  shift, and go to state 66
+    RSHIFT  shift, and go to state 67
+
+    $default  reduce using rule 34 (MethodInvocationaux)
+
+    MethodInvocationaux  go to state 120
+
+
+State 113
+
+   31 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR •
+
+    $default  reduce using rule 31 (MethodInvocation)
+
+
+State 114
+
+   21 VarDeclAux: COMMA • ID VarDeclAux
+
+    ID  shift, and go to state 104
+
+
+State 115
+
+   21 VarDeclAux: COMMA ID VarDeclAux •
+
+    $default  reduce using rule 21 (VarDeclAux)
+
+
+State 116
+
+   18 FormalParamsAux: COMMA Type ID • FormalParamsAux
+
+    COMMA  shift, and go to state 121
+
+    $default  reduce using rule 19 (FormalParamsAux)
+
+    FormalParamsAux  go to state 122
+
+
+State 117
+
+   11 FieldDeclAux: COMMA ID • FieldDeclAux
+
+    COMMA  shift, and go to state 107
+
+    $default  reduce using rule 12 (FieldDeclAux)
+
+    FieldDeclAux  go to state 123
+
+
+State 118
+
+   10 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON •
+
+    $default  reduce using rule 10 (FieldDecl)
+
+
+State 119
+
+   35 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ • RPAR
+
+    RPAR  shift, and go to state 124
+
+
+State 120
+
+   33 MethodInvocationaux: COMMA Expr MethodInvocationaux •
+
+    $default  reduce using rule 33 (MethodInvocationaux)
+
+
+State 121
+
+   18 FormalParamsAux: COMMA • Type ID FormalParamsAux
 
     INT     shift, and go to state 8
     DOUBLE  shift, and go to state 9
     BOOL    shift, and go to state 10
 
-    Type  go to state 90
+    Type  go to state 105
 
 
-State 105
+State 122
 
-   17 FormalParamsAux: COMMA Type ID FormalParamsAux •
+   18 FormalParamsAux: COMMA Type ID FormalParamsAux •
 
-    $default  reduce using rule 17 (FormalParamsAux)
-
-
-State 106
-
-   10 FieldDeclAux: COMMA ID FieldDeclAux •
-
-    $default  reduce using rule 10 (FieldDeclAux)
+    $default  reduce using rule 18 (FormalParamsAux)
 
 
-State 107
+State 123
 
-   26 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR •
+   11 FieldDeclAux: COMMA ID FieldDeclAux •
 
-    $default  reduce using rule 26 (ParseArgs)
+    $default  reduce using rule 11 (FieldDeclAux)
+
+
+State 124
+
+   35 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR •
+
+    $default  reduce using rule 35 (ParseArgs)

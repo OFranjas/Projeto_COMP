@@ -42,7 +42,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux
+%type <ast> Statement Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux
 
 /* Precedências */
 %left COMMA
@@ -64,11 +64,11 @@ struct AST* ast;
 %%
 
 Program: CLASS ID LBRACE Xona RBRACE                           {
-                                                                root = AST_newNode("Program","");
+                                                                $$ = AST_newNode("Program","");
                                                                 aux = AST_newNode("ID", $2); 
-                                                                AST_addSon(root, aux);
-                                                                AST_addBrother(aux,$4);
-                                                                $$ = root;
+                                                                AST_addSon($$, aux);
+                                                                AST_addSon($$,$4);
+                                                                root = $$;
                                                             }
         ;
 
@@ -76,7 +76,7 @@ Xona: Expr                                                  {$$ = $1;}
     | Assignment                                            {$$ = $1;}
     | ParseArgs                                             {$$ = $1;}
     | MethodInvocation                                      {$$ = $1;}
-    //| Statement                                             {$$ = $1;}
+    | Statement                                             {$$ = $1;}
     | VarDecl                                               {$$ = $1;}
     | FieldDecl                                             {$$ = $1;}
     | FormalParams                                          {$$ = $1;}
@@ -138,39 +138,33 @@ VarDeclAux: COMMA ID VarDeclAux                            {
                                                             }
         |                                                   {$$ = NULL;}
         ;
-/*
-Statement: LBRACE RBRACE                                                  {$$ = NULL;}
-           | LBRACE Statement RBRACE                                      {
-                                                                            if($2 != NULL){
-                                                                                AST_getNumberOfSons($2,n_sons);
-                                                                                if(n_sons > 0){
-                                                                                    // Nao existe
-                                                                                    $$ = AST_newNode("Block", "");
-                                                                                    AST_addSon($$, $2);
-                                                                                }else{
-                                                                                    $$ = $2;
-                                                                                }
-                                                                            }else{
-                                                                                $$ = NULL;
+
+Statement: 
+           /* | WHILE LPAR Expr RPAR Statement                               {$$ = AST_newNode("While","");
+                                                                            AST_addSon($$,$3);
+                                                                            AST_addSon($$,$5);
+                                                                            } */
+            RETURN SEMICOLON                                            {$$ = AST_newNode("Return", "");}
+
+           | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
+                                                                            AST_addSon($$,$2);
                                                                             }
-                                                                          }
-           | IF LPAR Expr RPAR Statement                                  {
-                                                                            $$ = AST_newNode("If", "");
-                                                                            AST_addSon($$, $3);
-                                                                            AST_addBrother($$, $5);
-                                                                          }
-           
-           | IF LPAR Expr RPAR Statement ELSE Statement                   {;}
-           | WHILE LPAR Expr RPAR Statement                               {;}
-           | RETURN Expr SEMICOLON                                        {;}
-           | RETURN SEMICOLON                                             {;}
-           | MethodInvocation SEMICOLON                                   {;}
-           | ParseArgs SEMICOLON                                          {;}
-           | PRINT LPAR Expr RPAR SEMICOLON                               {;}
-           | PRINT LPAR STRLIT RPAR SEMICOLON                             {;}
+            | SEMICOLON                                                  {$$ = NULL;}
+
+            | PRINT LPAR Expr RPAR SEMICOLON                             {$$ = AST_newNode("Print","");
+                                                                            printf("Print\n");
+                                                                            AST_addSon($$,$3);
+                                                                            }   
+            | PRINT LPAR STRLIT RPAR SEMICOLON                                         {$$ = AST_newNode("Print","");
+                                                                                    aux = AST_newNode("STRLIT", $3);
+                                                                                    AST_addSon($$, aux);
+                                                                                    }
+            | MethodInvocation SEMICOLON                                               {$$ = $1;}
+            | Assignment SEMICOLON                                                     {$$ = $1;}
+            | ParseArgs SEMICOLON                                                      {$$ = $1;}
            ;
 
-*/
+
 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {  
                                                                             $$ = AST_newNode("Call", "");
                                                                             aux = AST_newNode("ID", $1);
