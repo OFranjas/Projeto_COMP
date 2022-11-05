@@ -23,4 +23,4 @@ DEV/Meta2/*
 !DEV/Meta2/Tree.h
 !DEV/Meta2/expr.y
 !DEV/Meta2/TODOs.md
-!DEV/Meta2/testes/*
+!DEV/Meta2/testes/
