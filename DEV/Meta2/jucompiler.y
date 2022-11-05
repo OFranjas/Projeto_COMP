@@ -191,7 +191,8 @@ VarDeclAux: COMMA ID VarDeclAux                                                 
           ;
 
 
-Statement: LBRACE RBRACE                                                            {$$ = NULL;}
+Statement: LBRACE RBRACE                                                            {AST_newNode("Block","");}
+
          | LBRACE Statement RBRACE                                                  {
                                                                                     if($2 != NULL && $2->brother != NULL){
                                                                                         $$ = AST_newNode("Statement","");

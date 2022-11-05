@@ -86,12 +86,13 @@ void AST_print(AST* AST,int n_pontos)
         printf("\n");
     }
 
+    if(AST->son != NULL){
+        AST_print(AST->son,n_pontos+2);
+    }
     if(AST->brother != NULL){
         AST_print(AST->brother,n_pontos);
     }
-    if(AST->son != NULL){
-        AST_print(AST->son,n_pontos+=2);
-    }
+
 }
 
 /* Function to free the memory of the tree */

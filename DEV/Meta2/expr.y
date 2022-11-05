@@ -23,6 +23,8 @@ int n_sons;
 
 extern int yylex();
 void yyerror (char *s);
+
+int flag_while = 0;
 %}
 
 %union{
@@ -171,20 +173,71 @@ VarDeclAux: COMMA ID VarDeclAux                            {
         |                                                   {$$ = NULL;}
         ;
 
-Statement: 
-           /* | WHILE LPAR Expr RPAR Statement                               {
-                                                                            $$ = AST_newNode("While","");
-                                                                            AST_addSon($$,$3);
-                                                                            AST_addSon($$,$5);
-                                                                            } */
-            RETURN SEMICOLON                                            {$$ = AST_newNode("Return", "");}
+Statement:    LBRACE RBRACE                                                  {$$ = NULL;}
+            
+            | LBRACE Statement RBRACE                                        {
+                                                                              if($2 != NULL && $2->brother != NULL){
+                                                                                     $$ = AST_newNode("Block","");
+                                                                                     AST_addSon($$,$2);
+
+                                                                               }else if($2 != NULL && $2->brother == NULL){
+                                                                                        $$ = $2;
+                                                                                    }else{$$ = NULL;}     
+
+                                                                            }
+                                                                                
+                                                                            
+
+            | IF LPAR Expr RPAR Statement                                   {
+                                                                               $$ = AST_newNode("If","");
+                                                                               
+
+                                                                               AST_addSon($$,$3);
+
+
+                                                                               if($5 == NULL){
+                                                                                    AST_addSon($$,AST_newNode("Block",""));
+                                                                                    AST_addSon($$,AST_newNode("Block",""));
+                                                                               }else{
+                                                                                    AST_addSon($$,$5);
+                                                                                    AST_addSon($$,AST_newNode("Block",""));
+                                                                               }
+                                                                            }
+
+            | IF LPAR Expr RPAR Statement ELSE Statement                    {
+                                                                                $$ = AST_newNode("If","");
+                                                                                AST_addSon($$,$3);
+                                                                                if($5 == NULL){  //caso o primeiro satatement seja null
+                                                                                    AST_addSon($$,AST_newNode("Block",""));}
+                                                                                else{
+                                                                                    AST_addSon($$,$5);
+                                                                                    }
+                                                                                if($7 == NULL){ //caso o segundo statement seja null
+                                                                                    AST_addSon($$,AST_newNode("Block",""));}
+                                                                                else{
+                                                                                    AST_addSon($$,$7);
+                                                                                    }
+
+                                                                            }
+            | WHILE LPAR Expr RPAR Statement                                 {
+                                                                             $$ = AST_newNode("While","");
+                                                                             AST_addSon($$,$3);
+
+                                                                             if($5 != NULL){ //n tiver nd no statement
+                                                                                    AST_addBrother($3,$5);
+                                                                                }
+                                                                             
+                                                                            }
+
+            | RETURN SEMICOLON                                             {$$ = AST_newNode("Return", "");}
 
             | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
+                                                                            // FIXME: So printas se Return(<=1)
                                                                             AST_addSon($$,$2);
                                                                             }
-            | SEMICOLON                                                  {$$ = NULL;}
+            | SEMICOLON                                                     {$$ = NULL;}
 
-            | PRINT LPAR Expr RPAR SEMICOLON                             {$$ = AST_newNode("Print","");
+            | PRINT LPAR Expr RPAR SEMICOLON                                {$$ = AST_newNode("Print","");
                                                                             AST_addSon($$,$3);
                                                                             }   
             | PRINT LPAR STRLIT RPAR SEMICOLON                                         {
@@ -232,8 +285,8 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
 Assignment: ID ASSIGN Expr                                  {
                                                                 $$ = AST_newNode("Assign", "");
                                                                 aux = AST_newNode("ID", $1);
-                                                                AST_addSon($$,$3);
-                                                                AST_addBrother($3,aux);
+                                                                AST_addSon($$,aux);
+                                                                AST_addBrother(aux,$3);
                                                             }
     ;
     
