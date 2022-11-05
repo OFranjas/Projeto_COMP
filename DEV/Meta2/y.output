@@ -1,6 +1,5 @@
 Terminals unused in grammar
 
-    VOID
     WHILE
     IF
     ELSE
@@ -22,6 +21,7 @@ Grammar
     7     | VarDecl
     8     | FieldDecl
     9     | FormalParams
+    9     | MethodHeader
 
    10 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON
 
@@ -196,7 +196,7 @@ Nonterminals, with rules where they appear
 
 State 0
 
-    0 $accept: • Program $end
+    0 $accept: . Program $end
 
     CLASS  shift, and go to state 1
 
@@ -205,35 +205,35 @@ State 0
 
 State 1
 
-    1 Program: CLASS • ID LBRACE Xona RBRACE
+    1 Program: CLASS . ID LBRACE Xona RBRACE
 
     ID  shift, and go to state 3
 
 
 State 2
 
-    0 $accept: Program • $end
+    0 $accept: Program . $end
 
     $end  shift, and go to state 4
 
 
 State 3
 
-    1 Program: CLASS ID • LBRACE Xona RBRACE
+    1 Program: CLASS ID . LBRACE Xona RBRACE
 
     LBRACE  shift, and go to state 5
 
 
 State 4
 
-    0 $accept: Program $end •
+    0 $accept: Program $end .
 
     $default  accept
 
 
 State 5
 
-    1 Program: CLASS ID LBRACE • Xona RBRACE
+    1 Program: CLASS ID LBRACE . Xona RBRACE
 
     PUBLIC     shift, and go to state 6
     STRING     shift, and go to state 7
@@ -417,6 +417,8 @@ State 20
 
     $default  reduce using rule 60 (Expr)
 
+    $default  reduce using rule 53 (Expr)
+
 
 State 21
 
@@ -492,7 +494,6 @@ State 29
 
     $default  reduce using rule 5 (Xona)
 
-
 State 30
 
     4 Xona: ParseArgs •
@@ -563,7 +564,6 @@ State 33
 
     Type  go to state 68
 
-
 State 34
 
    17 FormalParams: STRING LSQ • RSQ ID
@@ -619,6 +619,8 @@ State 36
     LSHIFT  shift, and go to state 66
     RSHIFT  shift, and go to state 67
 
+    $default  reduce using rule 51 (Expr)
+
 
 State 37
 
@@ -673,7 +675,6 @@ State 38
 
     $default  reduce using rule 53 (Expr)
 
-
 State 39
 
    37 Expr: Expr • PLUS Expr
@@ -702,6 +703,8 @@ State 40
    23 Statement: RETURN SEMICOLON •
 
     $default  reduce using rule 23 (Statement)
+
+    Expr  go to state 67
 
 
 State 41
@@ -760,7 +763,6 @@ State 42
 
     Expr  go to state 73
 
-
 State 43
 
    35 ParseArgs: PARSEINT LPAR • ID LSQ Expr RSQ RPAR
@@ -784,6 +786,9 @@ State 44
     ID       shift, and go to state 35
 
     Expr  go to state 76
+
+    FormalParamsAux  go to state 71
+    VarDeclAux       go to state 72
 
 
 State 45
@@ -1058,7 +1063,6 @@ State 64
 
     Expr  go to state 93
 
-
 State 65
 
    50 Expr: Expr GT • Expr
@@ -1073,7 +1077,6 @@ State 65
     ID       shift, and go to state 35
 
     Expr  go to state 94
-
 
 State 66
 
@@ -1126,6 +1129,9 @@ State 70
    56 Expr: LPAR Expr RPAR •
 
     $default  reduce using rule 56 (Expr)
+
+    Type          go to state 92
+    FormalParams  go to state 100
 
 
 State 71
@@ -1277,7 +1283,6 @@ State 77
 
     $default  reduce using rule 36 (Assignment)
 
-
 State 78
 
    18 FormalParamsAux: COMMA • Type ID FormalParamsAux
@@ -1426,6 +1431,8 @@ State 85
    52     | Expr • GE Expr
 
     $default  reduce using rule 41 (Expr)
+
+    $default  reduce using rule 45 (Expr)
 
 
 State 86

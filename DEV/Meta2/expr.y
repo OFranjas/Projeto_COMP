@@ -42,7 +42,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> Statement Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux
+%type <ast> Statement Program Expr MethodInvocation Assignment ParseArgs Xona MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
 /* Precedências */
 %left COMMA
@@ -80,7 +80,39 @@ Xona: Expr                                                  {$$ = $1;}
     | VarDecl                                               {$$ = $1;}
     | FieldDecl                                             {$$ = $1;}
     | FormalParams                                          {$$ = $1;}
+    | MethodHeader                                          {$$ = $1;}
     ;
+
+MethodHeader: Type ID LPAR FormalParams RPAR                   {
+                                                                $$ = AST_newNode("MethodHeader","");
+                                                                AST_addSon($$,$1);
+                                                                aux = AST_newNode("ID", $2);
+                                                                AST_addBrother($1,aux);
+                                                                AST_addBrother(aux,$4);
+                                                               }
+
+        | Type ID LPAR RPAR                                    {
+                                                                $$ = AST_newNode("MethodHeader","");
+                                                                AST_addSon($$,$1);
+                                                                aux = AST_newNode("ID", $2);
+                                                                AST_addBrother($1,aux);
+                                                               }
+
+        | VOID ID LPAR FormalParams RPAR                       {
+                                                                $$ = AST_newNode("MethodHeader","");
+                                                                aux = AST_newNode("VOID", "");
+                                                                AST_addSon($$,aux); 
+                                                                AST_addBrother(aux,AST_newNode("ID", $2));
+                                                                AST_addBrother(aux,$4);
+                                                               }
+
+        | VOID ID LPAR RPAR                                    {
+                                                                $$ = AST_newNode("MethodHeader","");
+                                                                aux = AST_newNode("VOID", "");
+                                                                AST_addSon($$,aux); 
+                                                                AST_addBrother(aux,AST_newNode("ID", $2));
+                                                               }
+        ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                 $$ = AST_newNode("FieldDecl", "");
@@ -107,8 +139,8 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
                                                                             AST_addSon($$,aux);
                                                                             AST_addSon($$,$3);
                                                                             }
-
-            | STRING LSQ RSQ ID                                            {$$ = AST_newNode("ParamDecl","");
+            | STRING LSQ RSQ ID                                            {
+                                                                           $$ = AST_newNode("StringArray","");
                                                                            aux =  AST_newNode("ID",$4);
                                                                            AST_addSon($$,aux);
                                                                            aux = AST_newNode("StringArray","");
