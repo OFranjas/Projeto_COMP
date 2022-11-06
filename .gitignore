@@ -28,3 +28,4 @@ DEV/Meta2/*
 !DEV/Meta2/testes/
 !DEV/Meta2/test.sh
 !DEV/Meta2/makefile
+!DEV/Meta2/teste.java
