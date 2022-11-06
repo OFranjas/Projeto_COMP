@@ -20,7 +20,7 @@ int flag = 1;
 int error = 0;
 char *type;
 int n_sons;
-
+int yydebug = 1;
 
 extern int yylex();
 void yyerror (char *s);
@@ -208,9 +208,7 @@ VarDeclAux: COMMA ID VarDeclAux                            {
         |                                                   {$$ = NULL;}
         ;
 
-Statement:    LBRACE RBRACE                                                  {$$ = NULL;}
-            
-            | LBRACE Statement RBRACE                                        {
+Statement:    LBRACE StatementAux RBRACE                                        {
                                                                               if($2 != NULL && $2->brother != NULL){
                                                                                      $$ = AST_newNode("Block","");
                                                                                      AST_addSon($$,$2);
@@ -280,14 +278,14 @@ Statement:    LBRACE RBRACE                                                  {$$
                                                                                     aux = AST_newNode("STRLIT", $3);
                                                                                     AST_addSon($$, aux);
                                                                                     }
-            | MethodInvocation SEMICOLON                                               {$$ = $1;}
-            | Assignment SEMICOLON                                                     {$$ = $1;}
-            | ParseArgs SEMICOLON                                                      {$$ = $1;}
+            | MethodInvocation                                               {$$ = $1;}
+            | Assignment                                                      {$$ = $1;}
+            | ParseArgs                                                       {$$ = $1;}
             ;
 
 StatementAux: Statement SEMICOLON StatementAux                                        {
                                                                                         if($$ != NULL){
-                                                                                         $$ = $1; AST_addBrother($1,$3);~
+                                                                                         $$ = $1; AST_addBrother($1,$3);
                                                                                          }else{
                                                                                              $$ = $3;}
                                                                                         }
@@ -450,9 +448,6 @@ Expr: Expr PLUS Expr                                                            
     | BOOLLIT                                                                       {
                                                                 $$ = AST_newNode("BOOLLIT","");
                                                                                     }
-    | MethodInvocation                                                {$$ = $1;}
-    | Assignment                                                      {$$ = $1;}
-    | ParseArgs                                                       {$$ = $1;}
     ;
 
 %%
