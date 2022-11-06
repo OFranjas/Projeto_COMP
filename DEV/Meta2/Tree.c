@@ -23,8 +23,18 @@ void AST_addSon(AST* father, AST* son)
 {
     if (son == NULL)
     {
-        return;
+        printf("Erro no print: A raiz é nula!\n");
+        printf("Erro no nó (son) : %s\n", son->type);
+        return; 
     }
+
+    if (father == NULL)
+    {
+        printf("Erro no print: A raiz é nula!\n");
+        printf("Erro no nó (father) : %s\n", father->type);
+        return; 
+    }
+
     if (father->son == NULL)
     {
         father->son = son;
@@ -47,12 +57,16 @@ void AST_addBrother(AST* brother, AST* new)
 
     if (new == NULL)
     {
-        return;
+        printf("Erro no print: A raiz é nula!\n");
+        printf("Erro no nó (new) : %s\n", new->type);
+        return; 
     }
 
     if (brother == NULL)
     {
-        return;
+        printf("Erro no print: A raiz é nula!\n");
+        printf("Erro no nó (brother) : %s\n", brother->type);
+        return; 
     }
     else
     {
@@ -73,7 +87,10 @@ void AST_print(AST* AST,int n_pontos)
     //printf("estou aqui \n");
     if (AST == NULL)
     {
-        printf("A RAIZ ESTA A NULL\n");
+        printf("Erro no print: A raiz é nula!\n");
+        printf("Erro no nó : %s\n", AST->type);
+        return;    
+        
     }
     for (int i = 0; i < n_pontos; i++)
         printf(".");
@@ -119,4 +136,21 @@ void AST_getNumberOfSons(AST* AST, int* count)
     }
     AST_getNumberOfSons(AST->brother, count);
     AST_getNumberOfSons(AST->son, count);
+}
+
+int nrChilds (AST* node){
+    int count=0;
+    AST* root = node;
+
+    if(root->son==NULL || root ==NULL){
+        return 0;
+    }
+    else{
+        count++;
+        while (root->brother != NULL) {
+            count++;
+            root = root->brother;
+        }
+        return count;
+    }
 }

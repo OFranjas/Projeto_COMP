@@ -25,6 +25,8 @@ int n_sons;
 extern int yylex();
 void yyerror (char *s);
 
+int yydebug = 1;
+
 
 %}
 
@@ -209,16 +211,16 @@ VarDeclAux: COMMA ID VarDeclAux                            {
         |                                                   {$$ = NULL;}
         ;
 
-Statement:    LBRACE RBRACE                                                  {$$ = NULL;}
-            
-            | LBRACE Statement RBRACE                                        {
-                                                                              if($2 != NULL && $2->brother != NULL){
+
+
+Statement: LBRACE Statement RBRACE                                        {
+                                                                               if($2 != NULL && $2->brother != NULL){
                                                                                      $$ = AST_newNode("Block","");
                                                                                      AST_addSon($$,$2);
 
-                                                                               }else if($2 != NULL && $2->brother == NULL){
-                                                                                        $$ = $2;
-                                                                                    }else{$$ = NULL;}     
+                                                                                }else if($2 != NULL && $2->brother == NULL){
+                                                                                         $$ = $2;
+                                                                                     }else{$$ = NULL;}     
 
                                                                             }
                                                                                 
