@@ -15,6 +15,7 @@
 
 struct AST *root;
 struct AST *aux;
+struct AST *methodParams;
 int flag = 1;
 int error = 0;
 char *type;
@@ -109,10 +110,12 @@ MethodDecl: PUBLIC STATIC MethodHeader MethodBody                               
 
 MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 $$ = AST_newNode("MethodHeader","");
+                                                                methodParams = AST_newNode("MethodParams","");
                                                                 AST_addSon($$,$1);
-                                                                aux = AST_newNode("ID", $2);
+                                                                aux = AST_newNode("Id", $2);
                                                                 AST_addBrother($1,aux);
-                                                                AST_addBrother(aux,$4);
+                                                                AST_addBrother(aux, methodParams);
+                                                                AST_addSon(methodParams,$4);
                                                                }
 
         | Type ID LPAR RPAR                                    {
@@ -144,8 +147,8 @@ MethodBody: LBRACE MethodBodyAux RBRACE                                         
           ;
 
 
-MethodBodyAux: Statement MethodBodyAux                                              {$$ = $1; AST_addSon($$, $2);}
-             | VarDecl MethodBodyAux                                                {$$ = $1; AST_addSon($$, $2);}
+MethodBodyAux: Statement MethodBodyAux                                              {$$ = $1; AST_addBrother($$, $2);}
+             | VarDecl MethodBodyAux                                                {$$ = $1; AST_addBrother($$, $2);}
              |                                                                      {$$ = NULL;}
              ;
 
@@ -175,10 +178,9 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
                                                                             AST_addSon($$,$3);
                                                                             }
             | STRING LSQ RSQ ID                                            {
-                                                                           $$ = AST_newNode("StringArray","");
-                                                                           aux =  AST_newNode("ID",$4);
-                                                                           AST_addSon($$,aux);
-                                                                           aux = AST_newNode("StringArray","");
+                                                                           $$ = AST_newNode("ParamDecl","");
+                                                                           AST_addSon($$,AST_newNode("StringArray",""));
+                                                                           aux = AST_newNode("Id", $4);
                                                                            AST_addSon($$,aux);
                                                                            }
             ;                               
@@ -309,7 +311,7 @@ MethodInvocationaux: COMMA Expr MethodInvocationaux                     {
 
 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
                                                                 $$ = AST_newNode("ParseArgs","");
-                                                                aux = AST_newNode("ID", $3);
+                                                                aux = AST_newNode("Id", $3);
                                                                 AST_addSon($$, aux);
                                                                 AST_addBrother(aux, $5);
                                                             }
@@ -317,7 +319,7 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
 
 Assignment: ID ASSIGN Expr                                  {
                                                                 $$ = AST_newNode("Assign", "");
-                                                                aux = AST_newNode("ID", $1);
+                                                                aux = AST_newNode("Id", $1);
                                                                 AST_addSon($$,aux);
                                                                 AST_addBrother(aux,$3);
                                                             }

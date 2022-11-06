@@ -13,5 +13,13 @@ class newClass{
 		}
 		if(b) if(i1 == 10){;} else {System.out.print("Within the second else"); }
 		int a,b,j,k;
+
+        while(true) {
+			while(false) {
+				k = 3 + 10 * 3;
+			}
+		}
+        test();
+		return 0;
     }
 }
