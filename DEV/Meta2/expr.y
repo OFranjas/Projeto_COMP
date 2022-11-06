@@ -448,6 +448,9 @@ Expr: Expr PLUS Expr                                                            
     | BOOLLIT                                                                       {
                                                                 $$ = AST_newNode("BOOLLIT","");
                                                                                     }
+    | MethodInvocation                                               {$$ = $1;}
+    | Assignment                                                      {$$ = $1;}
+    | ParseArgs                                                       {$$ = $1;}
     ;
 
 %%
