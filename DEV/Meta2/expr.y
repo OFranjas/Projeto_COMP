@@ -47,7 +47,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID 
 
-%type <ast> ProgramAux Statement MethodDecl MethodBody MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
+%type <ast> StatementAux ProgramAux Statement MethodDecl MethodBody MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
 /* Precedências */
 %left COMMA
@@ -286,6 +286,16 @@ Statement: LBRACE Statement RBRACE                                        {
             | MethodInvocation SEMICOLON                                               {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
+            ;
+
+StatementAux: Statement SEMICOLON StatementAux                                        {
+                                                                                        if($$ != NULL){
+                                                                                         $$ = $1; AST_addBrother($1,$3);~
+                                                                                         }else{
+                                                                                             $$ = $3;}
+                                                                                        }
+                                                                                        
+            |                                                                         {$$ = NULL;}
             ;
 
 
