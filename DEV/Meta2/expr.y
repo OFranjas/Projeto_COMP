@@ -369,7 +369,7 @@ Expr: Expr PLUS Expr                                                            
                                                                 
                                                                                     }
     | Expr MINUS Expr                                                               {
-                                                                $$ = AST_newNode("SUB","");
+                                                                $$ = AST_newNode("Sub","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
