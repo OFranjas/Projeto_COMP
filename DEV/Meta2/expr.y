@@ -166,6 +166,7 @@ FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                     AST_addBrother($$, $5);
                                                                 }
                                                             }
+        | error SEMICOLON                                    {$$ = NULL;}
         ;
 
 
@@ -308,7 +309,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
             | MethodInvocation SEMICOLON                                              {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
-
+            | error SEMICOLON                                                          {$$ = NULL;}
             ;
 
 StatementAux: Statement StatementAux                                        {
@@ -334,7 +335,8 @@ MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {
                                                                             $$ = AST_newNode("Call", "");
                                                                             
                                                                             AST_addSon($$, AST_newNode("Id", $1));
-                                                                        }                             
+                                                                        }
+                | ID LPAR error RPAR                                      {$$ = NULL;}                             
                 ;
 
 MethodInvocationaux: COMMA Expr MethodInvocationaux                     {
@@ -351,6 +353,7 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
                                                                 AST_addSon($$, AST_newNode("Id", $3));
                                                                 AST_addSon($$, $5);
                                                             }
+        | PARSEINT LPAR error RPAR                              {$$ = NULL;}
         ;
 
 Assignment: ID ASSIGN Expr                                  {
@@ -470,7 +473,7 @@ Expr: Expr PLUS Expr                                                            
                                                                 $$ = AST_newNode("DecLit",$1);
                                                                                     }
     | REALLIT                                                                       {
-                                                                $$ = AST_newNode("Reallit",$1);
+                                                                $$ = AST_newNode("RealLit",$1);
                                                                                     } 
 
     | BOOLLIT                                                                       {
@@ -479,6 +482,7 @@ Expr: Expr PLUS Expr                                                            
     | MethodInvocation                                                {$$ = $1;}
     | Assignment                                                      {$$ = $1;}
     | ParseArgs                                                       {$$ = $1;}
+    | LPAR error RPAR                                                 {$$ = NULL;}
     ;
 
 %%
