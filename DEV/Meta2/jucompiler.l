@@ -110,7 +110,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 <STRLLIT>\"                  {coluna+=yyleng; BEGIN 0;
                              if (error!=1){if(flag==1){printf("STRLLIT(\"%s\")\n", buffer);}else if (flag == 2){buffer_envio[0] = '\"';strcat(buffer_envio,buffer);strcat(buffer_envio,"\"");yylval.string = (char *)strdup(buffer_envio); bzero(buffer_envio,sizeof(buffer_envio));return(STRLIT); }}}
 <STRLLIT>\\.|\\              {flag_erro_strlit = 1;error=1; if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext); coluna+=yyleng;} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna); coluna+=yyleng;}}
-<STRLLIT>{NEWLINE}                  {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
+<STRLLIT>{NEWLINE}                  {flag_erro_strlit = 1;error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
 <STRLLIT><<EOF>>             {flag_erro_strlit = 1;error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
 
 "\f"|"\t"                             {coluna += yyleng;}

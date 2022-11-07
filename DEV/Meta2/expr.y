@@ -76,12 +76,12 @@ struct AST* ast;
 %%
 
 Program: CLASS ID LBRACE ProgramAux RBRACE                           {
-                                                                $$ = AST_newNode("Program","");
-                                                                  
+                                                                $$ = AST_newNode("Program","");       
                                                                 AST_addSon($$, AST_newNode("Id", $2));
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
                                                             }
+        | CLASS ID LBRACE error                            {$$ = NULL;flag_erro=1;}
         ;
 
 ProgramAux: MethodDecl ProgramAux                            {
