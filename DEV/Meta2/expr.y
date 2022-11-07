@@ -14,6 +14,8 @@
 
 
 struct AST *root;
+struct AST *methodParams;
+struct AST *temp;
 char aux[1024];
 char aux2[1024];
 struct AST *methodParams;
@@ -112,8 +114,7 @@ MethodDecl: PUBLIC STATIC MethodHeader MethodBody                               
 MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 methodParams = AST_newNode("MethodParams","");
-                                                                AST_addSon($$,$1);
-                                                                 
+                                                                AST_addSon($$,$1); 
                                                                 AST_addSon($$,AST_newNode("Id", $2));
                                                                 AST_addSon($$, methodParams);
                                                                 AST_addSon(methodParams,$4);
@@ -128,17 +129,19 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
 
         | VOID ID LPAR FormalParams RPAR                       {
                                                                 $$ = AST_newNode("MethodHeader","");
-                                                                
-                                                                AST_addSon($$,AST_newNode("VOID", "")); 
+                                                                methodParams = AST_newNode("MethodParams","");
+                                                                AST_addSon($$,AST_newNode("Void", "")); 
                                                                 AST_addSon($$,AST_newNode("Id", $2));
-                                                                AST_addSon($$,$4);
+                                                                AST_addSon($$, methodParams);
+                                                                AST_addSon(methodParams,$4);
                                                                }
 
         | VOID ID LPAR RPAR                                    {
                                                                 $$ = AST_newNode("MethodHeader","");
-                                                                 
-                                                                AST_addSon($$,AST_newNode("VOID", "")); 
+                                                                 methodParams = AST_newNode("MethodParams","");
+                                                                AST_addSon($$,AST_newNode("Void", "")); 
                                                                 AST_addSon($$,AST_newNode("Id", $2));
+                                                                AST_addSon($$, methodParams);
                                                                }
         ;
 
@@ -186,7 +189,7 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
                                                                             AST_addSon($$,$1);
                                                                             
                                                                             AST_addSon($$,AST_newNode("Id", $2));
-                                                                            AST_addSon($$,$3);
+                                                                            AST_addBrother($$,$3);
                                                                             }
             | STRING LSQ RSQ ID                                            {
                                                                            $$ = AST_newNode("ParamDecl","");
@@ -196,8 +199,9 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
             ;                               
 
 
-FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("Id",$3);
-                                                                            AST_addBrother($$,$2);
+FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ParamDecl","");
+                                                                            AST_addSon($$,$2);
+                                                                            AST_addSon($$,AST_newNode("Id",$3));
                                                                             }
                                                                             
                 |                                                         {$$ = NULL;}
@@ -299,7 +303,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                             }   
             | PRINT LPAR STRLIT RPAR SEMICOLON                                         {
                                                                                     $$ = AST_newNode("Print","");
-                                                                                    AST_addSon($$, AST_newNode("STRLIT", $3));
+                                                                                    AST_addSon($$, AST_newNode("StrLit", $3));
                                                                                     }
             | MethodInvocation SEMICOLON                                              {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
@@ -358,7 +362,7 @@ Assignment: ID ASSIGN Expr                                  {
     ;
     
 Expr: Expr PLUS Expr                                                                {	
-                                                                $$ = AST_newNode("ADD","");
+                                                                $$ = AST_newNode("Add","");
                                                                 
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
@@ -370,7 +374,7 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr STAR Expr                                                                {
-                                                                $$ = AST_newNode("MUL","");
+                                                                $$ = AST_newNode("Mul","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
@@ -395,7 +399,7 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr AND Expr                                                                 {
-                                                                $$ = AST_newNode("AND","");
+                                                                $$ = AST_newNode("And","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
@@ -470,7 +474,7 @@ Expr: Expr PLUS Expr                                                            
                                                                                     } 
 
     | BOOLLIT                                                                       {
-                                                                $$ = AST_newNode("Boollit",$1);
+                                                                $$ = AST_newNode("BoolLit",$1);
                                                                                     }
     | MethodInvocation                                               {$$ = $1;}
     | Assignment                                                      {$$ = $1;}
