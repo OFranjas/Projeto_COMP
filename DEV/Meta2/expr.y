@@ -76,20 +76,22 @@ Program: CLASS ID LBRACE ProgramAux RBRACE                           {
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
                                                             }
+         | CLASS ID LBRACE error                         {$$ = NULL;}
         ;
 
 ProgramAux: MethodDecl ProgramAux                            {
                                                                 $$ = $1;
                                                                 AST_addBrother($$, $2);
                                                             }
-          | FieldDecl ProgramAux                             {
+          | FieldDecl ProgramAux                             {                                                              
                                                                 $$ = $1;
                                                                 AST_addBrother($$, $2);
+                                                                //aux[0] = '\0';
                                                             }
           | SEMICOLON ProgramAux                             {
                                                                 $$ = $2;
                                                             }
-          |                                                  {$$ = NULL;}
+          |                                                   {$$ = NULL;}
           ;
 /*
 Xona: Expr                                                  {$$ = $1;}
@@ -177,9 +179,8 @@ FieldDeclAux: COMMA ID FieldDeclAux                         {
                                                                 AST_addBrother($$, $3);
                                                             }
 
-            |                                              {$$ = NULL;
-                                                            aux[0] = '\0';
-                                                            aux2[0] = '\0';}                                                
+            |                                              {$$ = NULL;}                                                
+            ;
 
 Type: INT                                                   {$$ = AST_newNode("Int", "");}
     | DOUBLE                                                {$$ = AST_newNode("Double", "");}
@@ -383,22 +384,22 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr DIV Expr                                                                 {
-                                                                $$ = AST_newNode("DIV","");
+                                                                $$ = AST_newNode("Div","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr MOD Expr                                                                 {
-                                                                $$ = AST_newNode("MOD","");
+                                                                $$ = AST_newNode("Mod","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr OR Expr                                                                  {
-                                                                $$ = AST_newNode("OR","");
+                                                                $$ = AST_newNode("Or","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr XOR Expr                                                                 {
-                                                                $$ = AST_newNode("XOR","");
+                                                                $$ = AST_newNode("Xor","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
@@ -408,12 +409,12 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr LSHIFT Expr                                                              {
-                                                                $$ = AST_newNode("LSHIFT","");
+                                                                $$ = AST_newNode("Lshift","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     } 
     | Expr RSHIFT Expr                                                              {
-                                                                $$ = AST_newNode("RSHIFT","");
+                                                                $$ = AST_newNode("Rshift","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     } 
@@ -448,15 +449,15 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     }
     | MINUS Expr                                                                    {
-        														$$ = AST_newNode("MINUS","");
+        														$$ = AST_newNode("Minus","");
 																AST_addSon($$,$2);
                                                                                     } 
     | NOT Expr                                                                      {
-                                                                $$ = AST_newNode("NOT","");
+                                                                $$ = AST_newNode("Not","");
                                                                 AST_addSon($$,$2);
                                                                                     }
     | PLUS Expr                                                                     {
-                                                                $$ = AST_newNode("PLUS","");
+                                                                $$ = AST_newNode("Plus","");
                                                                 AST_addSon($$,$2);
                                                                                     }
     | LPAR Expr RPAR                                                                {
