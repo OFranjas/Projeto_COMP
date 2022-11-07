@@ -76,7 +76,7 @@ Program: CLASS ID LBRACE ProgramAux RBRACE                           {
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
                                                             }
-         | CLASS ID LBRACE error                         {$$ = NULL;}
+         //| CLASS ID LBRACE error                         {$$ = NULL;}
         ;
 
 ProgramAux: MethodDecl ProgramAux                            {
