@@ -34,7 +34,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 {reservadas}                {if(flag == 1){printf("RESERVED(%s)\n", yytext);}else if(flag == 2){return (RESERVED);}coluna += yyleng;}
 
-"true"|"false"              {if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}else if (flag == 2){return(BOOLLIT);}coluna += yyleng;}
+"true"|"false"              {if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}else if (flag == 2){yylval.string=(char*)strdup(yytext);return(BOOLLIT);}coluna += yyleng;}
 "&&"                        {if(flag == 1){printf("AND\n");}else if (flag == 2){return(AND);}coluna += yyleng;}
 "="                         {if(flag == 1){printf("ASSIGN\n");}else if (flag == 2){return(ASSIGN);}coluna += yyleng;}
 "*"                         {if(flag == 1){printf("STAR\n");}else if (flag == 2){return(STAR);}coluna += yyleng;}
@@ -107,7 +107,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 <STRLLIT>\\r                 {coluna+=yyleng; strcat(buffer, yytext);}
 <STRLLIT>\\[\\"]             {coluna+=yyleng; strcat(buffer, yytext);}
 <STRLLIT>\"                  {coluna+=yyleng; BEGIN 0;
-                             if (error!=1){if(flag==1){printf("STRLLIT(\"%s\")\n", buffer);}else if (flag == 2){buffer_envio[0] = '\"';strcat(buffer_envio,buffer);strcat(buffer_envio,"\"");yylval.string = (char *)strdup(buffer_envio);return(STRLIT);}}}
+                             if (error!=1){if(flag==1){printf("STRLLIT(\"%s\")\n", buffer);}else if (flag == 2){buffer_envio[0] = '\"';strcat(buffer_envio,buffer);strcat(buffer_envio,"\"");yylval.string = (char *)strdup(buffer_envio); bzero(buffer_envio,sizeof(buffer_envio));return(STRLIT); }}}
 <STRLLIT>\\.|\\              {error=1; if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext); coluna+=yyleng;} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna); coluna+=yyleng;}}
 <STRLLIT>{NEWLINE}                  {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}
 <STRLLIT><<EOF>>             {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0; BEGIN 0;}

@@ -38,12 +38,12 @@ struct AST* ast;
 %token STRING VOID INT DOUBLE BOOL
 %token SEMICOLON COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ ASSIGN
 %token PLUS MINUS STAR DIV MOD
-%token XOR OR AND BOOLLIT EQ NE LE GE LT GT NOT
+%token XOR OR AND EQ NE LE GE LT GT NOT
 %token WHILE IF ELSE RETURN 
 %token ARROW LSHIFT RSHIFT DOTLENGTH PRINT PARSEINT
 %token RESERVED
 
-%token <string> REALLIT STRLIT INTLIT ID 
+%token <string> REALLIT STRLIT INTLIT ID BOOLLIT
 
 %type <ast> StatementAux Statement MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
@@ -68,7 +68,7 @@ struct AST* ast;
 
 Program: CLASS ID LBRACE ProgramAux RBRACE                           {
                                                                 $$ = AST_newNode("Program","");
-                                                                aux = AST_newNode("ID", $2); 
+                                                                aux = AST_newNode("Id", $2); 
                                                                 AST_addSon($$, aux);
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
@@ -121,7 +121,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
         | Type ID LPAR RPAR                                    {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 AST_addSon($$,$1);
-                                                                aux = AST_newNode("ID", $2);
+                                                                aux = AST_newNode("Id", $2);
                                                                 AST_addBrother($1,aux);
                                                                }
 
@@ -129,7 +129,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 aux = AST_newNode("VOID", "");
                                                                 AST_addSon($$,aux); 
-                                                                AST_addBrother(aux,AST_newNode("ID", $2));
+                                                                AST_addBrother(aux,AST_newNode("Id", $2));
                                                                 AST_addBrother(aux,$4);
                                                                }
 
@@ -137,7 +137,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 aux = AST_newNode("VOID", "");
                                                                 AST_addSon($$,aux); 
-                                                                AST_addBrother(aux,AST_newNode("ID", $2));
+                                                                AST_addBrother(aux,AST_newNode("Id", $2));
                                                                }
         ;
 
@@ -155,12 +155,12 @@ MethodBodyAux: Statement MethodBodyAux                                          
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                 $$ = AST_newNode("FieldDecl", "");
                                                                 AST_addSon($$,$3);
-                                                                AST_addBrother($3, AST_newNode("ID", $4));
+                                                                AST_addBrother($3, AST_newNode("Id", $4));
                                                             }
         ;
 
 FieldDeclAux: COMMA ID FieldDeclAux                         {
-                                                                $$ = AST_newNode("ID", $2);
+                                                                $$ = AST_newNode("Id", $2);
                                                                 AST_addBrother($$, $3);
                                                             }
 
@@ -173,7 +173,7 @@ Type: INT                                                   {$$ = AST_newNode("I
 
 FormalParams: Type ID FormalParamsAux                                      {$$ = AST_newNode("ParamDecl","");
                                                                             AST_addSon($$,$1);
-                                                                            aux = AST_newNode("ID", $2);
+                                                                            aux = AST_newNode("Id", $2);
                                                                             AST_addSon($$,aux);
                                                                             AST_addSon($$,$3);
                                                                             }
@@ -186,7 +186,7 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
             ;                               
 
 
-FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ID",$3);
+FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("Id",$3);
                                                                             AST_addBrother($$,$2);
                                                                             }
                                                                             
@@ -196,13 +196,16 @@ FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ =
 
 VarDecl: Type ID VarDeclAux SEMICOLON                                   {
                                                                 $$ = AST_newNode("VarDecl", "");
-                                                                AST_addSon($$, $1);
-                                                                AST_addBrother($1, AST_newNode("ID", $2));
+                                                                AST_addSon($$, $1);     
+                                                                AST_addBrother($1, AST_newNode("Id", $2));
+                                                                if($3 != NULL){
+                                                                    AST_addBrother($1, $3);
+                                                                }
                                                                         }
         ;
 
 VarDeclAux: COMMA ID VarDeclAux                            {
-                                                                $$ = AST_newNode("ID", $2);
+                                                                $$ = AST_newNode("Id", $2);
                                                                 AST_addBrother($$, $3);
                                                             }
         |                                                   {$$ = NULL;}
@@ -218,8 +221,10 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                     }else{$$ = NULL;}     
 
                                                                             }
-                                                                                
-                                                                            
+
+            |LBRACE SEMICOLON RBRACE                                        {$$ = AST_newNode("Block","");}
+
+
 
             | IF LPAR Expr RPAR Statement                                   {
                                                                                $$ = AST_newNode("If","");
@@ -252,7 +257,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                     }
 
                                                                             }
-            | WHILE LPAR Expr RPAR Statement                                 {
+            | WHILE LPAR Expr RPAR Statement                                {
                                                                              $$ = AST_newNode("While","");
                                                                              AST_addSon($$,$3);
 
@@ -264,11 +269,11 @@ Statement:    LBRACE StatementAux RBRACE                                        
 
             | RETURN SEMICOLON                                             {$$ = AST_newNode("Return", "");}
 
+
             | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
                                                                             // FIXME: So printas se Return(<=1)
                                                                             AST_addSon($$,$2);
                                                                             }
-            | SEMICOLON                                                     {$$ = NULL;}
 
             | PRINT LPAR Expr RPAR SEMICOLON                                {$$ = AST_newNode("Print","");
                                                                             AST_addSon($$,$3);
@@ -278,25 +283,26 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                     aux = AST_newNode("STRLIT", $3);
                                                                                     AST_addSon($$, aux);
                                                                                     }
-            | MethodInvocation                                               {$$ = $1;}
-            | Assignment                                                      {$$ = $1;}
-            | ParseArgs                                                       {$$ = $1;}
+            | MethodInvocation SEMICOLON                                              {$$ = $1;}
+            | Assignment SEMICOLON                                                     {$$ = $1;}
+            | ParseArgs SEMICOLON                                                      {$$ = $1;}
+
             ;
 
-StatementAux: Statement SEMICOLON StatementAux                                        {
+StatementAux: Statement StatementAux                                        {
                                                                                         if($$ != NULL){
-                                                                                         $$ = $1; AST_addBrother($1,$3);
+                                                                                         $$ = $1; AST_addBrother($1,$2);
                                                                                          }else{
-                                                                                             $$ = $3;}
+                                                                                             $$ = $2;}
                                                                                         }
-                                                                                        
-            |                                                                         {$$ = NULL;}
+
+            |                                                               {$$ = NULL;}
             ;
 
 
 MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {  
                                                                             $$ = AST_newNode("Call", "");
-                                                                            aux = AST_newNode("ID", $1);
+                                                                            aux = AST_newNode("Id", $1);
                                                                             AST_addSon($$, aux);
                                                                             AST_addBrother(aux, $3);
                                                                             AST_addBrother($3, $4);
@@ -304,7 +310,7 @@ MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {
                                                                         
                 | ID LPAR RPAR                                          { 
                                                                             $$ = AST_newNode("Call", "");
-                                                                            aux = AST_newNode("ID", $1);
+                                                                            aux = AST_newNode("Id", $1);
                                                                             AST_addSon($$, aux);
                                                                         }                             
                 ;
@@ -386,32 +392,32 @@ Expr: Expr PLUS Expr                                                            
 																AST_addBrother($1,$3);
                                                                                     } 
     | Expr EQ Expr                                                                  {
-                                                                $$ = AST_newNode("EQ","");
+                                                                $$ = AST_newNode("Eq","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }   
     | Expr NE Expr                                                                  {
-                                                                $$ = AST_newNode("NE","");
+                                                                $$ = AST_newNode("Ne","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr LT Expr                                                                  {
-                                                                $$ = AST_newNode("LT","");
+                                                                $$ = AST_newNode("Lt","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr GT Expr                                                                  {
-                                                                $$ = AST_newNode("GT","");
+                                                                $$ = AST_newNode("Gt","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr LE Expr                                                                  {
-                                                                $$ = AST_newNode("LE","");
+                                                                $$ = AST_newNode("Le","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
     | Expr GE Expr                                                                  {
-                                                                $$ = AST_newNode("GE","");
+                                                                $$ = AST_newNode("Ge","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
@@ -431,22 +437,22 @@ Expr: Expr PLUS Expr                                                            
                                                                 $$ = $2;
                                                                                     } 
     | ID                                                                            {
-                                                                $$ = AST_newNode("ID",$1);
+                                                                $$ = AST_newNode("Id",$1);
 
                                                                                     }
     | ID DOTLENGTH                                                                  {
-                                                                $$ = AST_newNode("ID",$1);
+                                                                $$ = AST_newNode("Id",$1);
                                                                                     }
 
     | INTLIT                                                                        {
                                                                 $$ = AST_newNode("DecLit",$1);
                                                                                     }
     | REALLIT                                                                       {
-                                                                $$ = AST_newNode("REALLIT",$1);
+                                                                $$ = AST_newNode("Reallit",$1);
                                                                                     } 
 
     | BOOLLIT                                                                       {
-                                                                $$ = AST_newNode("BOOLLIT","");
+                                                                $$ = AST_newNode("Boollit",$1);
                                                                                     }
     | MethodInvocation                                               {$$ = $1;}
     | Assignment                                                      {$$ = $1;}
