@@ -189,10 +189,9 @@ Type: INT                                                   {$$ = AST_newNode("I
 
 FormalParams: Type ID FormalParamsAux                                      {$$ = AST_newNode("ParamDecl","");
                                                                             AST_addSon($$,$1);
-                                                                            
                                                                             AST_addSon($$,AST_newNode("Id", $2));
-                                                                            AST_addBrother($$,$3);
-                                                                            }
+                                                                            AST_addBrother($$,$3);}
+                                                                            
             | STRING LSQ RSQ ID                                            {
                                                                            $$ = AST_newNode("ParamDecl","");
                                                                            AST_addSon($$,AST_newNode("StringArray",""));
@@ -204,6 +203,7 @@ FormalParams: Type ID FormalParamsAux                                      {$$ =
 FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ = AST_newNode("ParamDecl","");
                                                                             AST_addSon($$,$2);
                                                                             AST_addSon($$,AST_newNode("Id",$3));
+                                                                            AST_addBrother($$,$4);
                                                                             }
                                                                             
                 |                                                         {$$ = NULL;}
@@ -456,7 +456,7 @@ Expr: Expr PLUS Expr                                                            
                                                                 $$ = AST_newNode("Not","");
                                                                 AST_addSon($$,$2);
                                                                                     }
-    | PLUS Expr %prec NOT                                                                    {
+    | PLUS Expr  %prec NOT                                                                   {
                                                                 $$ = AST_newNode("Plus","");
                                                                 AST_addSon($$,$2);
                                                                                     }
