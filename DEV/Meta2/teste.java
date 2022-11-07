@@ -7,7 +7,7 @@ class newClass{
 		if(args) {
 			if(Integer.parseInt(args[0]) == 1){
 				System.out.print("The first argument is one");
-			} else {
+            } else {
 				System.out.print("The value is something!");
 			}
 		}
