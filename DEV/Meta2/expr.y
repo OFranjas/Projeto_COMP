@@ -278,7 +278,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                     aux = AST_newNode("STRLIT", $3);
                                                                                     AST_addSon($$, aux);
                                                                                     }
-            | MethodInvocation                                               {$$ = $1;}
+            | MethodInvocation                                                {$$ = $1;}
             | Assignment                                                      {$$ = $1;}
             | ParseArgs                                                       {$$ = $1;}
             ;
@@ -448,7 +448,7 @@ Expr: Expr PLUS Expr                                                            
     | BOOLLIT                                                                       {
                                                                 $$ = AST_newNode("BOOLLIT","");
                                                                                     }
-    | MethodInvocation                                               {$$ = $1;}
+    | MethodInvocation                                                {$$ = $1;}
     | Assignment                                                      {$$ = $1;}
     | ParseArgs                                                       {$$ = $1;}
     ;
