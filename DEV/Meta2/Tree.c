@@ -120,3 +120,12 @@ void AST_getNumberOfSons(AST* AST, int* count)
     AST_getNumberOfSons(AST->brother, count);
     AST_getNumberOfSons(AST->son, count);
 }
+
+void givetype(AST* no,char* type){
+        AST* auxiliar = NULL;
+		for (AST *atual = no; atual; atual = atual->brother){
+            auxiliar=AST_newNode(type, "");
+            auxiliar->brother=atual->son;
+            atual->son=auxiliar;
+        }
+}
