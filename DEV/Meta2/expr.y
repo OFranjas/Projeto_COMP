@@ -171,7 +171,7 @@ FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
 
 
 FieldDeclAux: COMMA ID FieldDeclAux                         {
-                                                                $$ = AST_newNode("FieldDeclAux","");
+                                                                $$ = AST_newNode("FieldDecl","");
                                                                 AST_addSon($$, AST_newNode(aux, aux2));
                                                                 AST_addSon($$, AST_newNode("Id", $2));
                                                                 AST_addBrother($$, $3);
@@ -310,6 +310,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
             | error SEMICOLON                                                          {$$ = NULL;}
+            | SEMICOLON                                                                {$$ = NULL;}
             ;
 
 StatementAux: Statement StatementAux                                        {
@@ -466,7 +467,9 @@ Expr: Expr PLUS Expr                                                            
 
                                                                                     }
     | ID DOTLENGTH                                                                  {
-                                                                $$ = AST_newNode("Id",$1);
+                                                                $$ = AST_newNode("Length","");
+                                                                AST_addSon($$,AST_newNode("Id",$1));
+                                                                                    
                                                                                     }
 
     | INTLIT                                                                        {
