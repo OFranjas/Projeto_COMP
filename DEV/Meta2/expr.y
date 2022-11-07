@@ -29,6 +29,10 @@ extern int yylex();
 void yyerror (char *s);
 
 int flag_while = 0;
+
+
+
+
 %}
 
 %union{
@@ -82,28 +86,18 @@ ProgramAux: MethodDecl ProgramAux                            {
                                                                 $$ = $1;
                                                                 AST_addBrother($$, $2);
                                                             }
-          | FieldDecl ProgramAux                             {                                                              
+          | FieldDecl ProgramAux                             {                                                           
                                                                 $$ = $1;
+                                                                
                                                                 AST_addBrother($$, $2);
-                                                                //aux[0] = '\0';
+                                                                
                                                             }
           | SEMICOLON ProgramAux                             {
                                                                 $$ = $2;
                                                             }
           |                                                   {$$ = NULL;}
           ;
-/*
-Xona: Expr                                                  {$$ = $1;}
-    | Assignment                                            {$$ = $1;}
-    | ParseArgs                                             {$$ = $1;}
-    | MethodInvocation                                      {$$ = $1;}
-    | Statement                                             {$$ = $1;}
-    | VarDecl                                               {$$ = $1;}
-    | FieldDecl                                             {$$ = $1;}
-    | FormalParams                                          {$$ = $1;}
-    | MethodHeader                                          {$$ = $1;}
-    ;
-*/
+
 MethodDecl: PUBLIC STATIC MethodHeader MethodBody                                   {
                                                                                     $$ = AST_newNode("MethodDecl","");
                                                                                     AST_addSon($$,$3);
@@ -160,23 +154,24 @@ MethodBodyAux: Statement MethodBodyAux                                          
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                 $$ = AST_newNode("FieldDecl", "");
-                                                                strcpy(aux, $3->type);
-                                                                strcpy(aux2, $3->value);
                                                                 AST_addSon($$,$3);
-                                                                AST_addBrother($3, AST_newNode("Id", $4));
-                                                                if ($5 != NULL) {
-                                                                    AST_addBrother($$, $5);
-                                                                }
+                                                                AST_addSon($$, AST_newNode("Id", $4));
+                                                                givetype($5, $3->type);
+                                                                AST_addBrother($$, $5);
+                                                                
                                                             }
-        | error SEMICOLON                                    {$$ = NULL;}
+        | error SEMICOLON                                    {$$ = NULL;
+                                                            
+                                                            }
         ;
 
 
 FieldDeclAux: COMMA ID FieldDeclAux                         {
-                                                                $$ = AST_newNode("FieldDecl","");
-                                                                AST_addSon($$, AST_newNode(aux, aux2));
+                                                                $$ = AST_newNode("FieldDecl","");                                                                
                                                                 AST_addSon($$, AST_newNode("Id", $2));
+                                                                
                                                                 AST_addBrother($$, $3);
+                                                                
                                                             }
 
             |                                              {$$ = NULL;}                                                
@@ -213,27 +208,22 @@ FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ =
 VarDecl: Type ID VarDeclAux SEMICOLON                                   {
     
                                                                 $$ = AST_newNode("VarDecl", "");
-                                                                strcpy(aux, $1->type);
-                                                                strcpy(aux2, $1->value);
                                                                 AST_addSon($$, $1);
-                                                                AST_addBrother($1, AST_newNode("Id", $2));
-                                                                if ($3 != NULL) {
-                                                                    AST_addBrother($$, $3);
-                                                                }
+                                                                AST_addSon($$, AST_newNode("Id", $2));
+                                                                givetype($3, $1->type);
+                                                                
+                                                                AST_addBrother($$, $3);
+                                                                
                                                                 }
         ;
 
 VarDeclAux: COMMA ID VarDeclAux                            { 
                                                                 $$ = AST_newNode("VarDecl","");
-                                                                AST_addSon($$,AST_newNode(aux, aux2));
                                                                 AST_addSon($$, AST_newNode("Id", $2));                                                              
                                                                 AST_addBrother($$, $3);
                                                                 
                                                             }
-        |                                                   {$$ = NULL;
-                                                            aux[0] = '\0';
-                                                            aux2[0] = '\0';
-                                                            }
+        |                                                   {$$ = NULL;}
         ;
 
 Statement:    LBRACE StatementAux RBRACE                                        {
