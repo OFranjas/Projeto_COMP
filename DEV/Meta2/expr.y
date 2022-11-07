@@ -76,7 +76,6 @@ Program: CLASS ID LBRACE ProgramAux RBRACE                           {
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
                                                             }
-         //| CLASS ID LBRACE error                         {$$ = NULL;}
         ;
 
 ProgramAux: MethodDecl ProgramAux                            {
@@ -125,8 +124,9 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
         | Type ID LPAR RPAR                                    {
                                                                 $$ = AST_newNode("MethodHeader","");
                                                                 AST_addSon($$,$1);
-                                                                
+                                                                methodParams = AST_newNode("MethodParams","");
                                                                 AST_addBrother($1,AST_newNode("Id", $2));
+                                                                AST_addSon($$, methodParams);
                                                                }
 
         | VOID ID LPAR FormalParams RPAR                       {
@@ -140,7 +140,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
 
         | VOID ID LPAR RPAR                                    {
                                                                 $$ = AST_newNode("MethodHeader","");
-                                                                 methodParams = AST_newNode("MethodParams","");
+                                                                methodParams = AST_newNode("MethodParams","");
                                                                 AST_addSon($$,AST_newNode("Void", "")); 
                                                                 AST_addSon($$,AST_newNode("Id", $2));
                                                                 AST_addSon($$, methodParams);
@@ -448,15 +448,15 @@ Expr: Expr PLUS Expr                                                            
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | MINUS Expr                                                                    {
+    | MINUS Expr %prec NOT                                                                   {
         														$$ = AST_newNode("Minus","");
 																AST_addSon($$,$2);
                                                                                     } 
-    | NOT Expr                                                                      {
+    | NOT Expr   %prec NOT                                                                   {
                                                                 $$ = AST_newNode("Not","");
                                                                 AST_addSon($$,$2);
                                                                                     }
-    | PLUS Expr                                                                     {
+    | PLUS Expr %prec NOT                                                                    {
                                                                 $$ = AST_newNode("Plus","");
                                                                 AST_addSon($$,$2);
                                                                                     }
