@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-//#include "symtab.h"
 #include "Tree.h"
 
 
@@ -24,9 +23,12 @@ int error = 0;
 char *type;
 int n_sons;
 int yydebug = 1;
+int flag_erro = 0;
 
 extern int yylex();
-void yyerror (char *s);
+extern int yyerror(char *s);
+extern int yylineno;
+extern int coluna;
 
 int flag_while = 0;
 %}
@@ -168,7 +170,7 @@ FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                     AST_addBrother($$, $5);
                                                                 }
                                                             }
-        | error SEMICOLON                                    {$$ = NULL;}
+        | error SEMICOLON                                    {$$ = NULL;flag_erro = 1;}
         ;
 
 
@@ -310,7 +312,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
             | MethodInvocation SEMICOLON                                              {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
-            | error SEMICOLON                                                          {$$ = NULL;}
+            | error SEMICOLON                                                          {$$ = NULL;flag_erro = 1;}
             | SEMICOLON                                                                {$$ = NULL;}
             ;
 
@@ -338,7 +340,7 @@ MethodInvocation: ID LPAR Expr MethodInvocationaux RPAR                 {
                                                                             
                                                                             AST_addSon($$, AST_newNode("Id", $1));
                                                                         }
-                | ID LPAR error RPAR                                      {$$ = NULL;}                             
+                | ID LPAR error RPAR                                      {$$ = NULL;flag_erro = 1;}                             
                 ;
 
 MethodInvocationaux: COMMA Expr MethodInvocationaux                     {
@@ -355,7 +357,7 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR              {
                                                                 AST_addSon($$, AST_newNode("Id", $3));
                                                                 AST_addSon($$, $5);
                                                             }
-        | PARSEINT LPAR error RPAR                              {$$ = NULL;}
+        | PARSEINT LPAR error RPAR                              {$$ = NULL;flag_erro = 1;}
         ;
 
 Assignment: ID ASSIGN Expr                                  {
@@ -486,10 +488,13 @@ Expr: Expr PLUS Expr                                                            
     | MethodInvocation                                                {$$ = $1;}
     | Assignment                                                      {$$ = $1;}
     | ParseArgs                                                       {$$ = $1;}
-    | LPAR error RPAR                                                 {$$ = NULL;}
+
+    | LPAR error RPAR                                                 {$$ = NULL;flag_erro = 1;}
     ;
 
 %%
+
+
 
 int main(int argc, char *argv[]){
     if(argc > 1){
@@ -504,18 +509,23 @@ int main(int argc, char *argv[]){
         }else if(strcmp(argv[1],"-e2") == 0){
             /* Analise Lexical & Sintatica : Mostra so os erros */
             flag = 2;
+            yylex();
             yyparse();  
 	}else{
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root,0);
+            if(flag_erro == 0){
+                AST_print(root,0);
+            }
         }
     }else{
             /* Analise Lexical & Sintatica : Mostra tudo */
             flag = 2;
             yyparse();
-            AST_print(root,0);
+            if(flag_erro == 0){
+                AST_print(root,0);
+            }
         }       
     return 0;
 }
