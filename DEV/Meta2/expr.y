@@ -162,9 +162,6 @@ FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
                                                                 AST_addBrother($$, $5);
                                                                 
                                                             }
-        | error SEMICOLON                                    {$$ = NULL;
-                                                            
-                                                            }
         | error SEMICOLON                                    {$$ = NULL;flag_erro = 1;}
         ;
 
@@ -240,7 +237,7 @@ Statement:    LBRACE StatementAux RBRACE                                        
 
                                                                             }
 
-            |LBRACE SEMICOLON RBRACE                                        {$$ = AST_newNode("Block","");}
+            | LBRACE SEMICOLON RBRACE                                        {$$ = AST_newNode("Block","");}
 
 
 
@@ -300,11 +297,11 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                     $$ = AST_newNode("Print","");
                                                                                     AST_addSon($$, AST_newNode("StrLit", $3));
                                                                                     }
-            | MethodInvocation SEMICOLON                                              {$$ = $1;}
+            | MethodInvocation SEMICOLON                                               {$$ = $1;}
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
-            | error SEMICOLON                                                          {$$ = NULL;flag_erro = 1;}
             | SEMICOLON                                                                {$$ = NULL;}
+            | error SEMICOLON                                                          {$$ = NULL;flag_erro = 1;}
             ;
 
 StatementAux: Statement StatementAux                                        {
