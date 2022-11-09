@@ -105,7 +105,7 @@ MethodDecl: PUBLIC STATIC MethodHeader MethodBody                               
                                                                                     $$ = AST_newNode("MethodDecl","");
                                                                                     AST_addSon($$,$3);
                                                                                     AST_addSon($$,$4);
-                                                                                    }                                             
+                                                                                    }                                            
            ;
 
 
@@ -274,12 +274,19 @@ Statement:    LBRACE StatementAux RBRACE                                        
 
                                                                             }
             | WHILE LPAR Expr RPAR Statement                                {
+                                                                             //$$ = AST_newNode("Block","");
+                                                                             //temp = AST_newNode("While","");
+                                                                             //AST_addBrother($$,temp);
+                                                                             
                                                                              $$ = AST_newNode("While","");
                                                                              AST_addSon($$,$3);
-
-                                                                             if($5 != NULL){ //n tiver nd no statement
+                                                                             if($5 == NULL){
+                                                                                AST_addSon($$,AST_newNode("Block",""));
+                                                                                }
+                                                                             else {
                                                                                     AST_addBrother($3,$5);
                                                                                 }
+                                                                             
                                                                              
                                                                             }
 

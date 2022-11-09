@@ -127,7 +127,11 @@ void yyerror(char *s) {
         printf("Line %d, col %d: %s: \"%s\"\n", yylineno, coluna_aux + (int) yyleng - 1, s, buffer);
         buffer[0] = '\0';
     }else{
-        printf("Line %d, col %d: %s: %s\n", yylineno, coluna - (int) yyleng, s, yytext);
+        if(yylineno == 1 && yytext[-1] != '\n'){
+            printf("Line %d, col %d: %s: %s\n", yylineno, coluna - (int) yyleng + 1, s, yytext);
+        }else{
+            printf("Line %d, col %d: %s: %s\n", yylineno, coluna - (int) yyleng,     s, yytext);
+        }
     }
 }
 
