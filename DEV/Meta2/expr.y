@@ -19,16 +19,17 @@ char aux[1024];
 char aux2[1024];
 struct AST *methodParams;
 int flag = 1;
-int error = 0;
+
 char *type;
 int n_sons;
 int yydebug = 1;
 int flag_erro = 0;
+int flag_erro_string = 0;
 
-extern int yylex();
-extern int yyerror(char *s);
+int yylex(void);
 extern int yylineno;
 extern int coluna;
+extern int yyerror(char *s);
 
 int flag_while = 0;
 
@@ -286,7 +287,6 @@ Statement:    LBRACE StatementAux RBRACE                                        
 
 
             | RETURN Expr SEMICOLON                                        {$$ = AST_newNode("Return","");
-                                                                            // FIXME: So printas se Return(<=1)
                                                                             AST_addSon($$,$2);
                                                                             }
 
@@ -301,7 +301,8 @@ Statement:    LBRACE StatementAux RBRACE                                        
             | Assignment SEMICOLON                                                     {$$ = $1;}
             | ParseArgs SEMICOLON                                                      {$$ = $1;}
             | SEMICOLON                                                                {$$ = NULL;}
-            | error SEMICOLON                                                          {$$ = NULL;flag_erro = 1;}
+
+            | error SEMICOLON                                                          {$$ = NULL;flag_erro = 1;flag_erro_string = 1;}
             ;
 
 StatementAux: Statement StatementAux                                        {
@@ -485,35 +486,38 @@ Expr: Expr PLUS Expr                                                            
 
 
 int main(int argc, char *argv[]){
-    if(argc > 1){
-		if(strcmp(argv[1],"-e1") == 0){
-            /* Analise Lexical : Mostra so os erros */
-			flag=0;
-            yylex();
-		}else if(strcmp(argv[1],"-l") == 0){
-            /* Analise Lexical : Mostra tudo */
-            flag=1;
-            yylex();
-        }else if(strcmp(argv[1],"-e2") == 0){
-            /* Analise Lexical & Sintatica : Mostra so os erros */
-            flag = 2;
-            yylex();
-            yyparse();  
-	}else{
-            /* Analise Lexical & Sintatica : Mostra tudo */
-            flag = 2;
-            yyparse();
-            if(flag_erro == 0){
-                AST_print(root,0);
-            }
+	if(strcmp(argv[1],"-e1") == 0){
+        /* Analise Lexical : Mostra so os erros */
+		flag=0;
+        yylex();
+    }else if(strcmp(argv[1],"-l") == 0){
+        /* Analise Lexical : Mostra os erros e os tokens */
+        flag=1;
+        yylex();
+    }
+    if(strcmp(argv[1],"-e2") == 0){
+        /* Analise Sintatica : Mostra so os erros */
+        flag=2;
+        yyparse();
+    }
+    else if(strcmp(argv[1],"-t") == 0){
+        /* Analise Sintatica : Mostra os erros e a arvore */
+        flag=2;
+        yyparse();
+        if(flag_erro == 0){
+            AST_print(root,0);
         }
-    }else{
-            /* Analise Lexical & Sintatica : Mostra tudo */
-            flag = 2;
-            yyparse();
-            if(flag_erro == 0){
-                AST_print(root,0);
-            }
-        }       
+    }
     return 0;
 }
+
+/*void yyerror(char *s) {
+    if(flag_erro == 1 && strlen(buffer) > 1){
+        printf("Line %d, col %d: %s: \"%s\"\n", yylineno, coluna_aux + (int) yyleng - 1, s, buffer);
+        flag_erro = 0;
+        buffer[0] = '\0';
+    }else if(flag_erro == 1){
+        printf("Line %d, col %d: %s: %s\n", yylineno, coluna - (int) yyleng, s, yytext);
+        flag_erro = 0;
+    }
+}*/
