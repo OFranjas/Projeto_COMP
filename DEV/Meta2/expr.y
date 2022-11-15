@@ -149,13 +149,14 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
 MethodBody: LBRACE MethodBodyAux RBRACE                                             {$$ = AST_newNode("MethodBody",""); 
                                                                                     AST_addSon($$,$2);
                                                                                     }
+          | LBRACE error RBRACE                                                     {$$ = NULL;flag_erro = 1; return 0;}
           ;
 
 
 MethodBodyAux: Statement MethodBodyAux                                              {if($1 != NULL){$$ = $1; AST_addBrother($$, $2);}else{$$ = $2;}}
              | VarDecl MethodBodyAux                                                {$$ = $1; AST_addBrother($$, $2);}
              |                                                                      {$$ = NULL;}
-             | error                                                               {$$ = NULL;flag_erro = 1;}
+             | error                                                                {$$ = NULL;flag_erro = 1;}
              ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
