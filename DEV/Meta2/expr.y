@@ -151,7 +151,7 @@ MethodBody: LBRACE MethodBodyAux RBRACE                                         
           ;
 
 
-MethodBodyAux: Statement MethodBodyAux                                              {$$ = $1; AST_addBrother($$, $2);}
+MethodBodyAux: Statement MethodBodyAux                                              {if($1 != NULL){$$ = $1; AST_addBrother($$, $2);}else{$$ = $2;}}
              | VarDecl MethodBodyAux                                                {$$ = $1; AST_addBrother($$, $2);}
              |                                                                      {$$ = NULL;}
              ;
