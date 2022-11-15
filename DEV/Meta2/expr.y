@@ -32,8 +32,9 @@ extern int coluna;
 extern int yyerror(char *s);
 
 int flag_while = 0;
+int block_assign = 0;
 
-
+int yydegug = 1;
 
 
 %}
@@ -55,7 +56,7 @@ struct AST* ast;
 
 %token <string> REALLIT STRLIT INTLIT ID BOOLLIT
 
-%type <ast> StatementAux Statement MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
+%type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationaux  VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
 /* Precedências */
 %left COMMA
@@ -227,7 +228,7 @@ VarDeclAux: COMMA ID VarDeclAux                            {
         |                                                   {$$ = NULL;}
         ;
 
-Statement:    LBRACE StatementAux RBRACE                                        {
+Statement:    LBRACE StatementAux RBRACE                                   {
                                                                               if($2 != NULL && $2->brother != NULL){
                                                                                      $$ = AST_newNode("Block","");
                                                                                      AST_addSon($$,$2);
@@ -235,7 +236,6 @@ Statement:    LBRACE StatementAux RBRACE                                        
                                                                                }else if($2 != NULL && $2->brother == NULL){
                                                                                         $$ = $2;
                                                                                     }else{$$ = NULL;}     
-
                                                                             }
 
             | LBRACE SEMICOLON RBRACE                                        {$$ = AST_newNode("Block","");}
@@ -361,104 +361,108 @@ Assignment: ID ASSIGN Expr                                  {
                                                                 
                                                                 AST_addSon($$,AST_newNode("Id", $1));
                                                                 AST_addSon($$,$3);
+                                                                
                                                             }
     ;
-    
-Expr: Expr PLUS Expr                                                                {	
+
+Expr: ExprAux                                               {$$ = $1;}
+    | Assignment                                            {$$ = $1;}
+
+ExprAux: ExprAux PLUS ExprAux                                                                {	
                                                                 $$ = AST_newNode("Add","");
                                                                 
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                 
                                                                                     }
-    | Expr MINUS Expr                                                               {
+    | ExprAux MINUS ExprAux                                                               {
                                                                 $$ = AST_newNode("Sub","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr STAR Expr                                                                {
+    | ExprAux STAR ExprAux                                                                {
                                                                 $$ = AST_newNode("Mul","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr DIV Expr                                                                 {
+    | ExprAux DIV ExprAux                                                                 {
                                                                 $$ = AST_newNode("Div","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr MOD Expr                                                                 {
+    | ExprAux MOD ExprAux                                                                 {
                                                                 $$ = AST_newNode("Mod","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr OR Expr                                                                  {
+    | ExprAux OR ExprAux                                                                  {
                                                                 $$ = AST_newNode("Or","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr XOR Expr                                                                 {
+    | ExprAux XOR ExprAux                                                                 {
                                                                 $$ = AST_newNode("Xor","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr AND Expr                                                                 {
+    | ExprAux AND ExprAux                                                                 {
                                                                 $$ = AST_newNode("And","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr LSHIFT Expr                                                              {
+    | ExprAux LSHIFT ExprAux                                                              {
                                                                 $$ = AST_newNode("Lshift","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     } 
-    | Expr RSHIFT Expr                                                              {
+    | ExprAux RSHIFT ExprAux                                                              {
                                                                 $$ = AST_newNode("Rshift","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     } 
-    | Expr EQ Expr                                                                  {
+    | ExprAux EQ ExprAux                                                                  {
                                                                 $$ = AST_newNode("Eq","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }   
-    | Expr NE Expr                                                                  {
+    | ExprAux NE ExprAux                                                                  {
                                                                 $$ = AST_newNode("Ne","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr LT Expr                                                                  {
+    | ExprAux LT ExprAux                                                                  {
                                                                 $$ = AST_newNode("Lt","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr GT Expr                                                                  {
+    | ExprAux GT ExprAux                                                                  {
                                                                 $$ = AST_newNode("Gt","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr LE Expr                                                                  {
+    | ExprAux LE ExprAux                                                                  {
                                                                 $$ = AST_newNode("Le","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | Expr GE Expr                                                                  {
+    | ExprAux GE ExprAux                                                                  {
                                                                 $$ = AST_newNode("Ge","");
 																AST_addSon($$,$1);
 																AST_addBrother($1,$3);
                                                                                     }
-    | MINUS Expr %prec NOT                                                                   {
+    | MINUS ExprAux %prec NOT                                                                   {
         														$$ = AST_newNode("Minus","");
 																AST_addSon($$,$2);
                                                                                     } 
-    | NOT Expr   %prec NOT                                                                   {
+    | NOT ExprAux   %prec NOT                                                                   {
                                                                 $$ = AST_newNode("Not","");
                                                                 AST_addSon($$,$2);
                                                                                     }
-    | PLUS Expr  %prec NOT                                                                   {
+    | PLUS ExprAux  %prec NOT                                                                   {
                                                                 $$ = AST_newNode("Plus","");
                                                                 AST_addSon($$,$2);
                                                                                     }
-    | LPAR Expr RPAR                                                                {
+    | LPAR ExprAux RPAR                                                                {
                                                                 $$ = $2;
                                                                                     } 
     | ID                                                                            {
@@ -482,7 +486,6 @@ Expr: Expr PLUS Expr                                                            
                                                                 $$ = AST_newNode("BoolLit",$1);
                                                                                     }
     | MethodInvocation                                                {$$ = $1;}
-    | Assignment                                                      {$$ = $1;}
     | ParseArgs                                                       {$$ = $1;}
 
     | LPAR error RPAR                                                 {$$ = NULL;flag_erro = 1;}
