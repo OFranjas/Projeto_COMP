@@ -77,13 +77,13 @@ struct AST* ast;
 
 %%
 
-Program: CLASS ID LBRACE ProgramAux RBRACE                           {
+Program: CLASS ID LBRACE ProgramAux RBRACE                  {
                                                                 $$ = AST_newNode("Program","");       
                                                                 AST_addSon($$, AST_newNode("Id", $2));
                                                                 AST_addSon($$,$4);
                                                                 root = $$;
                                                             }
-        | CLASS ID LBRACE error                            {$$ = NULL;flag_erro=1;}
+        | error                                             {$$ = NULL;flag_erro = 1;return 0;}
         ;
 
 ProgramAux: MethodDecl ProgramAux                            {
@@ -91,15 +91,15 @@ ProgramAux: MethodDecl ProgramAux                            {
                                                                 AST_addBrother($$, $2);
                                                             }
           | FieldDecl ProgramAux                             {                                                           
-                                                                $$ = $1;
-                                                                
-                                                                AST_addBrother($$, $2);
+                                                                    $$ = $1;
+                                                                    AST_addBrother($$, $2);
                                                                 
                                                             }
           | SEMICOLON ProgramAux                             {
                                                                 $$ = $2;
                                                             }
           |                                                   {$$ = NULL;}
+          | error                                             {$$ = NULL;flag_erro = 1;}
           ;
 
 MethodDecl: PUBLIC STATIC MethodHeader MethodBody                                   {
@@ -143,6 +143,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                   {
                                                                 AST_addSon($$,AST_newNode("Id", $2));
                                                                 AST_addSon($$, methodParams);
                                                                }
+                                                               
         ;
 
 MethodBody: LBRACE MethodBodyAux RBRACE                                             {$$ = AST_newNode("MethodBody",""); 
@@ -154,6 +155,7 @@ MethodBody: LBRACE MethodBodyAux RBRACE                                         
 MethodBodyAux: Statement MethodBodyAux                                              {if($1 != NULL){$$ = $1; AST_addBrother($$, $2);}else{$$ = $2;}}
              | VarDecl MethodBodyAux                                                {$$ = $1; AST_addBrother($$, $2);}
              |                                                                      {$$ = NULL;}
+             | error                                                               {$$ = NULL;flag_erro = 1;}
              ;
 
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON     {
@@ -181,7 +183,7 @@ FieldDeclAux: COMMA ID FieldDeclAux                         {
 
 Type: INT                                                   {$$ = AST_newNode("Int", "");}
     | DOUBLE                                                {$$ = AST_newNode("Double", "");}
-    | BOOL                                                  {$$ = AST_newNode("Bool", "");}                
+    | BOOL                                                  {$$ = AST_newNode("Bool", "");}              
     ;
 
 FormalParams: Type ID FormalParamsAux                                      {$$ = AST_newNode("ParamDecl","");
