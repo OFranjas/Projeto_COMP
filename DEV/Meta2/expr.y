@@ -210,7 +210,7 @@ FormalParamsAux: COMMA Type ID FormalParamsAux                            { $$ =
                 ;
 
 
-VarDecl: Type ID VarDeclAux SEMICOLON                                   {
+VarDecl: Type ID VarDeclAux SEMICOLON                           {
     
                                                                 $$ = AST_newNode("VarDecl", "");
                                                                 AST_addSon($$, $1);
@@ -465,7 +465,7 @@ ExprAux: ExprAux PLUS ExprAux                                                   
                                                                 $$ = AST_newNode("Plus","");
                                                                 AST_addSon($$,$2);
                                                                                     }
-    | LPAR ExprAux RPAR                                                                {
+    | LPAR Expr RPAR                                                                {
                                                                 $$ = $2;
                                                                                     } 
     | ID                                                                            {
@@ -524,13 +524,3 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-/*void yyerror(char *s) {
-    if(flag_erro == 1 && strlen(buffer) > 1){
-        printf("Line %d, col %d: %s: \"%s\"\n", yylineno, coluna_aux + (int) yyleng - 1, s, buffer);
-        flag_erro = 0;
-        buffer[0] = '\0';
-    }else if(flag_erro == 1){
-        printf("Line %d, col %d: %s: %s\n", yylineno, coluna - (int) yyleng, s, yytext);
-        flag_erro = 0;
-    }
-}*/
