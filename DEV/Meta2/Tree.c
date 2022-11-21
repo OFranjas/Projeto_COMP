@@ -4,12 +4,10 @@
 #include <string.h>
 #include "Tree.h"
 
-
-
 /* Create a new node */
 AST *AST_newNode(char *type, char *value)
 {
-    AST* new = (AST*)malloc(sizeof(AST));
+    AST *new = (AST *)malloc(sizeof(AST));
     new->type = type;
     new->value = value;
     new->father = NULL;
@@ -19,9 +17,9 @@ AST *AST_newNode(char *type, char *value)
 }
 
 /* Add a son to the father node */
-void AST_addSon(AST* father, AST* son)
+void AST_addSon(AST *father, AST *son)
 {
-    if (son == NULL)
+    if (son == NULL || father == NULL)
     {
         return;
     }
@@ -31,7 +29,7 @@ void AST_addSon(AST* father, AST* son)
     }
     else
     {
-        AST* temp = father->son;
+        AST *temp = father->son;
         while (temp->brother != NULL)
         {
             temp = temp->brother;
@@ -42,7 +40,7 @@ void AST_addSon(AST* father, AST* son)
 }
 
 /* Adds a brother */
-void AST_addBrother(AST* brother, AST* new)
+void AST_addBrother(AST *brother, AST *new)
 {
 
     if (new == NULL)
@@ -56,7 +54,7 @@ void AST_addBrother(AST* brother, AST* new)
     }
     else
     {
-        AST* temp = brother;
+        AST *temp = brother;
         while (temp->brother != NULL)
         {
             temp = temp->brother;
@@ -64,39 +62,43 @@ void AST_addBrother(AST* brother, AST* new)
         temp->brother = new;
     }
     new->father = brother->father;
-    
 }
 
 /* Function to print the AST tree */
-void AST_print(AST* AST,int n_pontos)
+void AST_print(AST *AST, int n_pontos)
 {
-    //printf("estou aqui \n");
+    // printf("estou aqui \n");
     if (AST == NULL)
     {
-        printf("A RAIZ ESTA A NULL\n");
+        return;
     }
-    for (int i = 0; i < n_pontos; i++)
-        printf(".");
-    
-    printf("%s", AST->type);
-    if (strcmp(AST->value, "") != 0)
+    if (strcmp(AST->type, "Semicolon") != 0)
     {
-        printf("(%s)\n", AST->value);
-    }else{
-        printf("\n");
-    }
+        for (int i = 0; i < n_pontos; i++)
+            printf(".");
 
-    if(AST->son != NULL){
-        AST_print(AST->son,n_pontos+2);
+        printf("%s", AST->type);
+        if (strcmp(AST->value, "") != 0)
+        {
+            printf("(%s)\n", AST->value);
+        }
+        else
+        {
+            printf("\n");
+        }
     }
-    if(AST->brother != NULL){
-        AST_print(AST->brother,n_pontos);
+    if (AST->son != NULL)
+    {
+        AST_print(AST->son, n_pontos + 2);
     }
-
+    if (AST->brother != NULL)
+    {
+        AST_print(AST->brother, n_pontos);
+    }
 }
 
 /* Function to free the memory of the tree */
-void AST_free(AST* AST)
+void AST_free(AST *AST)
 {
     if (AST == NULL)
     {
@@ -107,7 +109,7 @@ void AST_free(AST* AST)
     free(AST);
 }
 
-void AST_getNumberOfSons(AST* AST, int* count)
+void AST_getNumberOfSons(AST *AST, int *count)
 {
     if (AST == NULL)
     {
@@ -121,11 +123,13 @@ void AST_getNumberOfSons(AST* AST, int* count)
     AST_getNumberOfSons(AST->son, count);
 }
 
-void givetype(AST* no,char* type){
-        AST* auxiliar = NULL;
-		for (AST *atual = no; atual; atual = atual->brother){
-            auxiliar=AST_newNode(type, "");
-            auxiliar->brother=atual->son;
-            atual->son=auxiliar;
-        }
+void givetype(AST *no, char *type)
+{
+    AST *auxiliar = NULL;
+    for (AST *atual = no; atual; atual = atual->brother)
+    {
+        auxiliar = AST_newNode(type, "");
+        auxiliar->brother = atual->son;
+        atual->son = auxiliar;
+    }
 }
