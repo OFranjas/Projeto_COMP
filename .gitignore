@@ -30,4 +30,21 @@ DEV/Meta2/*
 !DEV/Meta2/test.sh
 !DEV/Meta2/makefile
 !DEV/Meta2/teste.java
-!DEV/MEta2/testCompiler.sh
+!DEV/Meta2/testCompiler.sh
+
+
+# Na pasta DEV/Meta3 ignorar tudo menos estes ficheiros e pastas
+!DEV/Meta3/jucompiler.l
+!DEV/Meta3/jucompiler.y
+!DEV/Meta3/Tree.c
+!DEV/Meta3/Tree.h
+!DEV/Meta3/expr.y
+!DEV/Meta3/testes/
+!DEV/Meta3/test.sh
+!DEV/Meta3/makefile
+!DEV/Meta3/teste.java
+!DEV/Meta3/testCompiler.sh
+!DEV/Meta3/symtab.c
+!DEV/Meta3/symtab.h
+!DEV/Meta3/analise_semantica.c
+!DEV/Meta3/analise_semantica.h
