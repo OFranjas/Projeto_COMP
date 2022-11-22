@@ -85,7 +85,8 @@ ProgramAux: /*empty*/									     {$$=NULL;}
           | SEMICOLON ProgramAux                             {$$ = $2;}
           
 // Certo
-MethodDecl: PUBLIC STATIC MethodHeader MethodBody            {$$ = AST_newNode("MethodDecl","");AST_addSon($$,$3);AST_addSon($$,$4);}                                         
+MethodDecl: PUBLIC STATIC MethodHeader MethodBody            {$$ = AST_newNode("MethodDecl","");AST_addSon($$,$3);AST_addSon($$,$4);}   
+                                            
 
 // Certo +/- ?   
 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON      {$$ = AST_newNode("FieldDecl", "");AST_addSon($$,$3);AST_addSon($$, AST_newNode("Id", $4));givetype($5, $3->type);AST_addBrother($$, $5);}
@@ -243,7 +244,7 @@ Assignment: ID ASSIGN Expr                                   {$$ = AST_newNode("
 
 // Certo
 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("ParseArgs","");AST_addSon($$, AST_newNode("Id", $3));AST_addSon($$, $5);}
-        | PARSEINT LPAR error RPAR                           {$$ = NULL;}
+        | PARSEINT LPAR error RPAR                           {$$ = NULL;print_tree=0;}
      
 // Certo
 Expr: ExprAux                                               {$$ = $1;}
@@ -277,7 +278,7 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
     | BOOLLIT                                               {$$ = AST_newNode("BoolLit",$1);}
     | MethodInvocation                                      {$$ = $1;}
     | ParseArgs                                             {$$ = $1;}
-    | LPAR error RPAR                                       {$$ = NULL;}
+    | LPAR error RPAR                                       {$$ = NULL;print_tree=0;}
     
 
 %%
@@ -307,6 +308,7 @@ int main(int argc, char *argv[]){
             AST_print(root,0);
         }
     }
+    AST_free(root);
     return 0;
 }
 
