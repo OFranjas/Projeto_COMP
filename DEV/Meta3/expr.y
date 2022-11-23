@@ -9,8 +9,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Tree.h"
+#include "analise_semantica.h"
 
+
+symtab_header* symtab;
 
 struct AST *root;
 struct AST *methodParams;
@@ -308,6 +310,16 @@ int main(int argc, char *argv[]){
             AST_print(root,0);
         }
     }
+    if(strcmp(argv[1],"-s") == 0){
+        flag=2;
+        yyparse();
+        check_program(root);
+        printSymbolTable();
+        if(print_tree == 1){
+            AST_print(root,0);
+        }
+    }
+
     AST_free(root);
     return 0;
 }

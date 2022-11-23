@@ -38,7 +38,7 @@ specific_test=''
 diff_args=''
 
 prog="expr"
-args="-t"
+args="-s"
 only_error_files=["InsertionSort"]
 
 run_test(){

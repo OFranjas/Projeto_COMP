@@ -10,7 +10,7 @@ Grammar
 
     1 Program: CLASS ID LBRACE ProgramAux RBRACE
 
-    2 ProgramAux: ε
+    2 ProgramAux: %empty
     3           | MethodDecl ProgramAux
     4           | FieldDecl ProgramAux
     5           | SEMICOLON ProgramAux
@@ -21,7 +21,7 @@ Grammar
     8          | error SEMICOLON
 
     9 FieldDeclAux: COMMA ID FieldDeclAux
-   10             | ε
+   10             | %empty
 
    11 Type: INT
    12     | DOUBLE
@@ -32,21 +32,21 @@ Grammar
 
    16 FormalParams: Type ID FormalParamsAux
    17             | STRING LSQ RSQ ID
-   18             | ε
+   18             | %empty
 
    19 FormalParamsAux: COMMA Type ID FormalParamsAux
-   20                | ε
+   20                | %empty
 
    21 MethodBody: LBRACE MethodBodyAux RBRACE
 
    22 MethodBodyAux: Statement MethodBodyAux
    23              | VarDecl MethodBodyAux
-   24              | ε
+   24              | %empty
 
    25 VarDecl: Type ID VarDeclAux SEMICOLON
 
    26 VarDeclAux: COMMA ID VarDeclAux
-   27           | ε
+   27           | %empty
 
    28 Statement: LBRACE Statement StatementAux RBRACE
    29          | LBRACE RBRACE
@@ -64,7 +64,7 @@ Grammar
    41          | error SEMICOLON
 
    42 StatementAux: Statement StatementAux
-   43             | ε
+   43             | %empty
 
    44 MethodInvocation: ID LPAR RPAR
    45                 | ID LPAR MethodInvocationAux RPAR
@@ -72,7 +72,7 @@ Grammar
 
    47 MethodInvocationAux: Expr MethodInvocationAux_2
 
-   48 MethodInvocationAux_2: ε
+   48 MethodInvocationAux_2: %empty
    49                      | COMMA Expr MethodInvocationAux_2
 
    50 Assignment: ID ASSIGN Expr
@@ -241,7 +241,7 @@ Nonterminals, with rules where they appear
 
 State 0
 
-    0 $accept: • Program $end
+    0 $accept: . Program $end
 
     CLASS  shift, and go to state 1
 
@@ -250,35 +250,35 @@ State 0
 
 State 1
 
-    1 Program: CLASS • ID LBRACE ProgramAux RBRACE
+    1 Program: CLASS . ID LBRACE ProgramAux RBRACE
 
     ID  shift, and go to state 3
 
 
 State 2
 
-    0 $accept: Program • $end
+    0 $accept: Program . $end
 
     $end  shift, and go to state 4
 
 
 State 3
 
-    1 Program: CLASS ID • LBRACE ProgramAux RBRACE
+    1 Program: CLASS ID . LBRACE ProgramAux RBRACE
 
     LBRACE  shift, and go to state 5
 
 
 State 4
 
-    0 $accept: Program $end •
+    0 $accept: Program $end .
 
     $default  accept
 
 
 State 5
 
-    1 Program: CLASS ID LBRACE • ProgramAux RBRACE
+    1 Program: CLASS ID LBRACE . ProgramAux RBRACE
 
     error      shift, and go to state 6
     PUBLIC     shift, and go to state 7
@@ -293,22 +293,22 @@ State 5
 
 State 6
 
-    8 FieldDecl: error • SEMICOLON
+    8 FieldDecl: error . SEMICOLON
 
     SEMICOLON  shift, and go to state 12
 
 
 State 7
 
-    6 MethodDecl: PUBLIC • STATIC MethodHeader MethodBody
-    7 FieldDecl: PUBLIC • STATIC Type ID FieldDeclAux SEMICOLON
+    6 MethodDecl: PUBLIC . STATIC MethodHeader MethodBody
+    7 FieldDecl: PUBLIC . STATIC Type ID FieldDeclAux SEMICOLON
 
     STATIC  shift, and go to state 13
 
 
 State 8
 
-    5 ProgramAux: SEMICOLON • ProgramAux
+    5 ProgramAux: SEMICOLON . ProgramAux
 
     error      shift, and go to state 6
     PUBLIC     shift, and go to state 7
@@ -323,14 +323,14 @@ State 8
 
 State 9
 
-    1 Program: CLASS ID LBRACE ProgramAux • RBRACE
+    1 Program: CLASS ID LBRACE ProgramAux . RBRACE
 
     RBRACE  shift, and go to state 15
 
 
 State 10
 
-    3 ProgramAux: MethodDecl • ProgramAux
+    3 ProgramAux: MethodDecl . ProgramAux
 
     error      shift, and go to state 6
     PUBLIC     shift, and go to state 7
@@ -345,7 +345,7 @@ State 10
 
 State 11
 
-    4 ProgramAux: FieldDecl • ProgramAux
+    4 ProgramAux: FieldDecl . ProgramAux
 
     error      shift, and go to state 6
     PUBLIC     shift, and go to state 7
@@ -360,15 +360,15 @@ State 11
 
 State 12
 
-    8 FieldDecl: error SEMICOLON •
+    8 FieldDecl: error SEMICOLON .
 
     $default  reduce using rule 8 (FieldDecl)
 
 
 State 13
 
-    6 MethodDecl: PUBLIC STATIC • MethodHeader MethodBody
-    7 FieldDecl: PUBLIC STATIC • Type ID FieldDeclAux SEMICOLON
+    6 MethodDecl: PUBLIC STATIC . MethodHeader MethodBody
+    7 FieldDecl: PUBLIC STATIC . Type ID FieldDeclAux SEMICOLON
 
     VOID    shift, and go to state 18
     INT     shift, and go to state 19
@@ -381,71 +381,71 @@ State 13
 
 State 14
 
-    5 ProgramAux: SEMICOLON ProgramAux •
+    5 ProgramAux: SEMICOLON ProgramAux .
 
     $default  reduce using rule 5 (ProgramAux)
 
 
 State 15
 
-    1 Program: CLASS ID LBRACE ProgramAux RBRACE •
+    1 Program: CLASS ID LBRACE ProgramAux RBRACE .
 
     $default  reduce using rule 1 (Program)
 
 
 State 16
 
-    3 ProgramAux: MethodDecl ProgramAux •
+    3 ProgramAux: MethodDecl ProgramAux .
 
     $default  reduce using rule 3 (ProgramAux)
 
 
 State 17
 
-    4 ProgramAux: FieldDecl ProgramAux •
+    4 ProgramAux: FieldDecl ProgramAux .
 
     $default  reduce using rule 4 (ProgramAux)
 
 
 State 18
 
-   15 MethodHeader: VOID • ID LPAR FormalParams RPAR
+   15 MethodHeader: VOID . ID LPAR FormalParams RPAR
 
     ID  shift, and go to state 24
 
 
 State 19
 
-   11 Type: INT •
+   11 Type: INT .
 
     $default  reduce using rule 11 (Type)
 
 
 State 20
 
-   12 Type: DOUBLE •
+   12 Type: DOUBLE .
 
     $default  reduce using rule 12 (Type)
 
 
 State 21
 
-   13 Type: BOOL •
+   13 Type: BOOL .
 
     $default  reduce using rule 13 (Type)
 
 
 State 22
 
-    7 FieldDecl: PUBLIC STATIC Type • ID FieldDeclAux SEMICOLON
-   14 MethodHeader: Type • ID LPAR FormalParams RPAR
+    7 FieldDecl: PUBLIC STATIC Type . ID FieldDeclAux SEMICOLON
+   14 MethodHeader: Type . ID LPAR FormalParams RPAR
 
     ID  shift, and go to state 25
 
 
 State 23
 
-    6 MethodDecl: PUBLIC STATIC MethodHeader • MethodBody
+    6 MethodDecl: PUBLIC STATIC MethodHeader . MethodBody
 
     LBRACE  shift, and go to state 26
 
@@ -454,15 +454,15 @@ State 23
 
 State 24
 
-   15 MethodHeader: VOID ID • LPAR FormalParams RPAR
+   15 MethodHeader: VOID ID . LPAR FormalParams RPAR
 
     LPAR  shift, and go to state 28
 
 
 State 25
 
-    7 FieldDecl: PUBLIC STATIC Type ID • FieldDeclAux SEMICOLON
-   14 MethodHeader: Type ID • LPAR FormalParams RPAR
+    7 FieldDecl: PUBLIC STATIC Type ID . FieldDeclAux SEMICOLON
+   14 MethodHeader: Type ID . LPAR FormalParams RPAR
 
     COMMA  shift, and go to state 29
     LPAR   shift, and go to state 30
@@ -474,7 +474,7 @@ State 25
 
 State 26
 
-   21 MethodBody: LBRACE • MethodBodyAux RBRACE
+   21 MethodBody: LBRACE . MethodBodyAux RBRACE
 
     error      shift, and go to state 32
     INT        shift, and go to state 19
@@ -502,14 +502,14 @@ State 26
 
 State 27
 
-    6 MethodDecl: PUBLIC STATIC MethodHeader MethodBody •
+    6 MethodDecl: PUBLIC STATIC MethodHeader MethodBody .
 
     $default  reduce using rule 6 (MethodDecl)
 
 
 State 28
 
-   15 MethodHeader: VOID ID LPAR • FormalParams RPAR
+   15 MethodHeader: VOID ID LPAR . FormalParams RPAR
 
     STRING  shift, and go to state 48
     INT     shift, and go to state 19
@@ -524,14 +524,14 @@ State 28
 
 State 29
 
-    9 FieldDeclAux: COMMA • ID FieldDeclAux
+    9 FieldDeclAux: COMMA . ID FieldDeclAux
 
     ID  shift, and go to state 51
 
 
 State 30
 
-   14 MethodHeader: Type ID LPAR • FormalParams RPAR
+   14 MethodHeader: Type ID LPAR . FormalParams RPAR
 
     STRING  shift, and go to state 48
     INT     shift, and go to state 19
@@ -546,29 +546,29 @@ State 30
 
 State 31
 
-    7 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux • SEMICOLON
+    7 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux . SEMICOLON
 
     SEMICOLON  shift, and go to state 53
 
 
 State 32
 
-   41 Statement: error • SEMICOLON
+   41 Statement: error . SEMICOLON
 
     SEMICOLON  shift, and go to state 54
 
 
 State 33
 
-   38 Statement: SEMICOLON •
+   38 Statement: SEMICOLON .
 
     $default  reduce using rule 38 (Statement)
 
 
 State 34
 
-   28 Statement: LBRACE • Statement StatementAux RBRACE
-   29          | LBRACE • RBRACE
+   28 Statement: LBRACE . Statement StatementAux RBRACE
+   29          | LBRACE . RBRACE
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -589,23 +589,23 @@ State 34
 
 State 35
 
-   32 Statement: WHILE • LPAR Expr RPAR Statement
+   32 Statement: WHILE . LPAR Expr RPAR Statement
 
     LPAR  shift, and go to state 57
 
 
 State 36
 
-   30 Statement: IF • LPAR Expr RPAR Statement
-   31          | IF • LPAR Expr RPAR Statement ELSE Statement
+   30 Statement: IF . LPAR Expr RPAR Statement
+   31          | IF . LPAR Expr RPAR Statement ELSE Statement
 
     LPAR  shift, and go to state 58
 
 
 State 37
 
-   33 Statement: RETURN • Expr SEMICOLON
-   34          | RETURN • SEMICOLON
+   33 Statement: RETURN . Expr SEMICOLON
+   34          | RETURN . SEMICOLON
 
     SEMICOLON  shift, and go to state 59
     LPAR       shift, and go to state 60
@@ -627,26 +627,26 @@ State 37
 
 State 38
 
-   39 Statement: PRINT • LPAR Expr RPAR SEMICOLON
-   40          | PRINT • LPAR STRLIT RPAR SEMICOLON
+   39 Statement: PRINT . LPAR Expr RPAR SEMICOLON
+   40          | PRINT . LPAR STRLIT RPAR SEMICOLON
 
     LPAR  shift, and go to state 73
 
 
 State 39
 
-   51 ParseArgs: PARSEINT • LPAR ID LSQ Expr RSQ RPAR
-   52          | PARSEINT • LPAR error RPAR
+   51 ParseArgs: PARSEINT . LPAR ID LSQ Expr RSQ RPAR
+   52          | PARSEINT . LPAR error RPAR
 
     LPAR  shift, and go to state 74
 
 
 State 40
 
-   44 MethodInvocation: ID • LPAR RPAR
-   45                 | ID • LPAR MethodInvocationAux RPAR
-   46                 | ID • LPAR error RPAR
-   50 Assignment: ID • ASSIGN Expr
+   44 MethodInvocation: ID . LPAR RPAR
+   45                 | ID . LPAR MethodInvocationAux RPAR
+   46                 | ID . LPAR error RPAR
+   50 Assignment: ID . ASSIGN Expr
 
     LPAR    shift, and go to state 75
     ASSIGN  shift, and go to state 76
@@ -654,21 +654,21 @@ State 40
 
 State 41
 
-   25 VarDecl: Type • ID VarDeclAux SEMICOLON
+   25 VarDecl: Type . ID VarDeclAux SEMICOLON
 
     ID  shift, and go to state 77
 
 
 State 42
 
-   21 MethodBody: LBRACE MethodBodyAux • RBRACE
+   21 MethodBody: LBRACE MethodBodyAux . RBRACE
 
     RBRACE  shift, and go to state 78
 
 
 State 43
 
-   23 MethodBodyAux: VarDecl • MethodBodyAux
+   23 MethodBodyAux: VarDecl . MethodBodyAux
 
     error      shift, and go to state 32
     INT        shift, and go to state 19
@@ -696,7 +696,7 @@ State 43
 
 State 44
 
-   22 MethodBodyAux: Statement • MethodBodyAux
+   22 MethodBodyAux: Statement . MethodBodyAux
 
     error      shift, and go to state 32
     INT        shift, and go to state 19
@@ -724,49 +724,49 @@ State 44
 
 State 45
 
-   35 Statement: MethodInvocation • SEMICOLON
+   35 Statement: MethodInvocation . SEMICOLON
 
     SEMICOLON  shift, and go to state 81
 
 
 State 46
 
-   36 Statement: Assignment • SEMICOLON
+   36 Statement: Assignment . SEMICOLON
 
     SEMICOLON  shift, and go to state 82
 
 
 State 47
 
-   37 Statement: ParseArgs • SEMICOLON
+   37 Statement: ParseArgs . SEMICOLON
 
     SEMICOLON  shift, and go to state 83
 
 
 State 48
 
-   17 FormalParams: STRING • LSQ RSQ ID
+   17 FormalParams: STRING . LSQ RSQ ID
 
     LSQ  shift, and go to state 84
 
 
 State 49
 
-   16 FormalParams: Type • ID FormalParamsAux
+   16 FormalParams: Type . ID FormalParamsAux
 
     ID  shift, and go to state 85
 
 
 State 50
 
-   15 MethodHeader: VOID ID LPAR FormalParams • RPAR
+   15 MethodHeader: VOID ID LPAR FormalParams . RPAR
 
     RPAR  shift, and go to state 86
 
 
 State 51
 
-    9 FieldDeclAux: COMMA ID • FieldDeclAux
+    9 FieldDeclAux: COMMA ID . FieldDeclAux
 
     COMMA  shift, and go to state 29
 
@@ -777,35 +777,35 @@ State 51
 
 State 52
 
-   14 MethodHeader: Type ID LPAR FormalParams • RPAR
+   14 MethodHeader: Type ID LPAR FormalParams . RPAR
 
     RPAR  shift, and go to state 88
 
 
 State 53
 
-    7 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON •
+    7 FieldDecl: PUBLIC STATIC Type ID FieldDeclAux SEMICOLON .
 
     $default  reduce using rule 7 (FieldDecl)
 
 
 State 54
 
-   41 Statement: error SEMICOLON •
+   41 Statement: error SEMICOLON .
 
     $default  reduce using rule 41 (Statement)
 
 
 State 55
 
-   29 Statement: LBRACE RBRACE •
+   29 Statement: LBRACE RBRACE .
 
     $default  reduce using rule 29 (Statement)
 
 
 State 56
 
-   28 Statement: LBRACE Statement • StatementAux RBRACE
+   28 Statement: LBRACE Statement . StatementAux RBRACE
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -828,7 +828,7 @@ State 56
 
 State 57
 
-   32 Statement: WHILE LPAR • Expr RPAR Statement
+   32 Statement: WHILE LPAR . Expr RPAR Statement
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -849,8 +849,8 @@ State 57
 
 State 58
 
-   30 Statement: IF LPAR • Expr RPAR Statement
-   31          | IF LPAR • Expr RPAR Statement ELSE Statement
+   30 Statement: IF LPAR . Expr RPAR Statement
+   31          | IF LPAR . Expr RPAR Statement ELSE Statement
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -871,15 +871,15 @@ State 58
 
 State 59
 
-   34 Statement: RETURN SEMICOLON •
+   34 Statement: RETURN SEMICOLON .
 
     $default  reduce using rule 34 (Statement)
 
 
 State 60
 
-   74 ExprAux: LPAR • Expr RPAR
-   82        | LPAR • error RPAR
+   74 ExprAux: LPAR . Expr RPAR
+   82        | LPAR . error RPAR
 
     error     shift, and go to state 93
     LPAR      shift, and go to state 60
@@ -901,7 +901,7 @@ State 60
 
 State 61
 
-   73 ExprAux: PLUS • ExprAux
+   73 ExprAux: PLUS . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -920,7 +920,7 @@ State 61
 
 State 62
 
-   71 ExprAux: MINUS • ExprAux
+   71 ExprAux: MINUS . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -939,7 +939,7 @@ State 62
 
 State 63
 
-   72 ExprAux: NOT • ExprAux
+   72 ExprAux: NOT . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -958,26 +958,26 @@ State 63
 
 State 64
 
-   78 ExprAux: REALLIT •
+   78 ExprAux: REALLIT .
 
     $default  reduce using rule 78 (ExprAux)
 
 
 State 65
 
-   77 ExprAux: INTLIT •
+   77 ExprAux: INTLIT .
 
     $default  reduce using rule 77 (ExprAux)
 
 
 State 66
 
-   44 MethodInvocation: ID • LPAR RPAR
-   45                 | ID • LPAR MethodInvocationAux RPAR
-   46                 | ID • LPAR error RPAR
-   50 Assignment: ID • ASSIGN Expr
-   75 ExprAux: ID •
-   76        | ID • DOTLENGTH
+   44 MethodInvocation: ID . LPAR RPAR
+   45                 | ID . LPAR MethodInvocationAux RPAR
+   46                 | ID . LPAR error RPAR
+   50 Assignment: ID . ASSIGN Expr
+   75 ExprAux: ID .
+   76        | ID . DOTLENGTH
 
     LPAR       shift, and go to state 75
     ASSIGN     shift, and go to state 76
@@ -988,58 +988,58 @@ State 66
 
 State 67
 
-   79 ExprAux: BOOLLIT •
+   79 ExprAux: BOOLLIT .
 
     $default  reduce using rule 79 (ExprAux)
 
 
 State 68
 
-   80 ExprAux: MethodInvocation •
+   80 ExprAux: MethodInvocation .
 
     $default  reduce using rule 80 (ExprAux)
 
 
 State 69
 
-   54 Expr: Assignment •
+   54 Expr: Assignment .
 
     $default  reduce using rule 54 (Expr)
 
 
 State 70
 
-   81 ExprAux: ParseArgs •
+   81 ExprAux: ParseArgs .
 
     $default  reduce using rule 81 (ExprAux)
 
 
 State 71
 
-   33 Statement: RETURN Expr • SEMICOLON
+   33 Statement: RETURN Expr . SEMICOLON
 
     SEMICOLON  shift, and go to state 100
 
 
 State 72
 
-   53 Expr: ExprAux •
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   53 Expr: ExprAux .
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS    shift, and go to state 101
     MINUS   shift, and go to state 102
@@ -1063,8 +1063,8 @@ State 72
 
 State 73
 
-   39 Statement: PRINT LPAR • Expr RPAR SEMICOLON
-   40          | PRINT LPAR • STRLIT RPAR SEMICOLON
+   39 Statement: PRINT LPAR . Expr RPAR SEMICOLON
+   40          | PRINT LPAR . STRLIT RPAR SEMICOLON
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1086,8 +1086,8 @@ State 73
 
 State 74
 
-   51 ParseArgs: PARSEINT LPAR • ID LSQ Expr RSQ RPAR
-   52          | PARSEINT LPAR • error RPAR
+   51 ParseArgs: PARSEINT LPAR . ID LSQ Expr RSQ RPAR
+   52          | PARSEINT LPAR . error RPAR
 
     error  shift, and go to state 119
     ID     shift, and go to state 120
@@ -1095,9 +1095,9 @@ State 74
 
 State 75
 
-   44 MethodInvocation: ID LPAR • RPAR
-   45                 | ID LPAR • MethodInvocationAux RPAR
-   46                 | ID LPAR • error RPAR
+   44 MethodInvocation: ID LPAR . RPAR
+   45                 | ID LPAR . MethodInvocationAux RPAR
+   46                 | ID LPAR . error RPAR
 
     error     shift, and go to state 121
     LPAR      shift, and go to state 60
@@ -1121,7 +1121,7 @@ State 75
 
 State 76
 
-   50 Assignment: ID ASSIGN • Expr
+   50 Assignment: ID ASSIGN . Expr
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1142,7 +1142,7 @@ State 76
 
 State 77
 
-   25 VarDecl: Type ID • VarDeclAux SEMICOLON
+   25 VarDecl: Type ID . VarDeclAux SEMICOLON
 
     COMMA  shift, and go to state 126
 
@@ -1153,56 +1153,56 @@ State 77
 
 State 78
 
-   21 MethodBody: LBRACE MethodBodyAux RBRACE •
+   21 MethodBody: LBRACE MethodBodyAux RBRACE .
 
     $default  reduce using rule 21 (MethodBody)
 
 
 State 79
 
-   23 MethodBodyAux: VarDecl MethodBodyAux •
+   23 MethodBodyAux: VarDecl MethodBodyAux .
 
     $default  reduce using rule 23 (MethodBodyAux)
 
 
 State 80
 
-   22 MethodBodyAux: Statement MethodBodyAux •
+   22 MethodBodyAux: Statement MethodBodyAux .
 
     $default  reduce using rule 22 (MethodBodyAux)
 
 
 State 81
 
-   35 Statement: MethodInvocation SEMICOLON •
+   35 Statement: MethodInvocation SEMICOLON .
 
     $default  reduce using rule 35 (Statement)
 
 
 State 82
 
-   36 Statement: Assignment SEMICOLON •
+   36 Statement: Assignment SEMICOLON .
 
     $default  reduce using rule 36 (Statement)
 
 
 State 83
 
-   37 Statement: ParseArgs SEMICOLON •
+   37 Statement: ParseArgs SEMICOLON .
 
     $default  reduce using rule 37 (Statement)
 
 
 State 84
 
-   17 FormalParams: STRING LSQ • RSQ ID
+   17 FormalParams: STRING LSQ . RSQ ID
 
     RSQ  shift, and go to state 128
 
 
 State 85
 
-   16 FormalParams: Type ID • FormalParamsAux
+   16 FormalParams: Type ID . FormalParamsAux
 
     COMMA  shift, and go to state 129
 
@@ -1213,28 +1213,28 @@ State 85
 
 State 86
 
-   15 MethodHeader: VOID ID LPAR FormalParams RPAR •
+   15 MethodHeader: VOID ID LPAR FormalParams RPAR .
 
     $default  reduce using rule 15 (MethodHeader)
 
 
 State 87
 
-    9 FieldDeclAux: COMMA ID FieldDeclAux •
+    9 FieldDeclAux: COMMA ID FieldDeclAux .
 
     $default  reduce using rule 9 (FieldDeclAux)
 
 
 State 88
 
-   14 MethodHeader: Type ID LPAR FormalParams RPAR •
+   14 MethodHeader: Type ID LPAR FormalParams RPAR .
 
     $default  reduce using rule 14 (MethodHeader)
 
 
 State 89
 
-   42 StatementAux: Statement • StatementAux
+   42 StatementAux: Statement . StatementAux
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -1257,47 +1257,47 @@ State 89
 
 State 90
 
-   28 Statement: LBRACE Statement StatementAux • RBRACE
+   28 Statement: LBRACE Statement StatementAux . RBRACE
 
     RBRACE  shift, and go to state 132
 
 
 State 91
 
-   32 Statement: WHILE LPAR Expr • RPAR Statement
+   32 Statement: WHILE LPAR Expr . RPAR Statement
 
     RPAR  shift, and go to state 133
 
 
 State 92
 
-   30 Statement: IF LPAR Expr • RPAR Statement
-   31          | IF LPAR Expr • RPAR Statement ELSE Statement
+   30 Statement: IF LPAR Expr . RPAR Statement
+   31          | IF LPAR Expr . RPAR Statement ELSE Statement
 
     RPAR  shift, and go to state 134
 
 
 State 93
 
-   82 ExprAux: LPAR error • RPAR
+   82 ExprAux: LPAR error . RPAR
 
     RPAR  shift, and go to state 135
 
 
 State 94
 
-   74 ExprAux: LPAR Expr • RPAR
+   74 ExprAux: LPAR Expr . RPAR
 
     RPAR  shift, and go to state 136
 
 
 State 95
 
-   44 MethodInvocation: ID • LPAR RPAR
-   45                 | ID • LPAR MethodInvocationAux RPAR
-   46                 | ID • LPAR error RPAR
-   75 ExprAux: ID •
-   76        | ID • DOTLENGTH
+   44 MethodInvocation: ID . LPAR RPAR
+   45                 | ID . LPAR MethodInvocationAux RPAR
+   46                 | ID . LPAR error RPAR
+   75 ExprAux: ID .
+   76        | ID . DOTLENGTH
 
     LPAR       shift, and go to state 75
     DOTLENGTH  shift, and go to state 99
@@ -1307,90 +1307,90 @@ State 95
 
 State 96
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
-   73        | PLUS ExprAux •
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
+   73        | PLUS ExprAux .
 
     $default  reduce using rule 73 (ExprAux)
 
 
 State 97
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
-   71        | MINUS ExprAux •
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
+   71        | MINUS ExprAux .
 
     $default  reduce using rule 71 (ExprAux)
 
 
 State 98
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
-   72        | NOT ExprAux •
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
+   72        | NOT ExprAux .
 
     $default  reduce using rule 72 (ExprAux)
 
 
 State 99
 
-   76 ExprAux: ID DOTLENGTH •
+   76 ExprAux: ID DOTLENGTH .
 
     $default  reduce using rule 76 (ExprAux)
 
 
 State 100
 
-   33 Statement: RETURN Expr SEMICOLON •
+   33 Statement: RETURN Expr SEMICOLON .
 
     $default  reduce using rule 33 (Statement)
 
 
 State 101
 
-   55 ExprAux: ExprAux PLUS • ExprAux
+   55 ExprAux: ExprAux PLUS . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1409,7 +1409,7 @@ State 101
 
 State 102
 
-   56 ExprAux: ExprAux MINUS • ExprAux
+   56 ExprAux: ExprAux MINUS . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1428,7 +1428,7 @@ State 102
 
 State 103
 
-   57 ExprAux: ExprAux STAR • ExprAux
+   57 ExprAux: ExprAux STAR . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1447,7 +1447,7 @@ State 103
 
 State 104
 
-   58 ExprAux: ExprAux DIV • ExprAux
+   58 ExprAux: ExprAux DIV . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1466,7 +1466,7 @@ State 104
 
 State 105
 
-   59 ExprAux: ExprAux MOD • ExprAux
+   59 ExprAux: ExprAux MOD . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1485,7 +1485,7 @@ State 105
 
 State 106
 
-   61 ExprAux: ExprAux XOR • ExprAux
+   61 ExprAux: ExprAux XOR . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1504,7 +1504,7 @@ State 106
 
 State 107
 
-   60 ExprAux: ExprAux OR • ExprAux
+   60 ExprAux: ExprAux OR . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1523,7 +1523,7 @@ State 107
 
 State 108
 
-   62 ExprAux: ExprAux AND • ExprAux
+   62 ExprAux: ExprAux AND . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1542,7 +1542,7 @@ State 108
 
 State 109
 
-   65 ExprAux: ExprAux EQ • ExprAux
+   65 ExprAux: ExprAux EQ . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1561,7 +1561,7 @@ State 109
 
 State 110
 
-   66 ExprAux: ExprAux NE • ExprAux
+   66 ExprAux: ExprAux NE . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1580,7 +1580,7 @@ State 110
 
 State 111
 
-   69 ExprAux: ExprAux LE • ExprAux
+   69 ExprAux: ExprAux LE . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1599,7 +1599,7 @@ State 111
 
 State 112
 
-   70 ExprAux: ExprAux GE • ExprAux
+   70 ExprAux: ExprAux GE . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1618,7 +1618,7 @@ State 112
 
 State 113
 
-   67 ExprAux: ExprAux LT • ExprAux
+   67 ExprAux: ExprAux LT . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1637,7 +1637,7 @@ State 113
 
 State 114
 
-   68 ExprAux: ExprAux GT • ExprAux
+   68 ExprAux: ExprAux GT . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1656,7 +1656,7 @@ State 114
 
 State 115
 
-   63 ExprAux: ExprAux LSHIFT • ExprAux
+   63 ExprAux: ExprAux LSHIFT . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1675,7 +1675,7 @@ State 115
 
 State 116
 
-   64 ExprAux: ExprAux RSHIFT • ExprAux
+   64 ExprAux: ExprAux RSHIFT . ExprAux
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -1694,56 +1694,56 @@ State 116
 
 State 117
 
-   40 Statement: PRINT LPAR STRLIT • RPAR SEMICOLON
+   40 Statement: PRINT LPAR STRLIT . RPAR SEMICOLON
 
     RPAR  shift, and go to state 153
 
 
 State 118
 
-   39 Statement: PRINT LPAR Expr • RPAR SEMICOLON
+   39 Statement: PRINT LPAR Expr . RPAR SEMICOLON
 
     RPAR  shift, and go to state 154
 
 
 State 119
 
-   52 ParseArgs: PARSEINT LPAR error • RPAR
+   52 ParseArgs: PARSEINT LPAR error . RPAR
 
     RPAR  shift, and go to state 155
 
 
 State 120
 
-   51 ParseArgs: PARSEINT LPAR ID • LSQ Expr RSQ RPAR
+   51 ParseArgs: PARSEINT LPAR ID . LSQ Expr RSQ RPAR
 
     LSQ  shift, and go to state 156
 
 
 State 121
 
-   46 MethodInvocation: ID LPAR error • RPAR
+   46 MethodInvocation: ID LPAR error . RPAR
 
     RPAR  shift, and go to state 157
 
 
 State 122
 
-   44 MethodInvocation: ID LPAR RPAR •
+   44 MethodInvocation: ID LPAR RPAR .
 
     $default  reduce using rule 44 (MethodInvocation)
 
 
 State 123
 
-   45 MethodInvocation: ID LPAR MethodInvocationAux • RPAR
+   45 MethodInvocation: ID LPAR MethodInvocationAux . RPAR
 
     RPAR  shift, and go to state 158
 
 
 State 124
 
-   47 MethodInvocationAux: Expr • MethodInvocationAux_2
+   47 MethodInvocationAux: Expr . MethodInvocationAux_2
 
     COMMA  shift, and go to state 159
 
@@ -1754,35 +1754,35 @@ State 124
 
 State 125
 
-   50 Assignment: ID ASSIGN Expr •
+   50 Assignment: ID ASSIGN Expr .
 
     $default  reduce using rule 50 (Assignment)
 
 
 State 126
 
-   26 VarDeclAux: COMMA • ID VarDeclAux
+   26 VarDeclAux: COMMA . ID VarDeclAux
 
     ID  shift, and go to state 161
 
 
 State 127
 
-   25 VarDecl: Type ID VarDeclAux • SEMICOLON
+   25 VarDecl: Type ID VarDeclAux . SEMICOLON
 
     SEMICOLON  shift, and go to state 162
 
 
 State 128
 
-   17 FormalParams: STRING LSQ RSQ • ID
+   17 FormalParams: STRING LSQ RSQ . ID
 
     ID  shift, and go to state 163
 
 
 State 129
 
-   19 FormalParamsAux: COMMA • Type ID FormalParamsAux
+   19 FormalParamsAux: COMMA . Type ID FormalParamsAux
 
     INT     shift, and go to state 19
     DOUBLE  shift, and go to state 20
@@ -1793,28 +1793,28 @@ State 129
 
 State 130
 
-   16 FormalParams: Type ID FormalParamsAux •
+   16 FormalParams: Type ID FormalParamsAux .
 
     $default  reduce using rule 16 (FormalParams)
 
 
 State 131
 
-   42 StatementAux: Statement StatementAux •
+   42 StatementAux: Statement StatementAux .
 
     $default  reduce using rule 42 (StatementAux)
 
 
 State 132
 
-   28 Statement: LBRACE Statement StatementAux RBRACE •
+   28 Statement: LBRACE Statement StatementAux RBRACE .
 
     $default  reduce using rule 28 (Statement)
 
 
 State 133
 
-   32 Statement: WHILE LPAR Expr RPAR • Statement
+   32 Statement: WHILE LPAR Expr RPAR . Statement
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -1834,8 +1834,8 @@ State 133
 
 State 134
 
-   30 Statement: IF LPAR Expr RPAR • Statement
-   31          | IF LPAR Expr RPAR • Statement ELSE Statement
+   30 Statement: IF LPAR Expr RPAR . Statement
+   31          | IF LPAR Expr RPAR . Statement ELSE Statement
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -1855,37 +1855,37 @@ State 134
 
 State 135
 
-   82 ExprAux: LPAR error RPAR •
+   82 ExprAux: LPAR error RPAR .
 
     $default  reduce using rule 82 (ExprAux)
 
 
 State 136
 
-   74 ExprAux: LPAR Expr RPAR •
+   74 ExprAux: LPAR Expr RPAR .
 
     $default  reduce using rule 74 (ExprAux)
 
 
 State 137
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   55        | ExprAux PLUS ExprAux •
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   55        | ExprAux PLUS ExprAux .
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     STAR  shift, and go to state 103
     DIV   shift, and go to state 104
@@ -1896,23 +1896,23 @@ State 137
 
 State 138
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   56        | ExprAux MINUS ExprAux •
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   56        | ExprAux MINUS ExprAux .
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     STAR  shift, and go to state 103
     DIV   shift, and go to state 104
@@ -1923,92 +1923,92 @@ State 138
 
 State 139
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   57        | ExprAux STAR ExprAux •
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   57        | ExprAux STAR ExprAux .
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     $default  reduce using rule 57 (ExprAux)
 
 
 State 140
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   58        | ExprAux DIV ExprAux •
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   58        | ExprAux DIV ExprAux .
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     $default  reduce using rule 58 (ExprAux)
 
 
 State 141
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   59        | ExprAux MOD ExprAux •
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   59        | ExprAux MOD ExprAux .
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     $default  reduce using rule 59 (ExprAux)
 
 
 State 142
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   61        | ExprAux XOR ExprAux •
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   61        | ExprAux XOR ExprAux .
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS    shift, and go to state 101
     MINUS   shift, and go to state 102
@@ -2029,23 +2029,23 @@ State 142
 
 State 143
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   60        | ExprAux OR ExprAux •
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   60        | ExprAux OR ExprAux .
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS    shift, and go to state 101
     MINUS   shift, and go to state 102
@@ -2068,23 +2068,23 @@ State 143
 
 State 144
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   62        | ExprAux AND ExprAux •
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   62        | ExprAux AND ExprAux .
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS    shift, and go to state 101
     MINUS   shift, and go to state 102
@@ -2106,23 +2106,23 @@ State 144
 
 State 145
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   65        | ExprAux EQ ExprAux •
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   65        | ExprAux EQ ExprAux .
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2139,23 +2139,23 @@ State 145
 
 State 146
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   66        | ExprAux NE ExprAux •
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   66        | ExprAux NE ExprAux .
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2172,23 +2172,23 @@ State 146
 
 State 147
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   69        | ExprAux LE ExprAux •
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   69        | ExprAux LE ExprAux .
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2201,23 +2201,23 @@ State 147
 
 State 148
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
-   70        | ExprAux GE ExprAux •
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
+   70        | ExprAux GE ExprAux .
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2230,23 +2230,23 @@ State 148
 
 State 149
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   67        | ExprAux LT ExprAux •
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   67        | ExprAux LT ExprAux .
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2259,23 +2259,23 @@ State 149
 
 State 150
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   68        | ExprAux GT ExprAux •
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   68        | ExprAux GT ExprAux .
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2288,23 +2288,23 @@ State 150
 
 State 151
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   63        | ExprAux LSHIFT ExprAux •
-   64        | ExprAux • RSHIFT ExprAux
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   63        | ExprAux LSHIFT ExprAux .
+   64        | ExprAux . RSHIFT ExprAux
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2323,23 +2323,23 @@ State 151
 
 State 152
 
-   55 ExprAux: ExprAux • PLUS ExprAux
-   56        | ExprAux • MINUS ExprAux
-   57        | ExprAux • STAR ExprAux
-   58        | ExprAux • DIV ExprAux
-   59        | ExprAux • MOD ExprAux
-   60        | ExprAux • OR ExprAux
-   61        | ExprAux • XOR ExprAux
-   62        | ExprAux • AND ExprAux
-   63        | ExprAux • LSHIFT ExprAux
-   64        | ExprAux • RSHIFT ExprAux
-   64        | ExprAux RSHIFT ExprAux •
-   65        | ExprAux • EQ ExprAux
-   66        | ExprAux • NE ExprAux
-   67        | ExprAux • LT ExprAux
-   68        | ExprAux • GT ExprAux
-   69        | ExprAux • LE ExprAux
-   70        | ExprAux • GE ExprAux
+   55 ExprAux: ExprAux . PLUS ExprAux
+   56        | ExprAux . MINUS ExprAux
+   57        | ExprAux . STAR ExprAux
+   58        | ExprAux . DIV ExprAux
+   59        | ExprAux . MOD ExprAux
+   60        | ExprAux . OR ExprAux
+   61        | ExprAux . XOR ExprAux
+   62        | ExprAux . AND ExprAux
+   63        | ExprAux . LSHIFT ExprAux
+   64        | ExprAux . RSHIFT ExprAux
+   64        | ExprAux RSHIFT ExprAux .
+   65        | ExprAux . EQ ExprAux
+   66        | ExprAux . NE ExprAux
+   67        | ExprAux . LT ExprAux
+   68        | ExprAux . GT ExprAux
+   69        | ExprAux . LE ExprAux
+   70        | ExprAux . GE ExprAux
 
     PLUS   shift, and go to state 101
     MINUS  shift, and go to state 102
@@ -2358,28 +2358,28 @@ State 152
 
 State 153
 
-   40 Statement: PRINT LPAR STRLIT RPAR • SEMICOLON
+   40 Statement: PRINT LPAR STRLIT RPAR . SEMICOLON
 
     SEMICOLON  shift, and go to state 167
 
 
 State 154
 
-   39 Statement: PRINT LPAR Expr RPAR • SEMICOLON
+   39 Statement: PRINT LPAR Expr RPAR . SEMICOLON
 
     SEMICOLON  shift, and go to state 168
 
 
 State 155
 
-   52 ParseArgs: PARSEINT LPAR error RPAR •
+   52 ParseArgs: PARSEINT LPAR error RPAR .
 
     $default  reduce using rule 52 (ParseArgs)
 
 
 State 156
 
-   51 ParseArgs: PARSEINT LPAR ID LSQ • Expr RSQ RPAR
+   51 ParseArgs: PARSEINT LPAR ID LSQ . Expr RSQ RPAR
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -2400,21 +2400,21 @@ State 156
 
 State 157
 
-   46 MethodInvocation: ID LPAR error RPAR •
+   46 MethodInvocation: ID LPAR error RPAR .
 
     $default  reduce using rule 46 (MethodInvocation)
 
 
 State 158
 
-   45 MethodInvocation: ID LPAR MethodInvocationAux RPAR •
+   45 MethodInvocation: ID LPAR MethodInvocationAux RPAR .
 
     $default  reduce using rule 45 (MethodInvocation)
 
 
 State 159
 
-   49 MethodInvocationAux_2: COMMA • Expr MethodInvocationAux_2
+   49 MethodInvocationAux_2: COMMA . Expr MethodInvocationAux_2
 
     LPAR      shift, and go to state 60
     PLUS      shift, and go to state 61
@@ -2435,14 +2435,14 @@ State 159
 
 State 160
 
-   47 MethodInvocationAux: Expr MethodInvocationAux_2 •
+   47 MethodInvocationAux: Expr MethodInvocationAux_2 .
 
     $default  reduce using rule 47 (MethodInvocationAux)
 
 
 State 161
 
-   26 VarDeclAux: COMMA ID • VarDeclAux
+   26 VarDeclAux: COMMA ID . VarDeclAux
 
     COMMA  shift, and go to state 126
 
@@ -2453,36 +2453,36 @@ State 161
 
 State 162
 
-   25 VarDecl: Type ID VarDeclAux SEMICOLON •
+   25 VarDecl: Type ID VarDeclAux SEMICOLON .
 
     $default  reduce using rule 25 (VarDecl)
 
 
 State 163
 
-   17 FormalParams: STRING LSQ RSQ ID •
+   17 FormalParams: STRING LSQ RSQ ID .
 
     $default  reduce using rule 17 (FormalParams)
 
 
 State 164
 
-   19 FormalParamsAux: COMMA Type • ID FormalParamsAux
+   19 FormalParamsAux: COMMA Type . ID FormalParamsAux
 
     ID  shift, and go to state 172
 
 
 State 165
 
-   32 Statement: WHILE LPAR Expr RPAR Statement •
+   32 Statement: WHILE LPAR Expr RPAR Statement .
 
     $default  reduce using rule 32 (Statement)
 
 
 State 166
 
-   30 Statement: IF LPAR Expr RPAR Statement •
-   31          | IF LPAR Expr RPAR Statement • ELSE Statement
+   30 Statement: IF LPAR Expr RPAR Statement .
+   31          | IF LPAR Expr RPAR Statement . ELSE Statement
 
     ELSE  shift, and go to state 173
 
@@ -2491,28 +2491,28 @@ State 166
 
 State 167
 
-   40 Statement: PRINT LPAR STRLIT RPAR SEMICOLON •
+   40 Statement: PRINT LPAR STRLIT RPAR SEMICOLON .
 
     $default  reduce using rule 40 (Statement)
 
 
 State 168
 
-   39 Statement: PRINT LPAR Expr RPAR SEMICOLON •
+   39 Statement: PRINT LPAR Expr RPAR SEMICOLON .
 
     $default  reduce using rule 39 (Statement)
 
 
 State 169
 
-   51 ParseArgs: PARSEINT LPAR ID LSQ Expr • RSQ RPAR
+   51 ParseArgs: PARSEINT LPAR ID LSQ Expr . RSQ RPAR
 
     RSQ  shift, and go to state 174
 
 
 State 170
 
-   49 MethodInvocationAux_2: COMMA Expr • MethodInvocationAux_2
+   49 MethodInvocationAux_2: COMMA Expr . MethodInvocationAux_2
 
     COMMA  shift, and go to state 159
 
@@ -2523,14 +2523,14 @@ State 170
 
 State 171
 
-   26 VarDeclAux: COMMA ID VarDeclAux •
+   26 VarDeclAux: COMMA ID VarDeclAux .
 
     $default  reduce using rule 26 (VarDeclAux)
 
 
 State 172
 
-   19 FormalParamsAux: COMMA Type ID • FormalParamsAux
+   19 FormalParamsAux: COMMA Type ID . FormalParamsAux
 
     COMMA  shift, and go to state 129
 
@@ -2541,7 +2541,7 @@ State 172
 
 State 173
 
-   31 Statement: IF LPAR Expr RPAR Statement ELSE • Statement
+   31 Statement: IF LPAR Expr RPAR Statement ELSE . Statement
 
     error      shift, and go to state 32
     SEMICOLON  shift, and go to state 33
@@ -2561,34 +2561,34 @@ State 173
 
 State 174
 
-   51 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ • RPAR
+   51 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ . RPAR
 
     RPAR  shift, and go to state 178
 
 
 State 175
 
-   49 MethodInvocationAux_2: COMMA Expr MethodInvocationAux_2 •
+   49 MethodInvocationAux_2: COMMA Expr MethodInvocationAux_2 .
 
     $default  reduce using rule 49 (MethodInvocationAux_2)
 
 
 State 176
 
-   19 FormalParamsAux: COMMA Type ID FormalParamsAux •
+   19 FormalParamsAux: COMMA Type ID FormalParamsAux .
 
     $default  reduce using rule 19 (FormalParamsAux)
 
 
 State 177
 
-   31 Statement: IF LPAR Expr RPAR Statement ELSE Statement •
+   31 Statement: IF LPAR Expr RPAR Statement ELSE Statement .
 
     $default  reduce using rule 31 (Statement)
 
 
 State 178
 
-   51 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR •
+   51 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR .
 
     $default  reduce using rule 51 (ParseArgs)

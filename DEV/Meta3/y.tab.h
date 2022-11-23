@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.5.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,9 +31,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or yy_.  They are
-   private implementation details that can be changed or removed.  */
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
@@ -45,71 +44,62 @@
 extern int yydebug;
 #endif
 
-/* Token kinds.  */
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
-    CLASS = 258,                   /* CLASS  */
-    PUBLIC = 259,                  /* PUBLIC  */
-    STATIC = 260,                  /* STATIC  */
-    STRING = 261,                  /* STRING  */
-    VOID = 262,                    /* VOID  */
-    INT = 263,                     /* INT  */
-    DOUBLE = 264,                  /* DOUBLE  */
-    BOOL = 265,                    /* BOOL  */
-    SEMICOLON = 266,               /* SEMICOLON  */
-    COMMA = 267,                   /* COMMA  */
-    LBRACE = 268,                  /* LBRACE  */
-    RBRACE = 269,                  /* RBRACE  */
-    LPAR = 270,                    /* LPAR  */
-    RPAR = 271,                    /* RPAR  */
-    LSQ = 272,                     /* LSQ  */
-    RSQ = 273,                     /* RSQ  */
-    ASSIGN = 274,                  /* ASSIGN  */
-    PLUS = 275,                    /* PLUS  */
-    MINUS = 276,                   /* MINUS  */
-    STAR = 277,                    /* STAR  */
-    DIV = 278,                     /* DIV  */
-    MOD = 279,                     /* MOD  */
-    XOR = 280,                     /* XOR  */
-    OR = 281,                      /* OR  */
-    AND = 282,                     /* AND  */
-    EQ = 283,                      /* EQ  */
-    NE = 284,                      /* NE  */
-    LE = 285,                      /* LE  */
-    GE = 286,                      /* GE  */
-    LT = 287,                      /* LT  */
-    GT = 288,                      /* GT  */
-    NOT = 289,                     /* NOT  */
-    WHILE = 290,                   /* WHILE  */
-    IF = 291,                      /* IF  */
-    ELSE = 292,                    /* ELSE  */
-    RETURN = 293,                  /* RETURN  */
-    ARROW = 294,                   /* ARROW  */
-    LSHIFT = 295,                  /* LSHIFT  */
-    RSHIFT = 296,                  /* RSHIFT  */
-    DOTLENGTH = 297,               /* DOTLENGTH  */
-    PRINT = 298,                   /* PRINT  */
-    PARSEINT = 299,                /* PARSEINT  */
-    RESERVED = 300,                /* RESERVED  */
-    REALLIT = 301,                 /* REALLIT  */
-    STRLIT = 302,                  /* STRLIT  */
-    INTLIT = 303,                  /* INTLIT  */
-    ID = 304,                      /* ID  */
-    BOOLLIT = 305                  /* BOOLLIT  */
+    CLASS = 258,
+    PUBLIC = 259,
+    STATIC = 260,
+    STRING = 261,
+    VOID = 262,
+    INT = 263,
+    DOUBLE = 264,
+    BOOL = 265,
+    SEMICOLON = 266,
+    COMMA = 267,
+    LBRACE = 268,
+    RBRACE = 269,
+    LPAR = 270,
+    RPAR = 271,
+    LSQ = 272,
+    RSQ = 273,
+    ASSIGN = 274,
+    PLUS = 275,
+    MINUS = 276,
+    STAR = 277,
+    DIV = 278,
+    MOD = 279,
+    XOR = 280,
+    OR = 281,
+    AND = 282,
+    EQ = 283,
+    NE = 284,
+    LE = 285,
+    GE = 286,
+    LT = 287,
+    GT = 288,
+    NOT = 289,
+    WHILE = 290,
+    IF = 291,
+    ELSE = 292,
+    RETURN = 293,
+    ARROW = 294,
+    LSHIFT = 295,
+    RSHIFT = 296,
+    DOTLENGTH = 297,
+    PRINT = 298,
+    PARSEINT = 299,
+    RESERVED = 300,
+    REALLIT = 301,
+    STRLIT = 302,
+    INTLIT = 303,
+    ID = 304,
+    BOOLLIT = 305
   };
-  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Token kinds.  */
-#define YYEMPTY -2
-#define YYEOF 0
-#define YYerror 256
-#define YYUNDEF 257
+/* Tokens.  */
 #define CLASS 258
 #define PUBLIC 259
 #define STATIC 260
@@ -163,12 +153,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 40 "expr.y"
+#line 42 "expr.y"
 
 char* string;
 struct AST* ast;
 
-#line 172 "y.tab.h"
+#line 162 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -179,8 +169,6 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-
 int yyparse (void);
-
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */
