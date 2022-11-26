@@ -275,7 +275,7 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
     | PLUS ExprAux  %prec NOT                               {$1->name = "Plus" ; $$ = AST_newNode("Plus","",0,0);AST_addSon($$,$2);}
     | LPAR Expr RPAR                                        {$$ = $2;}
     | ID                                                    {$$ = AST_newNode("Id",$1->name,$1->linha,$1->coluna);}
-    | ID DOTLENGTH                                          {$$ = AST_newNode("Length","",0,0);AST_addSon($$,AST_newNode("Id",$1->name,$1->linha,$1->coluna));}
+    | ID DOTLENGTH                                          {$$ = AST_newNode("Length","",$2->linha,$2->coluna);AST_addSon($$,AST_newNode("Id",$1->name,$1->linha,$1->coluna));}
     | INTLIT                                                {$$ = AST_newNode("DecLit",$1->name,$1->linha,$1->coluna);}
     | REALLIT                                               {$$ = AST_newNode("RealLit",$1->name,$1->linha,$1->coluna);}
     | BOOLLIT                                               {$$ = AST_newNode("BoolLit",$1->name,$1->linha,$1->coluna);}

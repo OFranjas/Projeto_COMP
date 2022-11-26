@@ -2102,7 +2102,7 @@ yyreduce:
 
   case 77:
 #line 278 "expr.y"
-                                                            {(yyval.ast) = AST_newNode("Length","",0,0);AST_addSon((yyval.ast),AST_newNode("Id",(yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));}
+                                                            {(yyval.ast) = AST_newNode("Length","",(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);AST_addSon((yyval.ast),AST_newNode("Id",(yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));}
 #line 2107 "y.tab.c"
     break;
 
