@@ -30,7 +30,7 @@ typedef struct info_lex
     int coluna;
 } info_lex;
 
-AST *AST_newNode(char *type, char *value);
+AST *AST_newNode(char *type, char *value, int l, int c);
 void AST_addSon(AST *father, AST *son);
 void AST_addBrother(AST *brother, AST *new);
 void AST_print(AST *AST, int n_pontos);

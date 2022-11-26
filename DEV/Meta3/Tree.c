@@ -16,11 +16,13 @@ info_lex *createStruct(char *name, int line, int col)
 }
 
 /* Create a new node */
-AST *AST_newNode(char *type, char *value)
+AST *AST_newNode(char *type, char *value, int l, int c)
 {
     AST *new = (AST *)malloc(sizeof(AST));
     new->type = type;
     new->value = value;
+    new->linha = l;
+    new->coluna = c - 1;
     new->father = NULL;
     new->son = NULL;
     new->brother = NULL;
@@ -147,7 +149,7 @@ void givetype(AST *no, char *type)
     AST *auxiliar = NULL;
     for (AST *atual = no; atual; atual = atual->brother)
     {
-        auxiliar = AST_newNode(type, "");
+        auxiliar = AST_newNode(type, "", 0, 0);
         auxiliar->brother = atual->son;
         atual->son = auxiliar;
     }
