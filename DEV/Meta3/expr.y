@@ -218,7 +218,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
          | RETURN Expr SEMICOLON  						     {$$ = AST_newNode("Return","",$1->linha,$1->coluna);AST_addSon($$,$2);}
 		 | RETURN SEMICOLON								     {$$ = AST_newNode("Return", "",$1->linha,$1->coluna);}
 		 | MethodInvocation SEMICOLON 					     {$$ = $1;}
-		 | Assignment SEMICOLON 						     {$$ = AST_newNode("Assign","",$1->linha,$1->coluna+3);AST_addSon($$,$1);}
+		 | Assignment SEMICOLON 						     {$$ = AST_newNode("Assign","",$1->linha,$1->coluna+2);AST_addSon($$,$1);}
 		 | ParseArgs SEMICOLON 							     {$$ = $1;}
 		 | SEMICOLON									     {$$ = AST_newNode("Semicolon","",0,0);}		
 		 | PRINT LPAR Expr RPAR SEMICOLON 				     {$$ = AST_newNode("Print","",$1->linha,$1->coluna);AST_addSon($$,$3);}

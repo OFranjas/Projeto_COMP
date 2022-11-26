@@ -22,7 +22,7 @@ AST *AST_newNode(char *type, char *value, int l, int c)
     new->type = type;
     new->value = value;
     new->linha = l;
-    new->coluna = c - 1;
+    new->coluna = c;
     new->father = NULL;
     new->son = NULL;
     new->brother = NULL;

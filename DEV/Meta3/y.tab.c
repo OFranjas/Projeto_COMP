@@ -1862,7 +1862,7 @@ yyreduce:
 
   case 37:
 #line 221 "expr.y"
-                                                                                             {(yyval.ast) = AST_newNode("Assign","",(yyvsp[-1].ast)->linha,(yyvsp[-1].ast)->coluna+3);AST_addSon((yyval.ast),(yyvsp[-1].ast));}
+                                                                                             {(yyval.ast) = AST_newNode("Assign","",(yyvsp[-1].ast)->linha,(yyvsp[-1].ast)->coluna+2);AST_addSon((yyval.ast),(yyvsp[-1].ast));}
 #line 1867 "y.tab.c"
     break;
 
