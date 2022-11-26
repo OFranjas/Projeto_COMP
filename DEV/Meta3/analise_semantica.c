@@ -723,6 +723,7 @@ void printSymbolTable()
 
         tmp = tmp->brother;
     }
+    printf("\n");
 }
 // --------------------------------------------------------------------------------- Semantics.h ---------------------------------------------------------------------------------
 void check_program(AST *tree)
@@ -828,27 +829,16 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     //---------- VERIFICAR SE VARIAVEL JA FOI DECLARADA ---------
     else if (strcmp(name, "Id") == 0)
     {
-
-        // printf("%s\n",checkSymbol(node,method));
-
         if (!isCall)
         {
-            node->type = checkSymbol(node, method);
+            // Gameiro
+            node->type_semantico = checkSymbol(node, method);
         }
-
-        /*if(type == NULL){
-            //printf("Line %d, col %d: Cannot find symbol %s\n",line, col, param);
-            node->type= type;
-        }
-        else{
-            node->type= type;
-
-        }*/
     }
     else if (strcmp(name, "DecLit") == 0)
     {
-
-        node->type = "int";
+        // Gameiro
+        node->type_semantico = "int";
 
         // printf("%d\n",atoi(node->param));
 
@@ -861,18 +851,18 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     }
     else if (strcmp(name, "RealLit") == 0)
     {
-
-        node->type = "double";
+        // Gameiro
+        node->type_semantico = "double";
     }
     else if (strcmp(name, "BoolLit") == 0)
     {
-
-        node->type = "boolean";
+        // Gameiro
+        node->type_semantico = "boolean";
     }
     else if (strcmp(name, "StrLit") == 0)
     {
-
-        node->type = "String";
+        // Gameiro
+        node->type_semantico = "String";
     }
     //----------- CHAMADA DE FUNCAO ---------
     else if (strcmp(name, "Call") == 0)
@@ -955,71 +945,72 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
         {
             if (!(strcmp(node->son->type, "double") == 0 && strcmp(node->son->brother->type, "int") == 0))
             {
-                node->type = node->son->type;
+                // Gameiro
+                node->type_semantico = node->son->type_semantico;
                 printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type, node->son->brother->type);
             }
             else
             {
-
-                node->type = node->son->type;
+                // Gameiro
+                node->type_semantico = node->son->type_semantico;
             }
         }
         else
         {
-
-            node->type = node->son->type;
+            // Gameiro
+            node->type_semantico = node->son->type_semantico;
         }
     }
     else if (maths)
     {
         if (node->son->brother != NULL)
         {
-            if ((strcmp(node->son->type, "int") != 0 && strcmp(node->son->type, "double") != 0) || (strcmp(node->son->brother->type, "int") != 0 && strcmp(node->son->brother->type, "double") != 0))
+            if ((strcmp(node->son->type_semantico, "int") != 0 && strcmp(node->son->type_semantico, "double") != 0) || (strcmp(node->son->brother->type_semantico, "int") != 0 && strcmp(node->son->brother->type_semantico, "double") != 0))
             {
 
-                node->type = "undef";
+                node->type_semantico = "undef";
 
                 printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type, node->son->brother->type);
             }
             else
             {
 
-                if (strcmp(node->son->type, "double") == 0 || strcmp(node->son->brother->type, "double") == 0)
-                    node->type = "double";
+                if (strcmp(node->son->type_semantico, "double") == 0 || strcmp(node->son->brother->type_semantico, "double") == 0)
+                    node->type_semantico = "double";
                 else
-                    node->type = "int";
+                    node->type_semantico = "int";
             }
         }
         else
         {
-            if (strcmp(node->son->type, "int") != 0 && strcmp(node->son->type, "double") != 0)
+            if (strcmp(node->son->type_semantico, "int") != 0 && strcmp(node->son->type_semantico, "double") != 0)
             {
 
-                node->type = "undef";
+                node->type_semantico = "undef";
 
-                printf("Line %d, col %d: Operator %s cannot be applied to type %s\n", line, col, getToken(name), node->son->type);
+                printf("Line %d, col %d: Operator %s cannot be applied to type %s\n", line, col, getToken(name), node->son->type_semantico);
             }
             else
             {
 
-                if (strcmp(node->son->type, "double") == 0)
-                    node->type = "double";
+                if (strcmp(node->son->type_semantico, "double") == 0)
+                    node->type_semantico = "double";
                 else
-                    node->type = "int";
+                    node->type_semantico = "int";
             }
         }
     }
     else if (logic || comparation)
     {
-        node->type = "boolean";
+        node->type_semantico = "boolean";
 
         if (node->son->brother != NULL)
         {
-            if (strcmp(node->son->type, node->son->brother->type) != 0 || (strcmp(node->son->type, "undef") == 0) || (strcmp(node->son->brother->type, "undef") == 0) || (strcmp(node->son->type, "String[]") == 0) || (strcmp(node->son->brother->type, "String[]") == 0))
+            if (strcmp(node->son->type_semantico, node->son->brother->type_semantico) != 0 || (strcmp(node->son->type_semantico, "undef") == 0) || (strcmp(node->son->brother->type_semantico, "undef") == 0) || (strcmp(node->son->type_semantico, "String[]") == 0) || (strcmp(node->son->brother->type_semantico, "String[]") == 0))
             {
-                if (!((strcmp(node->son->type, "int") == 0 && strcmp(node->son->brother->type, "double") == 0) || (strcmp(node->son->type, "double") == 0 && strcmp(node->son->brother->type, "int") == 0)))
+                if (!((strcmp(node->son->type_semantico, "int") == 0 && strcmp(node->son->brother->type_semantico, "double") == 0) || (strcmp(node->son->type_semantico, "double") == 0 && strcmp(node->son->brother->type_semantico, "int") == 0)))
                 {
-                    printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type, node->son->brother->type);
+                    printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type_semantico, node->son->brother->type_semantico);
                 }
             }
         }
@@ -1027,7 +1018,7 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
         {
 
             if (strcmp(node->son->type, "boolean") != 0)
-                printf("Line %d, col %d: Operator %s cannot be applied to type %s\n", line, col, getToken(name), node->son->type);
+                printf("Line %d, col %d: Operator %s cannot be applied to type %s\n", line, col, getToken(name), node->son->type_semantico);
         }
     }
     else if (call)

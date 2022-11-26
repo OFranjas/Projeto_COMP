@@ -3,6 +3,18 @@
 #include <string.h>
 #include "Tree.h"
 
+info_lex *createStruct(char *name, int line, int col)
+{
+
+    info_lex *tmp = (info_lex *)malloc(sizeof(info_lex));
+
+    tmp->name = name;
+    tmp->linha = line;
+    tmp->coluna = col;
+
+    return tmp;
+}
+
 /* Create a new node */
 AST *AST_newNode(char *type, char *value)
 {
@@ -79,7 +91,15 @@ void AST_print(AST *AST, int n_pontos)
         printf("%s", AST->type);
         if (strcmp(AST->value, "") != 0)
         {
-            printf("(%s)\n", AST->value);
+            printf("(%s)", AST->value);
+        }
+        if (AST->type_semantico != NULL)
+        {
+            printf(" - %s\n", AST->type_semantico);
+        }
+        else if (AST->paramTypes != NULL)
+        {
+            printf(" - (%s)\n", AST->paramTypes);
         }
         else
         {

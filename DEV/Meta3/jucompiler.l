@@ -6,6 +6,7 @@
 
 %{
     #include "y.tab.h"
+    #include "Tree.h"
     int coluna = 1;
     int linha_aux = 0;
     int coluna_aux = 1;
@@ -17,6 +18,7 @@
     int error;
     extern int flag;
     extern int flag_erro_string;
+
     
 %}
 
@@ -34,58 +36,58 @@ NEWLINE "\n"|"\r"|"\r\n"
 
 %%  
 
-{reservadas}                {coluna += yyleng;     if(flag == 1){printf("RESERVED(%s)\n", yytext);} else if(flag == 2){return (RESERVED);}  }
+{reservadas}                {coluna += yyleng;     if(flag == 1){printf("RESERVED(%s)\n", yytext);} else if(flag == 2){return (RESERVED);}}
+     
+"true"|"false"              {coluna += yyleng;     if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}  else if (flag == 2){yylval.info=createStruct((char*)strdup(yytext),yylineno,coluna);         return(BOOLLIT);    }}
+"&&"                        {coluna += yyleng;     if(flag == 1){printf("AND\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("And"),yylineno,coluna);          return(AND);        }}
+"="                         {coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Assign"),yylineno,coluna);       return(ASSIGN);     }}
+"*"                         {coluna += yyleng;     if(flag == 1){printf("STAR\n");}                 else if (flag == 2){yylval.info=createStruct((char*)strdup("Mul"),yylineno,coluna);          return(STAR);       }}
+","                         {coluna += yyleng;     if(flag == 1){printf("COMMA\n");}                else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(COMMA);      }}
+"/"                         {coluna += yyleng;     if(flag == 1){printf("DIV\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Div"),yylineno,coluna);          return(DIV);        }}
+"=="                        {coluna += yyleng;     if(flag == 1){printf("EQ\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Eq"),yylineno,coluna);           return(EQ);         }}
+">="                        {coluna += yyleng;     if(flag == 1){printf("GE\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Ge"),yylineno,coluna);           return(GE);         }}
+">"                         {coluna += yyleng;     if(flag == 1){printf("GT\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Gt"),yylineno,coluna);           return(GT);         }}
+"{"                         {coluna += yyleng;     if(flag == 1){printf("LBRACE\n");}               else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(LBRACE);     }}
+"<="                        {coluna += yyleng;     if(flag == 1){printf("LE\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Le"),yylineno,coluna);           return(LE);         }}
+"("                         {coluna += yyleng;     if(flag == 1){printf("LPAR\n");}                 else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(LPAR);       }}
+"["                         {coluna += yyleng;     if(flag == 1){printf("LSQ\n");}                  else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(LSQ);        }}
+"<"                         {coluna += yyleng;     if(flag == 1){printf("LT\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Lt"),yylineno,coluna);           return(LT);         }}
+"-"                         {coluna += yyleng;     if(flag == 1){printf("MINUS\n");}                else if (flag == 2){yylval.info=createStruct((char*)strdup("Sub"),yylineno,coluna);          return(MINUS);      }}
+"%"                         {coluna += yyleng;     if(flag == 1){printf("MOD\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Mod"),yylineno,coluna);          return(MOD);        }}
+"!="                        {coluna += yyleng;     if(flag == 1){printf("NE\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Ne"),yylineno,coluna);           return(NE);         }}
+"!"                         {coluna += yyleng;     if(flag == 1){printf("NOT\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Not"),yylineno,coluna);          return(NOT);        }}
+"||"                        {coluna += yyleng;     if(flag == 1){printf("OR\n");}                   else if (flag == 2){yylval.info=createStruct((char*)strdup("Or"),yylineno,coluna);           return(OR);         }}
+"+"                         {coluna += yyleng;     if(flag == 1){printf("PLUS\n");}                 else if (flag == 2){yylval.info=createStruct((char*)strdup("Add"),yylineno,coluna);          return(PLUS);       }}
+"}"                         {coluna += yyleng;     if(flag == 1){printf("RBRACE\n");}               else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(RBRACE);     }}
+")"                         {coluna += yyleng;     if(flag == 1){printf("RPAR\n");}                 else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(RPAR);       }}
+"]"                         {coluna += yyleng;     if(flag == 1){printf("RSQ\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Add"),yylineno,coluna);          return(RSQ);        }}
+";"                         {coluna += yyleng;     if(flag == 1){printf("SEMICOLON\n");}            else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(SEMICOLON);  }}
+"->"                        {coluna += yyleng;     if(flag == 1){printf("ARROW\n");}                else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(ARROW);      }}
+"<<"                        {coluna += yyleng;     if(flag == 1){printf("LSHIFT\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Lshift"),yylineno,coluna);       return(LSHIFT);     }}
+">>"                        {coluna += yyleng;     if(flag == 1){printf("RSHIFT\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Rshift"),yylineno,coluna);       return(RSHIFT);     }}
+"^"                         {coluna += yyleng;     if(flag == 1){printf("XOR\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Xor"),yylineno,coluna);          return(XOR);        }}
+"boolean"                   {coluna += yyleng;     if(flag == 1){printf("BOOL\n");}                 else if (flag == 2){yylval.info=createStruct((char*)strdup("Bool"),yylineno,coluna);         return(BOOL);       }}
+"class"                     {coluna += yyleng;     if(flag == 1){printf("CLASS\n");}                else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(CLASS);      }}
+".length"                   {coluna += yyleng;     if(flag == 1){printf("DOTLENGTH\n");}            else if (flag == 2){yylval.info=createStruct((char*)strdup("Length"),yylineno,coluna);       return(DOTLENGTH);  }}
+"double"                    {coluna += yyleng;     if(flag == 1){printf("DOUBLE\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Double"),yylineno,coluna);       return(DOUBLE);     }}
+"else"                      {coluna += yyleng;     if(flag == 1){printf("ELSE\n");}                 else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(ELSE);       }}
+"if"                        {coluna += yyleng;     if(flag == 1){printf("IF\n");}                   else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(IF);         }}
+"int"                       {coluna += yyleng;     if(flag == 1){printf("INT\n");}                  else if (flag == 2){yylval.info=createStruct(strdup("Int"),yylineno,coluna);                 return(INT);        }}
+"System.out.print"          {coluna += yyleng;     if(flag == 1){printf("PRINT\n");}                else if (flag == 2){yylval.info=createStruct((char*)strdup("Print"),yylineno,coluna);        return(PRINT);      }}
+"Integer.parseInt"          {coluna += yyleng;     if(flag == 1){printf("PARSEINT\n");}             else if (flag == 2){yylval.info=createStruct((char*)strdup("ParseArgs"),yylineno,coluna);    return(PARSEINT);   }}
+"public"                    {coluna += yyleng;     if(flag == 1){printf("PUBLIC\n");}               else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(PUBLIC);     }}
+"return"                    {coluna += yyleng;     if(flag == 1){printf("RETURN\n");}               else if (flag == 2){yylval.info=createStruct(strdup("Return"),yylineno,coluna);              return(RETURN);     }}
+"static"                    {coluna += yyleng;     if(flag == 1){printf("STATIC\n");}               else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(STATIC);     }}
+"String"                    {coluna += yyleng;     if(flag == 1){printf("STRING\n");}               else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(STRING);     }}
+"void"                      {coluna += yyleng;     if(flag == 1){printf("VOID\n");}                 else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(VOID);       }}
+"while"                     {coluna += yyleng;     if(flag == 1){printf("WHILE\n");}                else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna);                return(WHILE);      }}
 
-"true"|"false"              {coluna += yyleng;     if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}  else if (flag == 2){yylval.string=(char*)strdup(yytext);return(BOOLLIT);}coluna += yyleng;}
-"&&"                        {coluna += yyleng;     if(flag == 1){printf("AND\n");}                  else if (flag == 2){return(AND);}       }
-"="                         {coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){return(ASSIGN);}    }
-"*"                         {coluna += yyleng;     if(flag == 1){printf("STAR\n");}                 else if (flag == 2){return(STAR);}      }
-","                         {coluna += yyleng;     if(flag == 1){printf("COMMA\n");}                else if (flag == 2){return(COMMA);}     }
-"/"                         {coluna += yyleng;     if(flag == 1){printf("DIV\n");}                  else if (flag == 2){return(DIV);}       }
-"=="                        {coluna += yyleng;     if(flag == 1){printf("EQ\n");}                   else if (flag == 2){return(EQ);}        }
-">="                        {coluna += yyleng;     if(flag == 1){printf("GE\n");}                   else if (flag == 2){return(GE);}        }
-">"                         {coluna += yyleng;     if(flag == 1){printf("GT\n");}                   else if (flag == 2){return(GT);}        }
-"{"                         {coluna += yyleng;     if(flag == 1){printf("LBRACE\n");}               else if (flag == 2){return(LBRACE);}    }
-"<="                        {coluna += yyleng;     if(flag == 1){printf("LE\n");}                   else if (flag == 2){return(LE);}        }
-"("                         {coluna += yyleng;     if(flag == 1){printf("LPAR\n");}                 else if (flag == 2){return(LPAR);}      }
-"["                         {coluna += yyleng;     if(flag == 1){printf("LSQ\n");}                  else if (flag == 2){return(LSQ);}       }
-"<"                         {coluna += yyleng;     if(flag == 1){printf("LT\n");}                   else if (flag == 2){return(LT);}        }
-"-"                         {coluna += yyleng;     if(flag == 1){printf("MINUS\n");}                else if (flag == 2){return(MINUS);}     }
-"%"                         {coluna += yyleng;     if(flag == 1){printf("MOD\n");}                  else if (flag == 2){return(MOD);}       }
-"!="                        {coluna += yyleng;     if(flag == 1){printf("NE\n");}                   else if (flag == 2){return(NE);}        }
-"!"                         {coluna += yyleng;     if(flag == 1){printf("NOT\n");}                  else if (flag == 2){return(NOT);}       }
-"||"                        {coluna += yyleng;     if(flag == 1){printf("OR\n");}                   else if (flag == 2){return(OR);}        }
-"+"                         {coluna += yyleng;     if(flag == 1){printf("PLUS\n");}                 else if (flag == 2){return(PLUS);}      }
-"}"                         {coluna += yyleng;     if(flag == 1){printf("RBRACE\n");}               else if (flag == 2){return(RBRACE);}    }
-")"                         {coluna += yyleng;     if(flag == 1){printf("RPAR\n");}                 else if (flag == 2){return(RPAR);}      }
-"]"                         {coluna += yyleng;     if(flag == 1){printf("RSQ\n");}                  else if (flag == 2){return(RSQ);}       }
-";"                         {coluna += yyleng;     if(flag == 1){printf("SEMICOLON\n");}            else if (flag == 2){return(SEMICOLON);} }
-"->"                        {coluna += yyleng;     if(flag == 1){printf("ARROW\n");}                else if (flag == 2){return(ARROW);}     }
-"<<"                        {coluna += yyleng;     if(flag == 1){printf("LSHIFT\n");}               else if (flag == 2){return(LSHIFT);}    }
-">>"                        {coluna += yyleng;     if(flag == 1){printf("RSHIFT\n");}               else if (flag == 2){return(RSHIFT);}    }
-"^"                         {coluna += yyleng;     if(flag == 1){printf("XOR\n");}                  else if (flag == 2){return(XOR);}       }
-"boolean"                   {coluna += yyleng;     if(flag == 1){printf("BOOL\n");}                 else if (flag == 2){return(BOOL);}      }
-"class"                     {coluna += yyleng;     if(flag == 1){printf("CLASS\n");}                else if (flag == 2){return(CLASS);}     }
-".length"                   {coluna += yyleng;     if(flag == 1){printf("DOTLENGTH\n");}            else if (flag == 2){return(DOTLENGTH);} }
-"double"                    {coluna += yyleng;     if(flag == 1){printf("DOUBLE\n");}               else if (flag == 2){return(DOUBLE);}    }
-"else"                      {coluna += yyleng;     if(flag == 1){printf("ELSE\n");}                 else if (flag == 2){return(ELSE);}      }
-"if"                        {coluna += yyleng;     if(flag == 1){printf("IF\n");}                   else if (flag == 2){return(IF);}        }
-"int"                       {coluna += yyleng;     if(flag == 1){printf("INT\n");}                  else if (flag == 2){return(INT);}       }
-"System.out.print"          {coluna += yyleng;     if(flag == 1){printf("PRINT\n");}                else if (flag == 2){return(PRINT);}     }
-"Integer.parseInt"          {coluna += yyleng;     if(flag == 1){printf("PARSEINT\n");}             else if (flag == 2){return(PARSEINT);}  }
-"public"                    {coluna += yyleng;     if(flag == 1){printf("PUBLIC\n");}               else if (flag == 2){return(PUBLIC);}    }
-"return"                    {coluna += yyleng;     if(flag == 1){printf("RETURN\n");}               else if (flag == 2){return(RETURN);}    }
-"static"                    {coluna += yyleng;     if(flag == 1){printf("STATIC\n");}               else if (flag == 2){return(STATIC);}    }
-"String"                    {coluna += yyleng;     if(flag == 1){printf("STRING\n");}               else if (flag == 2){return(STRING);}    }
-"void"                      {coluna += yyleng;     if(flag == 1){printf("VOID\n");}                 else if (flag == 2){return(VOID);}      }
-"while"                     {coluna += yyleng;     if(flag == 1){printf("WHILE\n");}                else if (flag == 2){return(WHILE);}     }
 
+{ID}                        {coluna += yyleng; if(flag == 1){printf("ID(%s)\n", yytext);}           else if (flag == 2){yylval.info=createStruct((char*)strdup(yytext),yylineno,coluna);         return(ID);         }}
 
-{ID}                        {coluna += yyleng; if(flag == 1){printf("ID(%s)\n", yytext);}           else if (flag == 2){yylval.string=(char*)strdup(yytext);return(ID);}}
+{REALLIT}                   {coluna += yyleng; if(flag == 1){printf("REALLIT(%s)\n", yytext);}      else if (flag == 2){yylval.info=createStruct((char*)strdup(yytext),yylineno,coluna);         return(REALLIT);    }}
 
-{REALLIT}                   {coluna += yyleng; if(flag == 1){printf("REALLIT(%s)\n", yytext);}      else if (flag == 2){yylval.string=(char*)strdup(yytext);return(REALLIT);}}
-
-{INTLIT}                    {coluna += yyleng; if(flag == 1){printf("INTLIT(%s)\n", yytext);}       else if (flag == 2){yylval.string=(char*)strdup(yytext);return(INTLIT);}}             
+{INTLIT}                    {coluna += yyleng; if(flag == 1){printf("INTLIT(%s)\n", yytext);}       else if (flag == 2){yylval.info=createStruct((char*)strdup(yytext),yylineno,coluna);         return(INTLIT);     }}             
 
 
 "//"                           {BEGIN SINGLE_LINE_COMMENT;coluna = 1;yylineno++;}
@@ -108,7 +110,7 @@ NEWLINE "\n"|"\r"|"\r\n"
 <STRLLIT>\\t                 {coluna+=yyleng; strcat(buffer, yytext);}
 <STRLLIT>\\r                 {coluna+=yyleng; strcat(buffer, yytext);}
 <STRLLIT>\\[\\"]             {coluna+=yyleng; strcat(buffer, yytext);}
-<STRLLIT>\"                  {coluna+=yyleng; BEGIN 0;if (error!=1){ if(flag==1) {printf("STRLLIT(\"%s\")\n", buffer);} else if (flag == 2) {buffer_envio[0] = '\"';strcat(buffer_envio,buffer);strcat(buffer_envio,"\"");yylval.string = (char *)strdup(buffer_envio); bzero(buffer_envio,sizeof(buffer_envio));return(STRLIT);}}}
+<STRLLIT>\"                  {coluna+=yyleng; BEGIN 0;if (error!=1){ if(flag==1) {printf("STRLLIT(\"%s\")\n", buffer);} else if (flag == 2) {buffer_envio[0] = '\"';strcat(buffer_envio,buffer);strcat(buffer_envio,"\"");yylval.info = createStruct((char *)strdup(buffer_envio),yylineno,coluna); bzero(buffer_envio,sizeof(buffer_envio));return(STRLIT);}}}
 <STRLLIT>\\.|\\              {error=1; if (yytext[1] != '\r') {printf("Line %d, col %d: invalid escape sequence (%s)\n", yylineno, coluna, yytext); coluna+=yyleng;} else {printf("Line %d, col %d: invalid escape sequence (\\)\n", yylineno, coluna); coluna+=yyleng;}}
 <STRLLIT>{NEWLINE}           {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0;buffer[0] = '\0';BEGIN 0;}
 <STRLLIT><<EOF>>             {error=1; printf("Line %d, col %d: unterminated string literal\n", linha_aux, coluna_aux); yylineno++; coluna=1; coluna_aux=0;buffer[0] = '\0'; BEGIN 0;}

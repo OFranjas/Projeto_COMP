@@ -25,9 +25,9 @@ typedef struct AST
 
 typedef struct info_lex
 {
+    char *name;
     int linha;
     int coluna;
-    char name;
 } info_lex;
 
 AST *AST_newNode(char *type, char *value);
@@ -38,5 +38,6 @@ void AST_free(AST *AST);
 void AST_getNumberOfSons(AST *AST, int *count);
 int nrChilds(AST *node);
 void givetype(AST *no, char *type);
+info_lex *createStruct(char *name, int line, int col);
 
 #endif // TREE_H
