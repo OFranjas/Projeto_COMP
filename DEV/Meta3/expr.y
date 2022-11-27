@@ -246,7 +246,7 @@ MethodInvocationAux_2: 						                 {$$ = NULL;}
 Assignment: ID ASSIGN Expr                                   {$$ = AST_newNode("Id", $1->name,$1->linha,$1->coluna); AST_addBrother($$,$3);}
 
 // Certo
-ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("ParseArgs","",0,0);AST_addSon($$, AST_newNode("Id", $3->name,$3->linha,$3->coluna));AST_addSon($$, $5);}
+ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("ParseArgs","",$1->linha,$1->coluna);AST_addSon($$, AST_newNode("Id", $3->name,$3->linha,$3->coluna));AST_addSon($$, $5);}
         | PARSEINT LPAR error RPAR                           {$$ = NULL;print_tree=0;}
      
 // Certo

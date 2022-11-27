@@ -1952,7 +1952,7 @@ yyreduce:
 
   case 52:
 #line 249 "expr.y"
-                                                             {(yyval.ast) = AST_newNode("ParseArgs","",0,0);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-4].info)->name,(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna));AST_addSon((yyval.ast), (yyvsp[-2].ast));}
+                                                             {(yyval.ast) = AST_newNode("ParseArgs","",(yyvsp[-6].info)->linha,(yyvsp[-6].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-4].info)->name,(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna));AST_addSon((yyval.ast), (yyvsp[-2].ast));}
 #line 1957 "y.tab.c"
     break;
 

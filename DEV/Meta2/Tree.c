@@ -5,10 +5,10 @@
 #include "Tree.h"
 
 /* Create a new node */
-AST *AST_newNode(char *type, char *value)
+AST *AST_newNode(char *name, char *value)
 {
     AST *new = (AST *)malloc(sizeof(AST));
-    new->type = type;
+    new->name = name;
     new->value = value;
     new->father = NULL;
     new->son = NULL;
@@ -72,12 +72,12 @@ void AST_print(AST *AST, int n_pontos)
     {
         return;
     }
-    if (strcmp(AST->type, "Semicolon") != 0)
+    if (strcmp(AST->name, "Semicolon") != 0)
     {
         for (int i = 0; i < n_pontos; i++)
             printf(".");
 
-        printf("%s", AST->type);
+        printf("%s", AST->name);
         if (strcmp(AST->value, "") != 0)
         {
             printf("(%s)\n", AST->value);
@@ -123,12 +123,12 @@ void AST_getNumberOfSons(AST *AST, int *count)
     AST_getNumberOfSons(AST->son, count);
 }
 
-void givetype(AST *no, char *type)
+void givetype(AST *no, char *name)
 {
     AST *auxiliar = NULL;
     for (AST *atual = no; atual; atual = atual->brother)
     {
-        auxiliar = AST_newNode(type, "");
+        auxiliar = AST_newNode(name, "");
         auxiliar->brother = atual->son;
         atual->son = auxiliar;
     }

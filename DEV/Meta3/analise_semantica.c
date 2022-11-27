@@ -108,7 +108,7 @@ void createGlobalVariable(AST *node)
 {
 
     char *name = node->son->brother->value;
-    char *type = convertType(node->son->type);
+    char *type = convertType(node->son->type); // nao mexer
 
     int line = node->son->brother->linha;
     int col = node->son->brother->coluna;
@@ -787,7 +787,7 @@ void createMethod(AST *node)
 void recursiveMethod(AST *node, symtab_line *method, bool isCall)
 {
 
-    char *name = node->type;
+    char *name = node->type; // nao mexer
     // char* param = node->param;
     int line = node->linha;
     int col = node->coluna;
@@ -817,13 +817,6 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
         }
 
         return;
-
-        /*node->son->type="null";
-        AST* tmp = node->son->brother;
-        while(tmp!=NULL){
-            tmp->type="null";
-            tmp=tmp->brother;
-        }*/
     }
 
     //---------- VERIFICAR SE VARIAVEL JA FOI DECLARADA ---------
@@ -899,7 +892,7 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     }
     else if (strcmp(name, "Lshift") == 0 || strcmp(name, "Rshift") == 0)
     {
-
+        // TODO: FIX
         node->type_semantico = "undef";
 
         if (node->brother != NULL)
