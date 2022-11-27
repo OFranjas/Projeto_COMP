@@ -1,4 +1,5 @@
 #include "analise_semantica.h"
+#include <math.h>
 
 // ---------------------------------------------- SYMTAB.H ----------------------------------------------
 
@@ -846,6 +847,13 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     {
         // Gameiro
         node->type_semantico = "double";
+
+        char *number = node->value;
+
+        if (!check_number_bounds(number))
+        {
+            printf("Line %d, col %d: Number %s out of bounds\n", line, col, node->value);
+        }
     }
     else if (strcmp(name, "BoolLit") == 0)
     {
@@ -1117,4 +1125,75 @@ char *getToken(char *name)
         return "Integer.parseInt";
     else
         return name;
+}
+
+bool check_number_bounds(char *number_strings)
+{
+    long number = atol(number_strings);
+    float expoente, base;
+    char temp[1024];
+
+    if (number >= 2147483647 || number <= -2147483648)
+    {
+        return false;
+    }
+
+    // Convert 2.5E-324 to long and check if it is in the bounds
+
+    // Procurar se o numero tem E
+    char *e = strchr(number_strings, 'E');
+    strcpy(temp, number_strings);
+
+    if ((strchr(number_strings, 'E') != NULL) && (strchr(number_strings, '_') == NULL))
+    {
+        // Calcular a potencia
+        expoente = atof(e + 1);
+
+        base = atof(strtok(temp, "E"));
+
+        if (powf(base, expoente) >= 2147483647 || powf(base, expoente) <= -2147483648)
+        {
+            return false;
+        }
+    }
+    else if ((strchr(number_strings, 'E') != NULL) && (strchr(number_strings, '_') != NULL))
+    {
+        // Remover todos os _ do numero
+        char *aux = strtok(temp, "_");
+        char *aux2 = (char *)malloc(sizeof(char) * 1024);
+
+        for (int i = 0; i < count_occurrences_string(temp); i++)
+        {
+            strcpy(aux2, aux);
+            aux = strtok(NULL, "_");
+            strcat(aux2, aux);
+        }
+
+        printf("aux2 = %s\n", aux2);
+
+        // Calcular a potencia
+        expoente = atof(e + 1);
+        base = atof(strtok(temp, "E"));
+
+        if (powf(base, expoente) >= 2147483647 || powf(base, expoente) <= -2147483648)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int count_occurrences_string(char *string)
+{
+    int count = 0;
+    char *aux = string;
+
+    while ((aux = strchr(aux, '_')) != NULL)
+    {
+        count++;
+        aux++;
+    }
+
+    return count;
 }

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Tree.h"
+#include <math.h>
 
 // O formato das linhas é:
 // <Name>/<t[paramTypes]/tType[/param]
@@ -55,5 +56,8 @@ void check_program(AST *tree);
 void createMethod(AST *node);
 void recursiveMethod(AST *node, symtab_line *method, bool isCall);
 char *getToken(char *name);
+
+bool check_number_bounds(char *number_strings);
+int count_occurrences_string(char *string);
 
 #endif // ANALISE_SEMANTICA_H
