@@ -289,39 +289,48 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
 
 
 int main(int argc, char *argv[]){
-	if(strcmp(argv[1],"-e1") == 0){
-        /* Analise Lexical : Mostra so os erros */
-		flag=0;
-        yylex();
-    }else if(strcmp(argv[1],"-l") == 0){
-        /* Analise Lexical : Mostra os erros e os tokens */
-        flag=1;
-        yylex();
-    }
-    if(strcmp(argv[1],"-e2") == 0){
-        /* Analise Sintatica : Mostra so os erros */
-        flag=2;
-        yyparse();
-    }
-    else if(strcmp(argv[1],"-t") == 0){
-        /* Analise Sintatica : Mostra os erros e a arvore */
-        flag=2;
-        yyparse();
-        if(print_tree == 1){
-            AST_print(root,0);
+    
+    if(argc >= 2){
+        if(strcmp(argv[1],"-e1") == 0){
+            /* Analise Lexical : Mostra so os erros */
+            flag=0;
+            yylex();
+        }else if(strcmp(argv[1],"-l") == 0){
+            /* Analise Lexical : Mostra os erros e os tokens */
+            flag=1;
+            yylex();
         }
-    }
-    if(strcmp(argv[1],"-s") == 0){
+        else if(strcmp(argv[1],"-e2") == 0){
+            /* Analise Sintatica : Mostra so os erros */
+            flag=2;
+            yyparse();
+        }
+        else if(strcmp(argv[1],"-t") == 0){
+            /* Analise Sintatica : Mostra os erros e a arvore */
+            flag=2;
+            yyparse();
+            if(print_tree == 1){
+                AST_print(root,0);
+            }
+            AST_free(root);
+        }
+        else if(strcmp(argv[1],"-s") == 0){
+            flag=2;
+            yyparse();
+            check_program(root);
+            printSymbolTable();
+            if(print_tree == 1){
+                AST_print(root,0);
+            }
+            AST_free(root);
+        }
+    }else{
         flag=2;
         yyparse();
         check_program(root);
-        printSymbolTable();
-        if(print_tree == 1){
-            AST_print(root,0);
-        }
     }
 
-    AST_free(root);
+    
     return 0;
 }
 

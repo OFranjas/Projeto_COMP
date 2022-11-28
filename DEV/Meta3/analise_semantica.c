@@ -1169,8 +1169,6 @@ bool check_number_bounds(char *number_strings)
             strcat(aux2, aux);
         }
 
-        printf("aux2 = %s\n", aux2);
-
         // Calcular a potencia
         expoente = atof(e + 1);
         base = atof(strtok(temp, "E"));

@@ -1,1 +1,6 @@
-# TODO: Handle the Double precision errors -> DoublePrecisionErros.java
+# TODO: Handle the Double precision errors -> DoublePrecisionErros.java                 ✅
+# TODO: Fix the Test.sh file -> Test.sh                                                 ✅
+# TODO: Solve Relational_op_test errors    -> Relational_op_test.java                   ❌
+# TODO: Solve printing_void.java errors    -> printing_void.java                        ❌
+# TODO: Solve params_in_redefined_method.java errors -> params_in_redefined_method.java ❌
+# TODO: Solve = operator errors            -> = methodsAndFields.java                   ❌

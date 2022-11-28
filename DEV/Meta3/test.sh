@@ -39,7 +39,8 @@ diff_args=''
 
 prog="expr"
 args="-s"
-only_error_files=["InsertionSort"]
+flag = "-s"
+only_error_files=("DoublePrecisionErros.java", "NoFlags.java", "testsMethods.java", "simpleTest.java")
 
 run_test(){
     in_file=$1
@@ -47,7 +48,13 @@ run_test(){
     out_file="${out_file%.java}"
     out_file="$out_file.out"
     
-    diff -y $diff_args <( ./$prog $args < "$in_dir/$in_file" ) $out_dir/$out_file &> $outputfile
+    if [[ $flag == "" ]]
+    then
+        diff -y $diff_args <( ./$prog < "$in_dir/$in_file" ) $out_dir/$out_file &> $outputfile
+    else
+        diff -y $diff_args <( ./$prog $args < "$in_dir/$in_file" ) $out_dir/$out_file &> $outputfile
+    fi
+
     error=$?
     if [ $error -eq 0 ]
     then
@@ -118,6 +125,13 @@ tests_passed=0
 for in_file in $in_dir/*.{juc,java} ; do
     echo $(basename $in_file)
     in_file=$(basename "$in_file")
+
+    if [[ " ${only_error_files[*]} " =~ "$in_file" ]] 
+    then
+        flag=""
+    else
+        flag="-s"
+    fi
     run_test $in_file
 done
 
