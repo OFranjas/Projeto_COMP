@@ -98,7 +98,7 @@ symtab_line *createMethodLineAndHeader(AST *node)
     else
     {
 
-        printf("Line %d, col %d: Symbol %s(%s) already defined\n", line, col, name, paramTypes);
+        printf("--Line %d, col %d: Symbol %s(%s) already defined\n", line, col, name, paramTypes);
         node->valid = false;
         return NULL;
     }

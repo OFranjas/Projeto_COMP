@@ -47,13 +47,13 @@ struct info_lex *info;
 
 /* TOKENS */
 %token CLASS PUBLIC STATIC
-%token STRING VOID 
+%token STRING 
 %token SEMICOLON COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ 
 %token WHILE IF ELSE  
 %token ARROW 
 %token RESERVED
 
-%token <info> ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
+%token <info> VOID ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
 
 
 %type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationAux MethodInvocationAux_2 VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
@@ -110,7 +110,7 @@ Type: INT                                                    {$$ = AST_newNode($
 
 // Certo ? 
 MethodHeader: Type ID LPAR FormalParams RPAR                 {$$ = AST_newNode("MethodHeader","",0,0);methodParams = AST_newNode("MethodParams","",0,0);AST_addSon($$,$1);AST_addSon($$,AST_newNode("Id", $2->name,$2->linha,$2->coluna));AST_addSon($$, methodParams);AST_addSon(methodParams,$4);}
-        | VOID ID LPAR FormalParams RPAR                     {$$ = AST_newNode("MethodHeader","",0,0);methodParams = AST_newNode("MethodParams","",0,0);AST_addSon($$,AST_newNode("Void", "",0,0));AST_addSon($$,AST_newNode("Id", $2->name,$2->linha,$2->coluna));AST_addSon($$, methodParams);AST_addSon(methodParams,$4);}
+        | VOID ID LPAR FormalParams RPAR                     {$$ = AST_newNode("MethodHeader","",0,0);methodParams = AST_newNode("MethodParams","",0,0);AST_addSon($$,AST_newNode("Void", "",$1->linha,$1->coluna));AST_addSon($$,AST_newNode("Id", $2->name,$2->linha,$2->coluna));AST_addSon($$, methodParams);AST_addSon(methodParams,$4);}
                                                                
         
 // Certo

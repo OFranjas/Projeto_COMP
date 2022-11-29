@@ -53,20 +53,20 @@ extern int yydebug;
     PUBLIC = 259,
     STATIC = 260,
     STRING = 261,
-    VOID = 262,
-    SEMICOLON = 263,
-    COMMA = 264,
-    LBRACE = 265,
-    RBRACE = 266,
-    LPAR = 267,
-    RPAR = 268,
-    LSQ = 269,
-    RSQ = 270,
-    WHILE = 271,
-    IF = 272,
-    ELSE = 273,
-    ARROW = 274,
-    RESERVED = 275,
+    SEMICOLON = 262,
+    COMMA = 263,
+    LBRACE = 264,
+    RBRACE = 265,
+    LPAR = 266,
+    RPAR = 267,
+    LSQ = 268,
+    RSQ = 269,
+    WHILE = 270,
+    IF = 271,
+    ELSE = 272,
+    ARROW = 273,
+    RESERVED = 274,
+    VOID = 275,
     ID = 276,
     STRLIT = 277,
     INTLIT = 278,
@@ -104,20 +104,20 @@ extern int yydebug;
 #define PUBLIC 259
 #define STATIC 260
 #define STRING 261
-#define VOID 262
-#define SEMICOLON 263
-#define COMMA 264
-#define LBRACE 265
-#define RBRACE 266
-#define LPAR 267
-#define RPAR 268
-#define LSQ 269
-#define RSQ 270
-#define WHILE 271
-#define IF 272
-#define ELSE 273
-#define ARROW 274
-#define RESERVED 275
+#define SEMICOLON 262
+#define COMMA 263
+#define LBRACE 264
+#define RBRACE 265
+#define LPAR 266
+#define RPAR 267
+#define LSQ 268
+#define RSQ 269
+#define WHILE 270
+#define IF 271
+#define ELSE 272
+#define ARROW 273
+#define RESERVED 274
+#define VOID 275
 #define ID 276
 #define STRLIT 277
 #define INTLIT 278
