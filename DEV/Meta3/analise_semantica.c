@@ -1,5 +1,4 @@
 #include "analise_semantica.h"
-#include <math.h>
 
 // ---------------------------------------------- SYMTAB.H ----------------------------------------------
 
@@ -1151,7 +1150,7 @@ bool check_number_bounds(char *number_strings)
 
         base = atof(strtok(temp, "E"));
 
-        if (powf(base, expoente) >= 2147483647 || powf(base, expoente) <= -2147483648)
+        if (Pow(base, expoente) >= 2147483647 || Pow(base, expoente) <= -2147483648)
         {
             return false;
         }
@@ -1173,7 +1172,7 @@ bool check_number_bounds(char *number_strings)
         expoente = atof(e + 1);
         base = atof(strtok(temp, "E"));
 
-        if (powf(base, expoente) >= 2147483647 || powf(base, expoente) <= -2147483648)
+        if (Pow(base, expoente) >= 2147483647 || Pow(base, expoente) <= -2147483648)
         {
             return false;
         }
@@ -1194,4 +1193,23 @@ int count_occurrences_string(char *string)
     }
 
     return count;
+}
+
+double Pow(double a, double b)
+{
+    double power = 1;
+
+    // if b is negative
+    if (b < 0)
+    {
+        b = -b;
+        a = 1 / a;
+    }
+
+    for (int i = 1; i <= b; i++)
+    {
+        power = power * a;
+    }
+    // printf("power(%f,%f) = %f\n", a, b, power);
+    return power;
 }
