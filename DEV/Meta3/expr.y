@@ -49,11 +49,11 @@ struct info_lex *info;
 %token CLASS PUBLIC STATIC
 %token STRING 
 %token SEMICOLON COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ 
-%token WHILE IF ELSE  
+%token WHILE ELSE  
 %token ARROW 
 %token RESERVED
 
-%token <info> VOID ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
+%token <info> VOID IF ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
 
 
 %type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationAux MethodInvocationAux_2 VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
@@ -173,7 +173,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
 		 | LBRACE RBRACE 								     {$$ = NULL;}
 
 		 | IF LPAR Expr RPAR Statement 					     {
-                                                                $$ = AST_newNode("If","",0,0);
+                                                                $$ = AST_newNode("If","",$1->linha,$1->coluna);
                                                                 AST_addSon($$,$3);
                                                                 
                                                                 if($5 == NULL || strcmp($5->type,"Semicolon")==0){
@@ -188,7 +188,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
 
 
 		 | IF LPAR Expr RPAR Statement ELSE Statement 	     {
-                                                                $$ = AST_newNode("If","",0,0);
+                                                                $$ = AST_newNode("If","",$1->linha,$1->coluna);
                                                                 AST_addSon($$,$3);
                                                                 if($5 == NULL || strcmp($5->type,"Semicolon")==0){
                                                                     AST_addSon($$,AST_newNode("Block","",0,0)); // addbrother(3,5)
@@ -276,8 +276,8 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
     | ExprAux OR ExprAux                                    {$$ = AST_newNode("Or","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux XOR ExprAux                                   {$$ = AST_newNode("Xor","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux AND ExprAux                                   {$$ = AST_newNode("And","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
-    | ExprAux LSHIFT ExprAux                                {$$ = AST_newNode("Lshift","",0,0);AST_addSon($$,$1);AST_addBrother($1,$3);}
-    | ExprAux RSHIFT ExprAux                                {$$ = AST_newNode("Rshift","",0,0);AST_addSon($$,$1);AST_addBrother($1,$3);}
+    | ExprAux LSHIFT ExprAux                                {$$ = AST_newNode("Lshift","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
+    | ExprAux RSHIFT ExprAux                                {$$ = AST_newNode("Rshift","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux EQ ExprAux                                    {$$ = AST_newNode("Eq","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux NE ExprAux                                    {$$ = AST_newNode("Ne","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux LT ExprAux                                    {$$ = AST_newNode("Lt","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}

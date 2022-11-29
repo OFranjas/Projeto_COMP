@@ -161,11 +161,11 @@ extern int yydebug;
     LSQ = 268,
     RSQ = 269,
     WHILE = 270,
-    IF = 271,
-    ELSE = 272,
-    ARROW = 273,
-    RESERVED = 274,
-    VOID = 275,
+    ELSE = 271,
+    ARROW = 272,
+    RESERVED = 273,
+    VOID = 274,
+    IF = 275,
     ID = 276,
     STRLIT = 277,
     INTLIT = 278,
@@ -212,11 +212,11 @@ extern int yydebug;
 #define LSQ 268
 #define RSQ 269
 #define WHILE 270
-#define IF 271
-#define ELSE 272
-#define ARROW 273
-#define RESERVED 274
-#define VOID 275
+#define ELSE 271
+#define ARROW 272
+#define RESERVED 273
+#define VOID 274
+#define IF 275
 #define ID 276
 #define STRLIT 277
 #define INTLIT 278
@@ -577,7 +577,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   377
+#define YYLAST   407
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  51
@@ -657,7 +657,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "CLASS", "PUBLIC", "STATIC", "STRING",
   "SEMICOLON", "COMMA", "LBRACE", "RBRACE", "LPAR", "RPAR", "LSQ", "RSQ",
-  "WHILE", "IF", "ELSE", "ARROW", "RESERVED", "VOID", "ID", "STRLIT",
+  "WHILE", "ELSE", "ARROW", "RESERVED", "VOID", "IF", "ID", "STRLIT",
   "INTLIT", "REALLIT", "BOOLLIT", "BOOL", "INT", "DOUBLE", "PLUS", "MINUS",
   "STAR", "DIV", "MOD", "AND", "OR", "XOR", "LSHIFT", "RSHIFT", "EQ", "GE",
   "GT", "LE", "LT", "NE", "NOT", "ASSIGN", "PRINT", "RETURN", "PARSEINT",
@@ -698,24 +698,24 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      19,    16,    49,    46,   -36,   128,    50,    67,   128,    79,
-     128,   128,   -36,    34,   -36,   -36,   -36,   -36,    72,   -36,
-     -36,   -36,    82,    95,   100,     5,    43,   -36,    88,    85,
-      88,   110,   111,   -36,   144,   109,   112,     0,   116,   187,
-     122,   113,   126,    43,    43,   114,   132,   134,   130,   123,
-     136,   149,   146,   -36,   -36,   -36,   154,   227,   227,   101,
-     227,   204,   -36,   155,     1,   -36,   -36,   -36,   244,   244,
-     244,   -36,   -36,   -36,   145,   265,     3,   159,   -36,   -36,
-     -36,   -36,   -36,   -36,   148,   160,   -36,   -36,   -36,   154,
-     164,   165,   169,   170,   -36,   171,   178,   -36,   175,   176,
-     177,   183,   -36,    -2,   -36,   -36,   -36,   -36,   244,   244,
-     244,   244,   244,   244,   244,   244,   244,   244,   244,   244,
-     244,   244,   244,   244,   184,   193,   188,   190,   197,    40,
-     -36,   -36,   -36,   198,   198,   -36,   -36,   227,   -36,   213,
-     214,   -36,   -36,   140,   140,   -36,   -36,   -36,   297,   281,
-     313,   329,   329,   334,    66,    66,    66,    66,   334,   -36,
-     227,   159,   -36,   -36,   201,   -36,   173,   178,   -36,   -36,
-     209,   -36,   160,   198,   -36,   212,   -36,   -36,   -36
+       1,    -8,    16,    13,   -36,   117,    17,    41,   117,    44,
+     117,   117,   -36,    70,   -36,   -36,   -36,   -36,    39,   -36,
+     -36,   -36,    43,    53,    61,     4,   105,   -36,    31,    78,
+      31,    45,    95,   -36,   160,   100,   102,     3,   106,   210,
+     111,   108,   113,   105,   105,   109,   123,   127,   125,   115,
+     129,   131,   132,   -36,   -36,   -36,   167,   256,   256,   134,
+     256,   239,   -36,   199,    -2,   -36,   -36,   -36,   279,   279,
+     279,   -36,   -36,   -36,   136,   300,    50,   140,   -36,   -36,
+     -36,   -36,   -36,   -36,   137,   142,   -36,   -36,   -36,   167,
+     146,   148,   150,   153,   -36,   154,   163,   -36,   161,   166,
+     172,   173,   -36,     0,   -36,   -36,   -36,   -36,   279,   279,
+     279,   279,   279,   279,   279,   279,   279,   279,   279,   279,
+     279,   279,   279,   279,   174,   159,   168,   183,   175,    42,
+     -36,   -36,   -36,    46,    46,   -36,   -36,   256,   -36,   190,
+     191,   -36,   -36,    59,    59,   -36,   -36,   -36,   332,   316,
+     348,   162,   162,   364,   241,   241,   241,   241,   364,   -36,
+     256,   140,   -36,   -36,   178,   -36,   195,   163,   -36,   -36,
+     198,   -36,   142,    46,   -36,   201,   -36,   -36,   -36
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -746,8 +746,8 @@ static const yytype_int8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -36,   -36,    -5,   -36,   -36,   179,     8,   -36,   205,    59,
-     -36,   -29,   -36,    76,   -33,   150,   -26,   -36,    73,   -32,
+     -36,   -36,    -5,   -36,   -36,   176,     8,   -36,   188,    47,
+     -36,    60,   -36,    64,   -33,   141,   -26,   -36,    65,   -32,
      -24,   -18,   -35
 };
 
@@ -764,86 +764,92 @@ static const yytype_int16 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int16 yytable[] =
 {
-      45,    56,    47,    14,   124,    16,    17,    72,    45,    59,
-      47,    59,    59,    29,    79,    80,    30,    45,    45,    47,
-      47,    22,     1,    89,   125,    72,    72,    72,    72,    72,
-      45,    72,    47,   104,   105,   106,    49,     3,    49,    91,
-      92,    96,    97,    99,    32,   101,    60,    60,   102,     4,
-      33,   102,    34,   -25,    18,     5,    89,    12,    35,    36,
-      19,    20,    21,    45,    37,    47,    19,    20,    21,    19,
-      20,    21,    13,   143,   144,   145,   146,   147,   148,   149,
-     150,   151,   152,   153,   154,   155,   156,   157,   158,    15,
-      38,    39,    40,    24,    48,   108,   109,   110,   111,   112,
-     165,   166,    93,    25,    26,    72,    51,    45,    45,    47,
-      47,    28,    63,    94,    19,    20,    21,    53,    54,   167,
-      57,    81,    64,    58,    65,    66,    67,    61,    72,     6,
-      68,    69,     7,    76,    77,     8,    78,   164,    -3,    82,
-     177,    83,   170,    84,    85,    32,    70,    45,    86,    47,
-      40,    33,   107,    34,    55,    32,   100,    29,    88,    35,
-      36,    33,   128,    34,   -44,    37,    63,   126,   129,    35,
-      36,   110,   111,   112,   132,    37,    64,   133,    65,    66,
-      67,   134,   135,   136,    68,    69,   137,   139,   140,   141,
-     173,    38,    39,    40,    62,   142,   159,   162,    63,    32,
-      70,    38,    39,    40,    40,    33,   160,    34,    64,   161,
-      65,    66,    67,    35,    36,    63,    68,    69,   163,    37,
-     168,   169,   172,   175,   178,    64,    98,    65,    66,    67,
-      87,   176,    70,    68,    69,    52,    40,   171,    63,   131,
-     174,     0,     0,     0,     0,    38,    39,    40,    64,    70,
-      65,    66,    67,    40,     0,    63,    68,    69,     0,     0,
-       0,     0,     0,     0,     0,   103,     0,    65,    66,    67,
-       0,     0,    70,    68,    69,     0,    40,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,    70,
-       0,     0,     0,    40,   108,   109,   110,   111,   112,   113,
-     114,   115,   116,   117,   118,   119,   120,   121,   122,   123,
-     108,   109,   110,   111,   112,   113,     0,   115,   116,   117,
-     118,   119,   120,   121,   122,   123,   108,   109,   110,   111,
-     112,     0,     0,   115,   116,   117,   118,   119,   120,   121,
-     122,   123,   108,   109,   110,   111,   112,     0,     0,     0,
-     116,   117,   118,   119,   120,   121,   122,   123,   108,   109,
-     110,   111,   112,   108,   109,   110,   111,   112,   118,   119,
-     120,   121,   122,   123,   119,   120,   121,   122
+      45,    56,    47,    14,     1,    16,    17,    72,    45,    59,
+      47,    59,    29,     3,    59,    30,     4,    45,    45,    47,
+      47,    22,     5,    89,    12,    72,    72,    72,    72,    72,
+      45,    72,    47,   104,   105,   106,    49,    48,    49,    91,
+      92,    96,    97,    99,    60,   101,    13,    32,   102,    60,
+     102,   124,    53,    33,    15,    34,    89,    19,    20,    21,
+      24,    35,    26,    45,    25,    47,    36,    37,    19,    20,
+      21,   125,    28,   143,   144,   145,   146,   147,   148,   149,
+     150,   151,   152,   153,   154,   155,   156,   157,   158,    18,
+     110,   111,   112,    38,    39,    40,    19,    20,    21,    51,
+     165,   166,    54,    79,    80,    72,    32,    45,    45,    47,
+      47,    57,    33,    58,    34,   -25,    81,    61,     6,   167,
+      35,     7,    76,    78,     8,    36,    37,    -3,    72,    77,
+      82,    19,    20,    21,    83,    93,    85,   164,    84,    29,
+     177,    86,   170,   107,    88,    63,    94,    45,   126,    47,
+     129,   128,    38,    39,    40,    64,   132,    65,    66,    67,
+     133,    32,   134,    68,    69,   135,   136,    33,    32,    34,
+      55,   137,   160,   139,    33,    35,    34,   -44,   140,    70,
+      36,    37,    35,    40,   141,   142,   159,    36,    37,   161,
+     162,   108,   109,   110,   111,   112,   163,   168,   169,   172,
+     100,   118,   119,   120,   121,   122,   123,    38,    39,    40,
+      63,   173,   175,   178,    38,    39,    40,    62,    52,   176,
+      64,    63,    65,    66,    67,   171,     0,    87,    68,    69,
+     131,    64,   174,    65,    66,    67,     0,     0,     0,    68,
+      69,     0,     0,     0,    70,     0,     0,     0,    40,     0,
+      63,     0,     0,     0,     0,    70,     0,     0,     0,    40,
+      64,    98,    65,    66,    67,     0,     0,    63,    68,    69,
+     108,   109,   110,   111,   112,     0,     0,    64,     0,    65,
+      66,    67,     0,     0,    70,    68,    69,     0,    40,     0,
+      63,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     103,    70,    65,    66,    67,    40,     0,     0,    68,    69,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,    70,     0,     0,     0,    40,   108,
+     109,   110,   111,   112,   113,   114,   115,   116,   117,   118,
+     119,   120,   121,   122,   123,   108,   109,   110,   111,   112,
+     113,     0,   115,   116,   117,   118,   119,   120,   121,   122,
+     123,   108,   109,   110,   111,   112,     0,     0,   115,   116,
+     117,   118,   119,   120,   121,   122,   123,   108,   109,   110,
+     111,   112,     0,     0,     0,   116,   117,   118,   119,   120,
+     121,   122,   123,   108,   109,   110,   111,   112,     0,     0,
+       0,     0,     0,     0,   119,   120,   121,   122
 };
 
 static const yytype_int16 yycheck[] =
 {
-      26,    34,    26,     8,     1,    10,    11,    39,    34,    11,
-      34,    11,    11,     8,    43,    44,    11,    43,    44,    43,
-      44,    13,     3,    56,    21,    57,    58,    59,    60,    61,
-      56,    63,    56,    68,    69,    70,    28,    21,    30,    57,
-      58,    59,    60,    61,     1,    63,    46,    46,    50,     0,
-       7,    50,     9,    10,    20,     9,    89,     7,    15,    16,
-      26,    27,    28,    89,    21,    89,    26,    27,    28,    26,
-      27,    28,     5,   108,   109,   110,   111,   112,   113,   114,
-     115,   116,   117,   118,   119,   120,   121,   122,   123,    10,
-      47,    48,    49,    21,     6,    29,    30,    31,    32,    33,
-     133,   134,     1,    21,     9,   137,    21,   133,   134,   133,
-     134,    11,    11,    12,    26,    27,    28,     7,     7,   137,
-      11,     7,    21,    11,    23,    24,    25,    11,   160,     1,
-      29,    30,     4,    11,    21,     7,    10,   129,    10,     7,
-     173,     7,   160,    13,    21,     1,    45,   173,    12,   173,
-      49,     7,     7,     9,    10,     1,     1,     8,    12,    15,
-      16,     7,    14,     9,    10,    21,    11,     8,     8,    15,
-      16,    31,    32,    33,    10,    21,    21,    12,    23,    24,
-      25,    12,    12,    12,    29,    30,     8,    12,    12,    12,
-      17,    47,    48,    49,     7,    12,    12,     7,    11,     1,
-      45,    47,    48,    49,    49,     7,    13,     9,    21,    21,
-      23,    24,    25,    15,    16,    11,    29,    30,    21,    21,
-       7,     7,    21,    14,    12,    21,    22,    23,    24,    25,
-      51,   172,    45,    29,    30,    30,    49,   161,    11,    89,
-     167,    -1,    -1,    -1,    -1,    47,    48,    49,    21,    45,
-      23,    24,    25,    49,    -1,    11,    29,    30,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    21,    -1,    23,    24,    25,
-      -1,    -1,    45,    29,    30,    -1,    49,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    45,
-      -1,    -1,    -1,    49,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
-      29,    30,    31,    32,    33,    34,    -1,    36,    37,    38,
-      39,    40,    41,    42,    43,    44,    29,    30,    31,    32,
-      33,    -1,    -1,    36,    37,    38,    39,    40,    41,    42,
-      43,    44,    29,    30,    31,    32,    33,    -1,    -1,    -1,
-      37,    38,    39,    40,    41,    42,    43,    44,    29,    30,
-      31,    32,    33,    29,    30,    31,    32,    33,    39,    40,
-      41,    42,    43,    44,    40,    41,    42,    43
+      26,    34,    26,     8,     3,    10,    11,    39,    34,    11,
+      34,    11,     8,    21,    11,    11,     0,    43,    44,    43,
+      44,    13,     9,    56,     7,    57,    58,    59,    60,    61,
+      56,    63,    56,    68,    69,    70,    28,     6,    30,    57,
+      58,    59,    60,    61,    46,    63,     5,     1,    50,    46,
+      50,     1,     7,     7,    10,     9,    89,    26,    27,    28,
+      21,    15,     9,    89,    21,    89,    20,    21,    26,    27,
+      28,    21,    11,   108,   109,   110,   111,   112,   113,   114,
+     115,   116,   117,   118,   119,   120,   121,   122,   123,    19,
+      31,    32,    33,    47,    48,    49,    26,    27,    28,    21,
+     133,   134,     7,    43,    44,   137,     1,   133,   134,   133,
+     134,    11,     7,    11,     9,    10,     7,    11,     1,   137,
+      15,     4,    11,    10,     7,    20,    21,    10,   160,    21,
+       7,    26,    27,    28,     7,     1,    21,   129,    13,     8,
+     173,    12,   160,     7,    12,    11,    12,   173,     8,   173,
+       8,    14,    47,    48,    49,    21,    10,    23,    24,    25,
+      12,     1,    12,    29,    30,    12,    12,     7,     1,     9,
+      10,     8,    13,    12,     7,    15,     9,    10,    12,    45,
+      20,    21,    15,    49,    12,    12,    12,    20,    21,    21,
+       7,    29,    30,    31,    32,    33,    21,     7,     7,    21,
+       1,    39,    40,    41,    42,    43,    44,    47,    48,    49,
+      11,    16,    14,    12,    47,    48,    49,     7,    30,   172,
+      21,    11,    23,    24,    25,   161,    -1,    51,    29,    30,
+      89,    21,   167,    23,    24,    25,    -1,    -1,    -1,    29,
+      30,    -1,    -1,    -1,    45,    -1,    -1,    -1,    49,    -1,
+      11,    -1,    -1,    -1,    -1,    45,    -1,    -1,    -1,    49,
+      21,    22,    23,    24,    25,    -1,    -1,    11,    29,    30,
+      29,    30,    31,    32,    33,    -1,    -1,    21,    -1,    23,
+      24,    25,    -1,    -1,    45,    29,    30,    -1,    49,    -1,
+      11,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      21,    45,    23,    24,    25,    49,    -1,    -1,    29,    30,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    45,    -1,    -1,    -1,    49,    29,
+      30,    31,    32,    33,    34,    35,    36,    37,    38,    39,
+      40,    41,    42,    43,    44,    29,    30,    31,    32,    33,
+      34,    -1,    36,    37,    38,    39,    40,    41,    42,    43,
+      44,    29,    30,    31,    32,    33,    -1,    -1,    36,    37,
+      38,    39,    40,    41,    42,    43,    44,    29,    30,    31,
+      32,    33,    -1,    -1,    -1,    37,    38,    39,    40,    41,
+      42,    43,    44,    29,    30,    31,    32,    33,    -1,    -1,
+      -1,    -1,    -1,    -1,    40,    41,    42,    43
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -851,9 +857,9 @@ static const yytype_int16 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,    52,    21,     0,     9,     1,     4,     7,    53,
-      54,    55,     7,     5,    53,    10,    53,    53,    20,    26,
+      54,    55,     7,     5,    53,    10,    53,    53,    19,    26,
       27,    28,    57,    58,    21,    21,     9,    61,    11,     8,
-      11,    56,     1,     7,     9,    15,    16,    21,    47,    48,
+      11,    56,     1,     7,     9,    15,    20,    21,    47,    48,
       49,    57,    62,    63,    65,    67,    70,    71,     6,    57,
       59,    21,    59,     7,     7,    10,    65,    11,    11,    11,
       46,    11,     7,    11,    21,    23,    24,    25,    29,    30,
@@ -867,7 +873,7 @@ static const yytype_int8 yystos[] =
       12,    12,    12,    73,    73,    73,    73,    73,    73,    73,
       73,    73,    73,    73,    73,    73,    73,    73,    73,    12,
       13,    21,     7,    21,    57,    65,    65,    72,     7,     7,
-      72,    64,    21,    17,    69,    14,    60,    65,    12
+      72,    64,    21,    16,    69,    14,    60,    65,    12
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -1593,163 +1599,163 @@ yyreduce:
   case 2:
 #line 80 "expr.y"
                                                              {root = AST_newNode("Program","",0,0);AST_addSon(root, AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon(root,(yyvsp[-1].ast));(yyval.ast) = root;}
-#line 1597 "y.tab.c"
+#line 1603 "y.tab.c"
     break;
 
   case 3:
 #line 84 "expr.y"
                                                                                              {(yyval.ast)=NULL;}
-#line 1603 "y.tab.c"
+#line 1609 "y.tab.c"
     break;
 
   case 4:
 #line 85 "expr.y"
                                                              {(yyval.ast) = (yyvsp[-1].ast);AST_addBrother((yyval.ast), (yyvsp[0].ast));}
-#line 1609 "y.tab.c"
+#line 1615 "y.tab.c"
     break;
 
   case 5:
 #line 86 "expr.y"
                                                              {(yyval.ast) = (yyvsp[-1].ast);AST_addBrother((yyval.ast), (yyvsp[0].ast));}
-#line 1615 "y.tab.c"
+#line 1621 "y.tab.c"
     break;
 
   case 6:
 #line 87 "expr.y"
                                                              {(yyval.ast) = (yyvsp[0].ast);}
-#line 1621 "y.tab.c"
+#line 1627 "y.tab.c"
     break;
 
   case 7:
 #line 90 "expr.y"
                                                              {(yyval.ast) = AST_newNode("MethodDecl","",0,0);AST_addSon((yyval.ast),(yyvsp[-1].ast));AST_addSon((yyval.ast),(yyvsp[0].ast));}
-#line 1627 "y.tab.c"
+#line 1633 "y.tab.c"
     break;
 
   case 8:
 #line 95 "expr.y"
                                                              {(yyval.ast) = AST_newNode("FieldDecl", "",0,0);AST_addSon((yyval.ast),(yyvsp[-3].ast));AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));givetype((yyvsp[-1].ast), (yyvsp[-3].ast)->type);AST_addBrother((yyval.ast), (yyvsp[-1].ast));}
-#line 1633 "y.tab.c"
+#line 1639 "y.tab.c"
     break;
 
   case 9:
 #line 96 "expr.y"
                                                              {(yyval.ast) = NULL;print_tree=0;}
-#line 1639 "y.tab.c"
+#line 1645 "y.tab.c"
     break;
 
   case 10:
 #line 100 "expr.y"
                                                              {(yyval.ast) = AST_newNode("FieldDecl","",0,0);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));AST_addBrother((yyval.ast), (yyvsp[0].ast));}
-#line 1645 "y.tab.c"
+#line 1651 "y.tab.c"
     break;
 
   case 11:
 #line 102 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1651 "y.tab.c"
+#line 1657 "y.tab.c"
     break;
 
   case 12:
 #line 105 "expr.y"
                                                              {(yyval.ast) = AST_newNode((yyvsp[0].info)->name,"",(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 1657 "y.tab.c"
+#line 1663 "y.tab.c"
     break;
 
   case 13:
 #line 106 "expr.y"
                                                              {(yyval.ast) = AST_newNode((yyvsp[0].info)->name,"",(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 1663 "y.tab.c"
+#line 1669 "y.tab.c"
     break;
 
   case 14:
 #line 107 "expr.y"
                                                              {(yyval.ast) = AST_newNode((yyvsp[0].info)->name,"",(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 1669 "y.tab.c"
+#line 1675 "y.tab.c"
     break;
 
   case 15:
 #line 112 "expr.y"
                                                              {(yyval.ast) = AST_newNode("MethodHeader","",0,0);methodParams = AST_newNode("MethodParams","",0,0);AST_addSon((yyval.ast),(yyvsp[-4].ast));AST_addSon((yyval.ast),AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon((yyval.ast), methodParams);AST_addSon(methodParams,(yyvsp[-1].ast));}
-#line 1675 "y.tab.c"
+#line 1681 "y.tab.c"
     break;
 
   case 16:
 #line 113 "expr.y"
                                                              {(yyval.ast) = AST_newNode("MethodHeader","",0,0);methodParams = AST_newNode("MethodParams","",0,0);AST_addSon((yyval.ast),AST_newNode("Void", "",(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna));AST_addSon((yyval.ast),AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon((yyval.ast), methodParams);AST_addSon(methodParams,(yyvsp[-1].ast));}
-#line 1681 "y.tab.c"
+#line 1687 "y.tab.c"
     break;
 
   case 17:
 #line 117 "expr.y"
                                                              {(yyval.ast) = AST_newNode("ParamDecl","",0,0);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addSon((yyval.ast),AST_newNode("Id", (yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1687 "y.tab.c"
+#line 1693 "y.tab.c"
     break;
 
   case 18:
 #line 119 "expr.y"
                                                              {(yyval.ast) = AST_newNode("ParamDecl","",0,0);AST_addSon((yyval.ast),AST_newNode("StringArray","",0,0));AST_addSon((yyval.ast),AST_newNode("Id", (yyvsp[0].info)->name,(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna));}
-#line 1693 "y.tab.c"
+#line 1699 "y.tab.c"
     break;
 
   case 19:
 #line 120 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1699 "y.tab.c"
+#line 1705 "y.tab.c"
     break;
 
   case 20:
 #line 124 "expr.y"
                                                              {(yyval.ast) = AST_newNode("ParamDecl","",0,0);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addSon((yyval.ast),AST_newNode("Id",(yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1705 "y.tab.c"
+#line 1711 "y.tab.c"
     break;
 
   case 21:
 #line 126 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1711 "y.tab.c"
+#line 1717 "y.tab.c"
     break;
 
   case 22:
 #line 130 "expr.y"
                                                              {(yyval.ast) = AST_newNode("MethodBody","",0,0);AST_addSon((yyval.ast),(yyvsp[-1].ast));}
-#line 1717 "y.tab.c"
+#line 1723 "y.tab.c"
     break;
 
   case 23:
 #line 134 "expr.y"
                                                              {if((yyvsp[-1].ast) != NULL){(yyval.ast) = (yyvsp[-1].ast); AST_addBrother((yyval.ast), (yyvsp[0].ast));}else{(yyval.ast) = (yyvsp[0].ast);}}
-#line 1723 "y.tab.c"
+#line 1729 "y.tab.c"
     break;
 
   case 24:
 #line 135 "expr.y"
                                                              {(yyval.ast) = (yyvsp[-1].ast); AST_addBrother((yyval.ast), (yyvsp[0].ast));}
-#line 1729 "y.tab.c"
+#line 1735 "y.tab.c"
     break;
 
   case 25:
 #line 136 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1735 "y.tab.c"
+#line 1741 "y.tab.c"
     break;
 
   case 26:
 #line 142 "expr.y"
                                                              {(yyval.ast) = AST_newNode("VarDecl", "",0,0);AST_addSon((yyval.ast), (yyvsp[-3].ast));AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));givetype((yyvsp[-1].ast), (yyvsp[-3].ast)->type);AST_addBrother((yyval.ast), (yyvsp[-1].ast));}
-#line 1741 "y.tab.c"
+#line 1747 "y.tab.c"
     break;
 
   case 27:
 #line 145 "expr.y"
                                                              {(yyval.ast) = AST_newNode("VarDecl","",0,0);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));AST_addBrother((yyval.ast), (yyvsp[0].ast));}
-#line 1747 "y.tab.c"
+#line 1753 "y.tab.c"
     break;
 
   case 28:
 #line 146 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1753 "y.tab.c"
+#line 1759 "y.tab.c"
     break;
 
   case 29:
@@ -1777,19 +1783,19 @@ yyreduce:
                                                                     (yyval.ast) = (yyvsp[-2].ast);
                                                                 }
                                                             }
-#line 1781 "y.tab.c"
+#line 1787 "y.tab.c"
     break;
 
   case 30:
 #line 173 "expr.y"
                                                                                                      {(yyval.ast) = NULL;}
-#line 1787 "y.tab.c"
+#line 1793 "y.tab.c"
     break;
 
   case 31:
 #line 175 "expr.y"
                                                                                      {
-                                                                (yyval.ast) = AST_newNode("If","",0,0);
+                                                                (yyval.ast) = AST_newNode("If","",(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna);
                                                                 AST_addSon((yyval.ast),(yyvsp[-2].ast));
                                                                 
                                                                 if((yyvsp[0].ast) == NULL || strcmp((yyvsp[0].ast)->type,"Semicolon")==0){
@@ -1801,13 +1807,13 @@ yyreduce:
                                                                 }
                                                                 
                                                             }
-#line 1805 "y.tab.c"
+#line 1811 "y.tab.c"
     break;
 
   case 32:
 #line 190 "expr.y"
                                                                      {
-                                                                (yyval.ast) = AST_newNode("If","",0,0);
+                                                                (yyval.ast) = AST_newNode("If","",(yyvsp[-6].info)->linha,(yyvsp[-6].info)->coluna);
                                                                 AST_addSon((yyval.ast),(yyvsp[-4].ast));
                                                                 if((yyvsp[-2].ast) == NULL || strcmp((yyvsp[-2].ast)->type,"Semicolon")==0){
                                                                     AST_addSon((yyval.ast),AST_newNode("Block","",0,0)); // addbrother(3,5)
@@ -1821,7 +1827,7 @@ yyreduce:
                                                                 }
                                                                 
                                                             }
-#line 1825 "y.tab.c"
+#line 1831 "y.tab.c"
     break;
 
   case 33:
@@ -1835,25 +1841,25 @@ yyreduce:
                                                                     AST_addSon((yyval.ast),(yyvsp[0].ast));
                                                                 }
                                                             }
-#line 1839 "y.tab.c"
+#line 1845 "y.tab.c"
     break;
 
   case 34:
 #line 218 "expr.y"
                                                                                      {(yyval.ast) = AST_newNode("Return","",(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-1].ast));}
-#line 1845 "y.tab.c"
+#line 1851 "y.tab.c"
     break;
 
   case 35:
 #line 219 "expr.y"
                                                                                                      {(yyval.ast) = AST_newNode("Return", "",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);}
-#line 1851 "y.tab.c"
+#line 1857 "y.tab.c"
     break;
 
   case 36:
 #line 220 "expr.y"
                                                                                      {(yyval.ast) = (yyvsp[-1].ast);}
-#line 1857 "y.tab.c"
+#line 1863 "y.tab.c"
     break;
 
   case 37:
@@ -1873,287 +1879,287 @@ yyreduce:
                                                                     (yyval.ast)->coluna += 2;
                                                                 }
                                                             }
-#line 1877 "y.tab.c"
+#line 1883 "y.tab.c"
     break;
 
   case 38:
 #line 236 "expr.y"
                                                                                              {(yyval.ast) = (yyvsp[-1].ast);}
-#line 1883 "y.tab.c"
+#line 1889 "y.tab.c"
     break;
 
   case 39:
 #line 237 "expr.y"
                                                                                                      {(yyval.ast) = AST_newNode("Semicolon","",0,0);}
-#line 1889 "y.tab.c"
+#line 1895 "y.tab.c"
     break;
 
   case 40:
 #line 238 "expr.y"
                                                                                      {(yyval.ast) = AST_newNode("Print","",(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));}
-#line 1895 "y.tab.c"
+#line 1901 "y.tab.c"
     break;
 
   case 41:
 #line 239 "expr.y"
                                                                              {(yyval.ast) = AST_newNode("Print","",(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna);AST_addSon((yyval.ast), AST_newNode("StrLit", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));}
-#line 1901 "y.tab.c"
+#line 1907 "y.tab.c"
     break;
 
   case 42:
 #line 240 "expr.y"
                                                                                                      {(yyval.ast) = NULL;print_tree = 0;}
-#line 1907 "y.tab.c"
+#line 1913 "y.tab.c"
     break;
 
   case 43:
 #line 243 "expr.y"
                                                              {(yyval.ast) = (yyvsp[-1].ast);AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1913 "y.tab.c"
+#line 1919 "y.tab.c"
     break;
 
   case 44:
 #line 244 "expr.y"
                                                              {(yyval.ast) = NULL;}
-#line 1919 "y.tab.c"
+#line 1925 "y.tab.c"
     break;
 
   case 45:
 #line 248 "expr.y"
                                                                                  {(yyval.ast) = AST_newNode("Call", "",(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));}
-#line 1925 "y.tab.c"
+#line 1931 "y.tab.c"
     break;
 
   case 46:
 #line 249 "expr.y"
                                                                                      {(yyval.ast) = AST_newNode("Call", "",(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon((yyval.ast),(yyvsp[-1].ast));}
-#line 1931 "y.tab.c"
+#line 1937 "y.tab.c"
     break;
 
   case 47:
 #line 250 "expr.y"
                                                                                              {(yyval.ast) = NULL;print_tree = 0;}
-#line 1937 "y.tab.c"
+#line 1943 "y.tab.c"
     break;
 
   case 48:
 #line 253 "expr.y"
                                                                      {(yyval.ast) = (yyvsp[-1].ast);AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1943 "y.tab.c"
+#line 1949 "y.tab.c"
     break;
 
   case 49:
 #line 256 "expr.y"
                                                                                  {(yyval.ast) = NULL;}
-#line 1949 "y.tab.c"
+#line 1955 "y.tab.c"
     break;
 
   case 50:
 #line 257 "expr.y"
                                                                                  {(yyval.ast) = (yyvsp[-1].ast);AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1955 "y.tab.c"
+#line 1961 "y.tab.c"
     break;
 
   case 51:
 #line 260 "expr.y"
                                                              {(yyval.ast) = AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna); AST_addBrother((yyval.ast),(yyvsp[0].ast));}
-#line 1961 "y.tab.c"
+#line 1967 "y.tab.c"
     break;
 
   case 52:
 #line 263 "expr.y"
                                                              {(yyval.ast) = AST_newNode("ParseArgs","",(yyvsp[-6].info)->linha,(yyvsp[-6].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-4].info)->name,(yyvsp[-4].info)->linha,(yyvsp[-4].info)->coluna));AST_addSon((yyval.ast), (yyvsp[-2].ast));}
-#line 1967 "y.tab.c"
+#line 1973 "y.tab.c"
     break;
 
   case 53:
 #line 264 "expr.y"
                                                              {(yyval.ast) = NULL;print_tree=0;}
-#line 1973 "y.tab.c"
+#line 1979 "y.tab.c"
     break;
 
   case 54:
 #line 267 "expr.y"
                                                             {(yyval.ast) = (yyvsp[0].ast);}
-#line 1979 "y.tab.c"
+#line 1985 "y.tab.c"
     break;
 
   case 55:
 #line 268 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Assign","",(yyvsp[0].ast)->linha,(yyvsp[0].ast)->coluna+2);AST_addSon((yyval.ast),(yyvsp[0].ast));}
-#line 1985 "y.tab.c"
+#line 1991 "y.tab.c"
     break;
 
   case 56:
 #line 271 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Add","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1991 "y.tab.c"
+#line 1997 "y.tab.c"
     break;
 
   case 57:
 #line 272 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Sub","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 1997 "y.tab.c"
+#line 2003 "y.tab.c"
     break;
 
   case 58:
 #line 273 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Mul","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2003 "y.tab.c"
+#line 2009 "y.tab.c"
     break;
 
   case 59:
 #line 274 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Div","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2009 "y.tab.c"
+#line 2015 "y.tab.c"
     break;
 
   case 60:
 #line 275 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Mod","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2015 "y.tab.c"
+#line 2021 "y.tab.c"
     break;
 
   case 61:
 #line 276 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Or","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2021 "y.tab.c"
+#line 2027 "y.tab.c"
     break;
 
   case 62:
 #line 277 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Xor","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2027 "y.tab.c"
+#line 2033 "y.tab.c"
     break;
 
   case 63:
 #line 278 "expr.y"
                                                             {(yyval.ast) = AST_newNode("And","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2033 "y.tab.c"
+#line 2039 "y.tab.c"
     break;
 
   case 64:
 #line 279 "expr.y"
-                                                            {(yyval.ast) = AST_newNode("Lshift","",0,0);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2039 "y.tab.c"
+                                                            {(yyval.ast) = AST_newNode("Lshift","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
+#line 2045 "y.tab.c"
     break;
 
   case 65:
 #line 280 "expr.y"
-                                                            {(yyval.ast) = AST_newNode("Rshift","",0,0);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2045 "y.tab.c"
+                                                            {(yyval.ast) = AST_newNode("Rshift","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
+#line 2051 "y.tab.c"
     break;
 
   case 66:
 #line 281 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Eq","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2051 "y.tab.c"
+#line 2057 "y.tab.c"
     break;
 
   case 67:
 #line 282 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Ne","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2057 "y.tab.c"
+#line 2063 "y.tab.c"
     break;
 
   case 68:
 #line 283 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Lt","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2063 "y.tab.c"
+#line 2069 "y.tab.c"
     break;
 
   case 69:
 #line 284 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Gt","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2069 "y.tab.c"
+#line 2075 "y.tab.c"
     break;
 
   case 70:
 #line 285 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Le","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2075 "y.tab.c"
+#line 2081 "y.tab.c"
     break;
 
   case 71:
 #line 286 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Ge","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[-2].ast));AST_addBrother((yyvsp[-2].ast),(yyvsp[0].ast));}
-#line 2081 "y.tab.c"
+#line 2087 "y.tab.c"
     break;
 
   case 72:
 #line 287 "expr.y"
                                                             {(yyvsp[-1].info)->name = "Minus"; (yyval.ast) = AST_newNode("Minus","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
-#line 2087 "y.tab.c"
+#line 2093 "y.tab.c"
     break;
 
   case 73:
 #line 288 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Not","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
-#line 2093 "y.tab.c"
+#line 2099 "y.tab.c"
     break;
 
   case 74:
 #line 289 "expr.y"
                                                             {(yyvsp[-1].info)->name = "Plus" ; (yyval.ast) = AST_newNode("Plus","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
-#line 2099 "y.tab.c"
+#line 2105 "y.tab.c"
     break;
 
   case 75:
 #line 290 "expr.y"
                                                             {(yyval.ast) = (yyvsp[-1].ast);}
-#line 2105 "y.tab.c"
+#line 2111 "y.tab.c"
     break;
 
   case 76:
 #line 291 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Id",(yyvsp[0].info)->name,(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 2111 "y.tab.c"
+#line 2117 "y.tab.c"
     break;
 
   case 77:
 #line 292 "expr.y"
                                                             {(yyval.ast) = AST_newNode("Length","",(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);AST_addSon((yyval.ast),AST_newNode("Id",(yyvsp[-1].info)->name,(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna));}
-#line 2117 "y.tab.c"
+#line 2123 "y.tab.c"
     break;
 
   case 78:
 #line 293 "expr.y"
                                                             {(yyval.ast) = AST_newNode("DecLit",(yyvsp[0].info)->name,(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 2123 "y.tab.c"
+#line 2129 "y.tab.c"
     break;
 
   case 79:
 #line 294 "expr.y"
                                                             {(yyval.ast) = AST_newNode("RealLit",(yyvsp[0].info)->name,(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 2129 "y.tab.c"
+#line 2135 "y.tab.c"
     break;
 
   case 80:
 #line 295 "expr.y"
                                                             {(yyval.ast) = AST_newNode("BoolLit",(yyvsp[0].info)->name,(yyvsp[0].info)->linha,(yyvsp[0].info)->coluna);}
-#line 2135 "y.tab.c"
+#line 2141 "y.tab.c"
     break;
 
   case 81:
 #line 296 "expr.y"
                                                             {(yyval.ast) = (yyvsp[0].ast);}
-#line 2141 "y.tab.c"
+#line 2147 "y.tab.c"
     break;
 
   case 82:
 #line 297 "expr.y"
                                                             {(yyval.ast) = (yyvsp[0].ast);}
-#line 2147 "y.tab.c"
+#line 2153 "y.tab.c"
     break;
 
   case 83:
 #line 298 "expr.y"
                                                             {(yyval.ast) = NULL;print_tree=0;}
-#line 2153 "y.tab.c"
+#line 2159 "y.tab.c"
     break;
 
 
-#line 2157 "y.tab.c"
+#line 2163 "y.tab.c"
 
       default: break;
     }

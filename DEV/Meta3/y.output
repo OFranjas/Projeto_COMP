@@ -130,11 +130,11 @@ Terminals, with rules where they appear
     LSQ (268) 17 51
     RSQ (269) 17 51
     WHILE (270) 32
-    IF (271) 30 31
-    ELSE (272) 31
-    ARROW (273)
-    RESERVED (274)
-    VOID <info> (275) 15
+    ELSE (271) 31
+    ARROW (272)
+    RESERVED (273)
+    VOID <info> (274) 15
+    IF <info> (275) 30 31
     ID <info> (276) 1 7 9 14 15 16 17 19 25 26 44 45 46 50 51 75 76
     STRLIT <info> (277) 40
     INTLIT <info> (278) 77

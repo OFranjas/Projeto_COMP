@@ -62,11 +62,11 @@ extern int yydebug;
     LSQ = 268,
     RSQ = 269,
     WHILE = 270,
-    IF = 271,
-    ELSE = 272,
-    ARROW = 273,
-    RESERVED = 274,
-    VOID = 275,
+    ELSE = 271,
+    ARROW = 272,
+    RESERVED = 273,
+    VOID = 274,
+    IF = 275,
     ID = 276,
     STRLIT = 277,
     INTLIT = 278,
@@ -113,11 +113,11 @@ extern int yydebug;
 #define LSQ 268
 #define RSQ 269
 #define WHILE 270
-#define IF 271
-#define ELSE 272
-#define ARROW 273
-#define RESERVED 274
-#define VOID 275
+#define ELSE 271
+#define ARROW 272
+#define RESERVED 273
+#define VOID 274
+#define IF 275
 #define ID 276
 #define STRLIT 277
 #define INTLIT 278
