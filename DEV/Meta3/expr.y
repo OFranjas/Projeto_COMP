@@ -221,8 +221,14 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
 		 | Assignment SEMICOLON 						     {  
                                                                 $$ = AST_newNode("Assign","",$1->linha,$1->coluna);
                                                                 AST_addSon($$,$1);
-                                                                if(strcmp($$->son->brother->type,"Lshift") == 0 || strcmp($$->son->brother->type,"Rshift") == 0){
+                                                                if(strcmp($$->son->brother->type,"Lshift") == 0 || strcmp($$->son->brother->type,"Rshift") == 0 ){
                                                                     $$->coluna += 1;
+                                                                }else if($$->son->brother->son != NULL){
+                                                                    if(strcmp($$->son->brother->son->type,"Lshift") == 0 || strcmp($$->son->brother->son->type,"Rshift") == 0){
+                                                                        $$->coluna += 1;
+                                                                    }else{
+                                                                    $$->coluna += 2;
+                                                                }
                                                                 }else{
                                                                     $$->coluna += 2;
                                                                 }
