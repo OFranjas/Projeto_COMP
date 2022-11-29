@@ -1920,13 +1920,13 @@ yyreduce:
 
   case 45:
 #line 248 "expr.y"
-                                                                                 {(yyval.ast) = AST_newNode("Call", "",0,0);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));}
+                                                                                 {(yyval.ast) = AST_newNode("Call", "",(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-2].info)->name,(yyvsp[-2].info)->linha,(yyvsp[-2].info)->coluna));}
 #line 1925 "y.tab.c"
     break;
 
   case 46:
 #line 249 "expr.y"
-                                                                                     {(yyval.ast) = AST_newNode("Call", "",0,0);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon((yyval.ast),(yyvsp[-1].ast));}
+                                                                                     {(yyval.ast) = AST_newNode("Call", "",(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna);AST_addSon((yyval.ast), AST_newNode("Id", (yyvsp[-3].info)->name,(yyvsp[-3].info)->linha,(yyvsp[-3].info)->coluna));AST_addSon((yyval.ast),(yyvsp[-1].ast));}
 #line 1931 "y.tab.c"
     break;
 
@@ -1980,7 +1980,7 @@ yyreduce:
 
   case 55:
 #line 268 "expr.y"
-                                                            {(yyval.ast) = AST_newNode("Assign","",(yyvsp[0].ast)->linha,(yyvsp[0].ast)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
+                                                            {(yyval.ast) = AST_newNode("Assign","",(yyvsp[0].ast)->linha,(yyvsp[0].ast)->coluna+2);AST_addSon((yyval.ast),(yyvsp[0].ast));}
 #line 1985 "y.tab.c"
     break;
 

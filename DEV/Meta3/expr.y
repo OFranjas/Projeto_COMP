@@ -245,8 +245,8 @@ StatementAux: Statement StatementAux                         {$$ = $1;AST_addBro
             
 
 // Certo
-MethodInvocation:  ID LPAR RPAR 					         {$$ = AST_newNode("Call", "",0,0);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));}
-				| ID LPAR MethodInvocationAux RPAR 		     {$$ = AST_newNode("Call", "",0,0);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));AST_addSon($$,$3);}
+MethodInvocation:  ID LPAR RPAR 					         {$$ = AST_newNode("Call", "",$1->linha,$1->coluna);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));}
+				| ID LPAR MethodInvocationAux RPAR 		     {$$ = AST_newNode("Call", "",$1->linha,$1->coluna);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));AST_addSon($$,$3);}
 				| ID LPAR error RPAR 					     {$$ = NULL;print_tree = 0;} //  nao recupera deste
 
 // Certo
@@ -265,7 +265,7 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("
      
 // Certo
 Expr: ExprAux                                               {$$ = $1;}
-    | Assignment                                            {$$ = AST_newNode("Assign","",$1->linha,$1->coluna);AST_addSon($$,$1);}
+    | Assignment                                            {$$ = AST_newNode("Assign","",$1->linha,$1->coluna+2);AST_addSon($$,$1);}
 
 // Certo
 ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("Add","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}

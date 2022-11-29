@@ -1074,13 +1074,15 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     }
     else if (returnBool)
     {
-
         if (node->son != NULL)
         {
             if (strcmp(node->son->type_semantico, method->type) != 0 || strcmp(node->son->type_semantico, "undef") == 0 || strcmp(node->son->type_semantico, "void") == 0)
             {
+
                 if (!(strcmp(node->son->type_semantico, "int") == 0 && strcmp(method->type, "double") == 0))
                 {
+                    // Aqui
+                    // printf("node->son->type = %s\n", node->son->type_semantico);
                     printf("Line %d, col %d: Incompatible type %s in %s statement\n", node->son->linha, node->son->coluna, node->son->type_semantico, getToken(name));
                 }
             }
