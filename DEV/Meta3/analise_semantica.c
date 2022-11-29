@@ -899,17 +899,32 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     }
     else if (strcmp(name, "Lshift") == 0 || strcmp(name, "Rshift") == 0)
     {
-        // TODO: FIX
-        node->type_semantico = "none";
+
+        // printf("node->brother->type = %s", node->son->brother->type);
+        // printf("node->brother->value = %s\n", node->son->brother->value);
+
+        if (strcmp(node->son->brother->type, "DecLit") == 0)
+        {
+            node->type_semantico = "int";
+            node->son->type_semantico = node->type_semantico;
+            node->son->brother->type_semantico = node->type_semantico;
+        }
+        else
+        {
+            node->type_semantico = "none";
+        }
 
         if (node->brother != NULL)
+        {
+            // printf("node->brother->type = %s", node->brother->type);
             recursiveMethod(node->brother, method, isCall);
+        }
 
         return;
     }
     else if (strcmp(name, "Assign") == 0)
     {
-
+        // printf("aaa\n");
         assign = true;
     }
     else if (strcmp(name, "And") == 0 || strcmp(name, "Or") == 0 || strcmp(name, "Not") == 0 || strcmp(name, "Xor") == 0)
