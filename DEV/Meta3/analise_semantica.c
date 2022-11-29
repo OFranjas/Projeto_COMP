@@ -1118,7 +1118,7 @@ char *getToken(char *name)
     else if (strcmp(name, "Add") == 0 || strcmp(name, "Plus") == 0)
         return "+";
     else if (strcmp(name, "Minus") == 0 || strcmp(name, "Sub") == 0)
-        return "+";
+        return "-";
     else if (strcmp(name, "Mul") == 0)
         return "*";
     else if (strcmp(name, "Mod") == 0)
