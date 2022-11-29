@@ -1006,6 +1006,20 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
 
         if (node->son->brother != NULL)
         {
+            // printf("type = %s\n", node->son->brother->type);
+            // printf("value = %s\n", node->son->brother->value);
+            // printf("line = %d\n", node->son->brother->linha);
+            // printf("col = %d\n", node->son->brother->coluna);
+            // printf("type_semantico = %s\n", node->son->brother->type_semantico);
+
+            // // ID
+            // printf("type = %s\n", node->son->type);
+            // printf("value = %s\n", node->son->value);
+            // printf("line = %d\n", node->son->linha);
+            // printf("col = %d\n", node->son->coluna);
+            // printf("type_semantico = %s\n", node->son->type_semantico);
+            // printf("------------------------\n");
+
             if (strcmp(node->son->type_semantico, node->son->brother->type_semantico) != 0 || (strcmp(node->son->type_semantico, "undef") == 0) || (strcmp(node->son->brother->type_semantico, "undef") == 0) || (strcmp(node->son->type_semantico, "String[]") == 0) || (strcmp(node->son->brother->type_semantico, "String[]") == 0))
             {
                 if (!((strcmp(node->son->type_semantico, "int") == 0 && strcmp(node->son->brother->type_semantico, "double") == 0) || (strcmp(node->son->type_semantico, "double") == 0 && strcmp(node->son->brother->type_semantico, "int") == 0)))
@@ -1013,12 +1027,18 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
                     printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type_semantico, node->son->brother->type_semantico);
                 }
             }
+            else if ((strcmp(node->son->type_semantico, node->son->brother->type_semantico) == 0) && (strcmp(node->son->type, "Id") == 0) && (strcmp(node->son->brother->type, "BoolLit") == 0) && (strcmp(node->type, "Eq") != 0) && (strcmp(node->type, "Ne") != 0))
+            {
+                printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", line, col, getToken(name), node->son->type_semantico, node->son->brother->type_semantico);
+            }
         }
+
         else
         {
-
             if (strcmp(node->son->type_semantico, "boolean") != 0)
+            {
                 printf("Line %d, col %d: Operator %s cannot be applied to type %s\n", line, col, getToken(name), node->son->type_semantico);
+            }
         }
     }
     else if (call)
