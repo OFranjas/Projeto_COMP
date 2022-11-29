@@ -1041,7 +1041,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 43 "jucompiler.l"
-{coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Assign"),yylineno,coluna - (int) yyleng +2);       return(ASSIGN);     }}
+{coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Assign"),yylineno,coluna - (int) yyleng);       return(ASSIGN);     }}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP

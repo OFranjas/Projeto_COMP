@@ -40,7 +40,7 @@ NEWLINE "\n"|"\r"|"\r\n"
      
 "true"|"false"              {coluna += yyleng;     if(flag == 1){printf("BOOLLIT(%s)\n", yytext);}  else if (flag == 2){yylval.info=createStruct((char*)strdup(yytext),yylineno,coluna - (int) yyleng);         return(BOOLLIT);    }}
 "&&"                        {coluna += yyleng;     if(flag == 1){printf("AND\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("And"),yylineno,coluna - (int) yyleng);          return(AND);        }}
-"="                         {coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Assign"),yylineno,coluna - (int) yyleng +2);       return(ASSIGN);     }}
+"="                         {coluna += yyleng;     if(flag == 1){printf("ASSIGN\n");}               else if (flag == 2){yylval.info=createStruct((char*)strdup("Assign"),yylineno,coluna - (int) yyleng);       return(ASSIGN);     }}
 "*"                         {coluna += yyleng;     if(flag == 1){printf("STAR\n");}                 else if (flag == 2){yylval.info=createStruct((char*)strdup("Mul"),yylineno,coluna - (int) yyleng);          return(STAR);       }}
 ","                         {coluna += yyleng;     if(flag == 1){printf("COMMA\n");}                else if (flag == 2){yylval.info=createStruct(strdup(yytext),yylineno,coluna - (int) yyleng);                return(COMMA);      }}
 "/"                         {coluna += yyleng;     if(flag == 1){printf("DIV\n");}                  else if (flag == 2){yylval.info=createStruct((char*)strdup("Div"),yylineno,coluna - (int) yyleng);          return(DIV);        }}

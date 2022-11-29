@@ -95,7 +95,7 @@ void AST_print(AST *AST, int n_pontos)
         {
             printf("(%s)", AST->value);
         }
-        if (AST->type_semantico != NULL)
+        if (AST->type_semantico != NULL && strcmp(AST->type_semantico, "none") != 0)
         {
             printf(" - %s\n", AST->type_semantico);
         }

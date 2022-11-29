@@ -98,7 +98,7 @@ symtab_line *createMethodLineAndHeader(AST *node)
     else
     {
 
-        printf("--Line %d, col %d: Symbol %s(%s) already defined\n", line, col, name, paramTypes);
+        printf("Line %d, col %d: Symbol %s(%s) already defined\n", line, col, name, paramTypes);
         node->valid = false;
         return NULL;
     }
@@ -900,7 +900,7 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     else if (strcmp(name, "Lshift") == 0 || strcmp(name, "Rshift") == 0)
     {
         // TODO: FIX
-        node->type_semantico = "undef";
+        node->type_semantico = "none";
 
         if (node->brother != NULL)
             recursiveMethod(node->brother, method, isCall);
@@ -941,7 +941,7 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     if (assign)
     {
 
-        if (strcmp(node->son->type_semantico, node->son->brother->type_semantico) != 0 || (strcmp(node->son->type_semantico, "undef") == 0) || (strcmp(node->son->brother->type_semantico, "undef") == 0 || strcmp(node->son->type_semantico, "none") == 0) || strcmp(node->son->type_semantico, "none") == 0 || (strcmp(node->son->type_semantico, "String[]") == 0) || (strcmp(node->son->brother->type_semantico, "String[]") == 0))
+        if (strcmp(node->son->type_semantico, node->son->brother->type_semantico) != 0 || (strcmp(node->son->type_semantico, "undef") == 0) || (strcmp(node->son->brother->type_semantico, "undef") == 0 || strcmp(node->son->brother->type_semantico, "none") == 0) || strcmp(node->son->type_semantico, "none") == 0 || (strcmp(node->son->type_semantico, "String[]") == 0) || (strcmp(node->son->brother->type_semantico, "String[]") == 0))
         {
             if (!(strcmp(node->son->type_semantico, "double") == 0 && strcmp(node->son->brother->type_semantico, "int") == 0))
             {
