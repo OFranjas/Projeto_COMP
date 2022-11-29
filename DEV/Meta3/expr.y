@@ -284,9 +284,9 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
     | ExprAux GT ExprAux                                    {$$ = AST_newNode("Gt","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux LE ExprAux                                    {$$ = AST_newNode("Le","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux GE ExprAux                                    {$$ = AST_newNode("Ge","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
-    | MINUS ExprAux %prec NOT                               {$1->name = "Minus"; $$ = AST_newNode("Minus","",0,0);AST_addSon($$,$2);}
-    | NOT ExprAux                                           {$$ = AST_newNode("Not","",0,0);AST_addSon($$,$2);}
-    | PLUS ExprAux  %prec NOT                               {$1->name = "Plus" ; $$ = AST_newNode("Plus","",0,0);AST_addSon($$,$2);}
+    | MINUS ExprAux %prec NOT                               {$1->name = "Minus"; $$ = AST_newNode("Minus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
+    | NOT ExprAux                                           {$$ = AST_newNode("Not","",$1->linha,$1->coluna);AST_addSon($$,$2);}
+    | PLUS ExprAux  %prec NOT                               {$1->name = "Plus" ; $$ = AST_newNode("Plus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
     | LPAR Expr RPAR                                        {$$ = $2;}
     | ID                                                    {$$ = AST_newNode("Id",$1->name,$1->linha,$1->coluna);}
     | ID DOTLENGTH                                          {$$ = AST_newNode("Length","",$2->linha,$2->coluna);AST_addSon($$,AST_newNode("Id",$1->name,$1->linha,$1->coluna));}

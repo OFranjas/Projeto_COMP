@@ -2082,19 +2082,19 @@ yyreduce:
 
   case 72:
 #line 287 "expr.y"
-                                                            {(yyvsp[-1].info)->name = "Minus"; (yyval.ast) = AST_newNode("Minus","",0,0);AST_addSon((yyval.ast),(yyvsp[0].ast));}
+                                                            {(yyvsp[-1].info)->name = "Minus"; (yyval.ast) = AST_newNode("Minus","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
 #line 2087 "y.tab.c"
     break;
 
   case 73:
 #line 288 "expr.y"
-                                                            {(yyval.ast) = AST_newNode("Not","",0,0);AST_addSon((yyval.ast),(yyvsp[0].ast));}
+                                                            {(yyval.ast) = AST_newNode("Not","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
 #line 2093 "y.tab.c"
     break;
 
   case 74:
 #line 289 "expr.y"
-                                                            {(yyvsp[-1].info)->name = "Plus" ; (yyval.ast) = AST_newNode("Plus","",0,0);AST_addSon((yyval.ast),(yyvsp[0].ast));}
+                                                            {(yyvsp[-1].info)->name = "Plus" ; (yyval.ast) = AST_newNode("Plus","",(yyvsp[-1].info)->linha,(yyvsp[-1].info)->coluna);AST_addSon((yyval.ast),(yyvsp[0].ast));}
 #line 2099 "y.tab.c"
     break;
 
