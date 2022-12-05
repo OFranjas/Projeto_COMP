@@ -63,4 +63,5 @@ int count_occurrences_string(char *string);
 void check_xor(AST *node);
 
 double Pow(double a, double b);
+void check_xor(AST *node);
 #endif // ANALISE_SEMANTICA_H
