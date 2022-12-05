@@ -60,5 +60,7 @@ char *getToken(char *name);
 bool check_number_bounds(char *number_strings);
 int count_occurrences_string(char *string);
 
+void check_xor(AST *node);
+
 double Pow(double a, double b);
 #endif // ANALISE_SEMANTICA_H

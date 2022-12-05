@@ -906,8 +906,10 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
         if (strcmp(node->son->brother->type, "DecLit") == 0)
         {
             node->type_semantico = "int";
-            node->son->type_semantico = node->type_semantico;
-            node->son->brother->type_semantico = node->type_semantico;
+            if (node->son != NULL)
+                node->son->type_semantico = node->type_semantico;
+            if (node->son->brother != NULL)
+                node->son->brother->type_semantico = node->type_semantico;
         }
         else
         {
@@ -1017,10 +1019,13 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
     }
     else if (logic || comparation)
     {
+        // TODO: Verificar se o xor é undef, int ou boolean
+        //  Por default colocamos o xor a boolean mas temosde verificar os nos que se seguem
         node->type_semantico = "boolean";
 
         if (node->son->brother != NULL)
         {
+            check_xor(node);
             // printf("type = %s\n", node->son->brother->type);
             // printf("value = %s\n", node->son->brother->value);
             // printf("line = %d\n", node->son->brother->linha);
@@ -1249,4 +1254,40 @@ double Pow(double a, double b)
     }
     // printf("power(%f,%f) = %f\n", a, b, power);
     return power;
+}
+
+void check_xor(AST *node)
+{
+    // Verificar se o xor é undef, boolean ou int
+    // Por default o xor é boolean
+
+    // Check if the node->type_semantico is boolean
+
+    if (node == NULL)
+        return;
+
+    if (strcmp(node->type, "Xor") != 0)
+        return;
+
+    if (node->son->type_semantico != NULL)
+    {
+        // printf("node->value = %s\n", node->value);
+        //  Verificar se é double
+        if (strchr(node->son->value, '.') != NULL)
+        {
+            // É double
+            node->type_semantico = "undef";
+            printf("Line %d, col %d: Operator %s cannot be applied to types %s, %s\n", node->linha, node->coluna, getToken(node->type), node->son->type_semantico, node->son->brother->type_semantico);
+        }
+        else
+        {
+            // Verificar se é int
+            if (strcmp(node->son->type_semantico, "int") == 0 && strcmp(node->son->brother->type_semantico, "int") == 0)
+            {
+                node->type_semantico = "int";
+            }
+        }
+
+        // printf("son = %s, brother = %s\n", node->son->type_semantico, node->son->brother->type_semantico);
+    }
 }

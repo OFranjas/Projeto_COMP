@@ -46,14 +46,13 @@ struct info_lex *info;
 }
 
 /* TOKENS */
-%token CLASS PUBLIC STATIC
-%token STRING 
-%token SEMICOLON COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ 
-%token WHILE ELSE  
+%token CLASS PUBLIC STATIC 
+%token COMMA LBRACE RBRACE LPAR RPAR LSQ RSQ 
+%token ELSE  
 %token ARROW 
 %token RESERVED
 
-%token <info> VOID IF ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
+%token <info> WHILE SEMICOLON STRING VOID IF ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
 
 
 %type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationAux MethodInvocationAux_2 VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
@@ -116,7 +115,7 @@ MethodHeader: Type ID LPAR FormalParams RPAR                 {$$ = AST_newNode("
 // Certo
 FormalParams: Type ID FormalParamsAux                        {$$ = AST_newNode("ParamDecl","",0,0);AST_addSon($$,$1);AST_addSon($$,AST_newNode("Id", $2->name,$2->linha,$2->coluna));AST_addBrother($$,$3);}
                                                                             
-            | STRING LSQ RSQ ID                              {$$ = AST_newNode("ParamDecl","",0,0);AST_addSon($$,AST_newNode("StringArray","",0,0));AST_addSon($$,AST_newNode("Id", $4->name,$4->linha,$4->coluna));}
+            | STRING LSQ RSQ ID                              {$$ = AST_newNode("ParamDecl","",0,0);AST_addSon($$,AST_newNode("StringArray","",$1->linha,$1->coluna));AST_addSon($$,AST_newNode("Id", $4->name,$4->linha,$4->coluna));}
             |                                                {$$ = NULL;}
             
             
@@ -206,7 +205,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
 
 
 		 | WHILE LPAR Expr RPAR Statement 				     {
-                                                                $$ = AST_newNode("While","",0,0);
+                                                                $$ = AST_newNode("While","",$1->linha,$1->coluna);
                                                                 AST_addSon($$,$3);
                                                                 if($5 == NULL || strcmp($5->type,"Semicolon")==0){
                                                                     AST_addSon($$,AST_newNode("Block","",0,0));
@@ -234,7 +233,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
                                                                 }
                                                             }
 		 | ParseArgs SEMICOLON 							     {$$ = $1;}
-		 | SEMICOLON									     {$$ = AST_newNode("Semicolon","",0,0);}		
+		 | SEMICOLON									     {$$ = AST_newNode("Semicolon","",$1->linha,$1->coluna);}		
 		 | PRINT LPAR Expr RPAR SEMICOLON 				     {$$ = AST_newNode("Print","",$1->linha,$1->coluna);AST_addSon($$,$3);}
 		 | PRINT LPAR STRLIT RPAR SEMICOLON 			     {$$ = AST_newNode("Print","",$1->linha,$1->coluna);AST_addSon($$, AST_newNode("StrLit", $3->name,$3->linha,$3->coluna));}
 		 | error SEMICOLON 								     {$$ = NULL;print_tree = 0;}
@@ -284,9 +283,9 @@ ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("A
     | ExprAux GT ExprAux                                    {$$ = AST_newNode("Gt","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux LE ExprAux                                    {$$ = AST_newNode("Le","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
     | ExprAux GE ExprAux                                    {$$ = AST_newNode("Ge","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
-    | MINUS ExprAux %prec NOT                               {$1->name = "Minus"; $$ = AST_newNode("Minus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
+    | MINUS ExprAux %prec NOT                               {$$ = AST_newNode("Minus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
     | NOT ExprAux                                           {$$ = AST_newNode("Not","",$1->linha,$1->coluna);AST_addSon($$,$2);}
-    | PLUS ExprAux  %prec NOT                               {$1->name = "Plus" ; $$ = AST_newNode("Plus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
+    | PLUS ExprAux  %prec NOT                               {$$ = AST_newNode("Plus","",$1->linha,$1->coluna);AST_addSon($$,$2);}
     | LPAR Expr RPAR                                        {$$ = $2;}
     | ID                                                    {$$ = AST_newNode("Id",$1->name,$1->linha,$1->coluna);}
     | ID DOTLENGTH                                          {$$ = AST_newNode("Length","",$2->linha,$2->coluna);AST_addSon($$,AST_newNode("Id",$1->name,$1->linha,$1->coluna));}
@@ -335,13 +334,15 @@ int main(int argc, char *argv[]){
             printSymbolTable();
             if(print_tree == 1){
                 AST_print(root,0);
+                AST_free(root);
             }
-            AST_free(root);
         }
     }else{
         flag=2;
         yyparse();
-        check_program(root);
+        if(root != NULL){
+            check_program(root);
+        }
     }
 
     
