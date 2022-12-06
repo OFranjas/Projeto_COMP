@@ -55,7 +55,7 @@ struct info_lex *info;
 %token <info> WHILE SEMICOLON STRING VOID IF ID STRLIT INTLIT REALLIT BOOLLIT BOOL INT DOUBLE PLUS MINUS STAR DIV MOD AND OR XOR LSHIFT RSHIFT EQ GE GT LE LT NE NOT ASSIGN PRINT RETURN PARSEINT DOTLENGTH
 
 
-%type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation Assignment ParseArgs  MethodInvocationAux MethodInvocationAux_2 VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
+%type <ast> StatementAux Statement ExprAux MethodDecl MethodBody ProgramAux MethodBodyAux Program Expr MethodInvocation ParseArgs  MethodInvocationAux MethodInvocationAux_2 VarDecl Type VarDeclAux FieldDecl FieldDeclAux FormalParams FormalParamsAux MethodHeader
 
 /* Precedências */
 %left COMMA
@@ -217,21 +217,7 @@ Statement:  LBRACE Statement StatementAux RBRACE	         {
          | RETURN Expr SEMICOLON  						     {$$ = AST_newNode("Return","",$1->linha,$1->coluna);AST_addSon($$,$2);}
 		 | RETURN SEMICOLON								     {$$ = AST_newNode("Return", "",$1->linha,$1->coluna);}
 		 | MethodInvocation SEMICOLON 					     {$$ = $1;}
-		 | Assignment SEMICOLON 						     {  
-                                                                $$ = AST_newNode("Assign","",$1->linha,$1->coluna);
-                                                                AST_addSon($$,$1);
-                                                                if(strcmp($$->son->brother->type,"Lshift") == 0 || strcmp($$->son->brother->type,"Rshift") == 0 ){
-                                                                    $$->coluna += 1;
-                                                                }else if($$->son->brother->son != NULL){
-                                                                    if(strcmp($$->son->brother->son->type,"Lshift") == 0 || strcmp($$->son->brother->son->type,"Rshift") == 0){
-                                                                        $$->coluna += 1;
-                                                                    }else{
-                                                                    $$->coluna += 2;
-                                                                }
-                                                                }else{
-                                                                    $$->coluna += 2;
-                                                                }
-                                                            }
+         | ID ASSIGN Expr SEMICOLON                          {$$ = AST_newNode("Assign","",$2->linha,$2->coluna);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));AST_addSon($$, $3);}
 		 | ParseArgs SEMICOLON 							     {$$ = $1;}
 		 | SEMICOLON									     {$$ = AST_newNode("Semicolon","",$1->linha,$1->coluna);}		
 		 | PRINT LPAR Expr RPAR SEMICOLON 				     {$$ = AST_newNode("Print","",$1->linha,$1->coluna);AST_addSon($$,$3);}
@@ -255,8 +241,6 @@ MethodInvocationAux: Expr MethodInvocationAux_2			     {$$ = $1;AST_addBrother($
 MethodInvocationAux_2: 						                 {$$ = NULL;}
 					| COMMA Expr MethodInvocationAux_2       {$$ = $2;AST_addBrother($$,$3);}
      
-// Certo
-Assignment: ID ASSIGN Expr                                   {$$ = AST_newNode("Id", $1->name,$1->linha,$1->coluna); AST_addBrother($$,$3);}
 
 // Certo
 ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("ParseArgs","",$1->linha,$1->coluna);AST_addSon($$, AST_newNode("Id", $3->name,$3->linha,$3->coluna));AST_addSon($$, $5);}
@@ -264,7 +248,7 @@ ParseArgs: PARSEINT LPAR ID LSQ Expr RSQ RPAR                {$$ = AST_newNode("
      
 // Certo
 Expr: ExprAux                                               {$$ = $1;}
-    | Assignment                                            {$$ = AST_newNode("Assign","",$1->linha,$1->coluna+2);AST_addSon($$,$1);}
+    | ID ASSIGN Expr                                        {$$ = AST_newNode("Assign","",$2->linha,$2->coluna);AST_addSon($$, AST_newNode("Id", $1->name,$1->linha,$1->coluna));AST_addSon($$, $3);}
 
 // Certo
 ExprAux: ExprAux PLUS ExprAux                               {$$ = AST_newNode("Add","",$2->linha,$2->coluna);AST_addSon($$,$1);AST_addBrother($1,$3);}
