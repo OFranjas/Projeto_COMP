@@ -64,4 +64,6 @@ void check_xor(AST *node);
 
 double Pow(double a, double b);
 void check_xor(AST *node);
+void check_shift_sons(AST *node, symtab_line *method);
+void check_shift(AST *node);
 #endif // ANALISE_SEMANTICA_H

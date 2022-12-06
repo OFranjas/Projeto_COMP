@@ -922,6 +922,16 @@ void recursiveMethod(AST *node, symtab_line *method, bool isCall)
             recursiveMethod(node->brother, method, isCall);
         }
 
+        check_shift_sons(node->son, method);
+        check_shift_sons(node->son->brother, method);
+        check_shift(node);
+
+        if (strcmp(node->type_semantico, "none") == 0)
+        {
+            node->son->type_semantico = "none";
+            node->son->brother->type_semantico = "none";
+        }
+
         return;
     }
     else if (strcmp(name, "Assign") == 0)
@@ -1289,5 +1299,68 @@ void check_xor(AST *node)
         }
 
         // printf("son = %s, brother = %s\n", node->son->type_semantico, node->son->brother->type_semantico);
+    }
+}
+
+// 823
+
+void check_shift_sons(AST *node, symtab_line *method)
+{
+    // printf("Check shift\n");
+
+    char *name = node->type;
+
+    // Add the type to avery node
+    if (node == NULL)
+        return;
+
+    if (strcmp(name, "Id") == 0)
+    {
+        node->type_semantico = checkSymbol(node, method);
+    }
+    else if (strcmp(name, "RealLit") == 0)
+    {
+        node->type_semantico = "double";
+    }
+    else if (strcmp(name, "DecLit") == 0)
+    {
+        node->type_semantico = "int";
+    }
+    else if (strcmp(name, "BoolLit") == 0)
+    {
+        node->type_semantico = "boolean";
+    }
+    else if (strcmp(name, "StrLit") == 0)
+    {
+        node->type_semantico = "String";
+    }
+}
+
+void check_shift(AST *node)
+{
+    if (node == NULL)
+        return;
+
+    if (node->son == NULL || node->son->brother == NULL)
+        return;
+
+    if (node->son->type_semantico == NULL || node->son->brother->type_semantico == NULL)
+        return;
+
+    if (strcmp(node->son->type_semantico, "int") == 0 && strcmp(node->son->brother->type_semantico, "int") == 0)
+    {
+        if ((strcmp(node->son->type, "Id") == 0 && strcmp(node->son->brother->type, "Id") == 0))
+        {
+            node->type_semantico = "none";
+        }
+        else
+        {
+            node->type_semantico = "int";
+        }
+    }
+    else
+    {
+        node->type_semantico = "undef";
+        printf("Line %d, col %d: Operator << cannot be applied to types %s, %s\n", node->linha, node->coluna, node->son->type_semantico, node->son->brother->type_semantico);
     }
 }
